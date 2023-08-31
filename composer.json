@@ -1,0 +1,47 @@
+{
+    "name": "raid/core-auth",
+    "description": "Raid Core Auth Package",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "minimum-stability": "dev",
+    "keywords": [
+        "laravel",
+        "raid",
+        "core",
+        "auth",
+        "authentication"
+    ],
+    "require": {
+        "php": "^8.2",
+        "laravel/sanctum": "^4.0@dev",
+        "raid/core-model": "dev-main",
+        "raid/core-enum": "dev-main"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Raid\\Core\\Auth\\": "src"
+        }
+    },
+    "scripts": {
+        "pint": [
+            "./vendor/bin/pint --config pint.json "
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Raid\\Core\\Auth\\Providers\\AuthServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "mohamed_khedr",
+            "email": "mohamedkhedr700@gmail.com"
+        }
+    ]
+}
