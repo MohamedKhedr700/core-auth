@@ -3,13 +3,13 @@
 namespace Raid\Core\AuthAuthentication\Login;
 
 use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
-use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
-use Raid\Core\AuthAuthentication\Contracts\Login\LoginProviderInterface;
 use Raid\Core\Auth\Traits\Authentication\LoginProvider\WithAccount;
+use Raid\Core\Auth\Traits\Authentication\LoginProvider\WithAccountable;
 use Raid\Core\Auth\Traits\Authentication\LoginProvider\WithCredentials;
 use Raid\Core\Auth\Traits\Authentication\LoginProvider\WithManager;
-use Raid\Core\Auth\Traits\Authentication\LoginProvider\WithAccountable;
 use Raid\Core\Auth\Traits\Authentication\LoginProvider\WithToken;
+use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
+use Raid\Core\AuthAuthentication\Contracts\Login\LoginProviderInterface;
 use Raid\Core\Model\Traits\Error\WithErrors;
 
 abstract class LoginProvider implements LoginProviderInterface
@@ -46,7 +46,7 @@ abstract class LoginProvider implements LoginProviderInterface
         $loginManager = $this->setLoginManagerByType($credentials);
 
         if (! $loginManager) {
-            $this->errors()->add('error', trans('auth.login_type_not_found'));
+            $this->errors()->add('error', __('auth.login_type_not_found'));
 
             return $this;
         }
@@ -54,7 +54,7 @@ abstract class LoginProvider implements LoginProviderInterface
         $account = $loginManager->fetchUser($accountable, $credentials);
 
         if (! $account) {
-            $this->errors()->add('error', trans('auth.not_found'));
+            $this->errors()->add('error', __('auth.not_found'));
 
             return $this;
         }
@@ -95,10 +95,10 @@ abstract class LoginProvider implements LoginProviderInterface
      * Method `isLoginActive` found in a user model to control login check.
      * Base method in Accountable trait.
      */
-    public function checkActiveLoginRules(AccountInterface $user): bool
+    public function checkActiveLoginRules(AccountInterface $account): bool
     {
         try {
-            $user->isLoginActive();
+            $account->isLoginActive();
         } catch (LoginException $exception) {
             $this->errors()->add('error', $exception->getMessage());
 
@@ -114,10 +114,6 @@ abstract class LoginProvider implements LoginProviderInterface
     public function authenticateAccount(AccountInterface $account): void
     {
         $this->setToken($account->createUserToken());
-
-        //        $this->attachDevice($account, device());
-
-        //        authenticate_user($account);
 
         $this->authenticated = true;
     }

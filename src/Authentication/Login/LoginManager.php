@@ -5,7 +5,6 @@ namespace Raid\Core\AuthAuthentication\Login;
 use Illuminate\Support\Str;
 use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
 use Raid\Core\AuthAuthentication\Contracts\Login\LoginManagerInterface;
-use Raid\Core\AuthRepositories\Contracts\RepositoryInterface;
 
 abstract class LoginManager implements LoginManagerInterface
 {

@@ -5,17 +5,17 @@ namespace Raid\Core\AuthModels\Authentication;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Raid\Core\Auth\Traits\Authentication\Accountable;
-use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Traits\Authentication\Authenticatable as AuthenticatableResolver;
 use Raid\Core\Auth\Traits\Authentication\Deviceable;
 use Raid\Core\Auth\Traits\Authentication\Loginable;
 use Raid\Core\Auth\Traits\Authentication\Relationable;
 use Raid\Core\Auth\Traits\Authentication\Tokenable;
 use Raid\Core\Auth\Traits\Authentication\WithPassword;
+use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
 use Raid\Core\Model\Models\Contracts\ModelInterface;
 use Raid\Core\Model\Models\Model;
 
-abstract class Account extends Model implements ModelInterface, AccountInterface, Authenticatable
+abstract class Account extends Model implements AccountInterface, Authenticatable, ModelInterface
 {
     use Accountable,
         AuthenticatableResolver,

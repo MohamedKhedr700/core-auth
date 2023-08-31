@@ -2,8 +2,6 @@
 
 namespace Raid\Core\AuthModels\AccessToken;
 
-use Raid\Core\AuthFacades\Application\Application;
-
 class AccessToken extends PersonalAccessToken
 {
     /**

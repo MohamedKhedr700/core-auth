@@ -6,7 +6,6 @@ use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
 use Raid\Core\AuthAuthentication\Contracts\Login\LoginManagerInterface;
 use Raid\Core\AuthAuthentication\Login\LoginManager;
 use Raid\Core\AuthModels\Authentication\Enum\LoginColumn;
-use Raid\Core\AuthRepositories\Contracts\RepositoryInterface;
 
 class DeviceIdLoginManager extends LoginManager implements LoginManagerInterface
 {

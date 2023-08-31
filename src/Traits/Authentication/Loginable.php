@@ -12,9 +12,9 @@ trait Loginable
      */
     public function isLoginActive(): bool
     {
-//        if ($this->attribute('disabled')) {
-//            throw new LoginException(__('disabled'));
-//        }
+        //        if ($this->attribute('disabled')) {
+        //            throw new LoginException(__('disabled'));
+        //        }
 
         return true;
     }
