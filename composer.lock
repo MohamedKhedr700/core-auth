@@ -2853,7 +2853,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "laravel/sanctum": 20,
-        "raid/core-model": 20
+        "raid/core-enum": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
