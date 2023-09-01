@@ -2,12 +2,10 @@
 
 namespace Raid\Core\AuthModels\Authentication\Enum;
 
-use Raid\Core\AuthEnum\Traits\Enum\ConstEnum;
+use Raid\Core\Enum\Models\Enum;
 
-class LoginType
+class LoginType extends Enum
 {
-    use ConstEnum;
-
     public const DEVICE = 'device';
 
     public const SYSTEM = 'system';

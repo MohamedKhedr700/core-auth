@@ -9,7 +9,7 @@ interface LoginManagerInterface
     /**
      * Get column name.
      */
-    public static function getColumn(): string;
+    public static function column(): string;
 
     /**
      * Fetch user with login manager if exists.

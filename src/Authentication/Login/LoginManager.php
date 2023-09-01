@@ -16,7 +16,7 @@ abstract class LoginManager implements LoginManagerInterface
     /**
      * {@inheritDoc}
      */
-    public static function getColumn(): string
+    public static function column(): string
     {
         return static::COLUMN;
     }
@@ -26,8 +26,11 @@ abstract class LoginManager implements LoginManagerInterface
      */
     public function fetchUser(object $accountable, array $credentials): ?AccountInterface
     {
-        $filters = [Str::snake(static::getColumn()) => $credentials[static::getColumn()]];
+        //        $filters = [Str::snake(static::column()) => $credentials[static::column()]];
 
-        return $accountable->findBy($filters);
+        $column = Str::snake(static::column());
+        $value = $credentials[static::column()];
+
+        return $accountable->where($column, $value)->first();
     }
 }

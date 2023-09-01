@@ -2,12 +2,10 @@
 
 namespace Raid\Core\AuthModels\Authentication\Enum;
 
-use Raid\Core\AuthEnum\Traits\Enum\ConstEnum;
+use Raid\Core\Enum\Models\Enum;
 
-class LoginColumn
+class LoginColumn extends Enum
 {
-    use ConstEnum;
-
     public const DEVICE_ID = 'deviceId';
 
     public const EMAIL = 'email';

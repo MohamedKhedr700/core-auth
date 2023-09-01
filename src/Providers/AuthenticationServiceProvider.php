@@ -26,6 +26,6 @@ class AuthenticationServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->registerEvents();
+        $this->registerPersonalAccessTokenModel();
     }
 }

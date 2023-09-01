@@ -1,10 +1,10 @@
 <?php
 
-namespace Raid\Core\Auth\Traits\Authentication\LoginProvider;
+namespace Raid\Core\Auth\Traits\Authentication\Login;
 
 use Raid\Core\AuthAuthentication\Contracts\Login\LoginManagerInterface;
 
-trait WithManager
+trait WithLoginManager
 {
     /**
      * Login manager instance.
@@ -16,7 +16,7 @@ trait WithManager
      */
     public static function getLoginTypeManagers(): array
     {
-        return config('login.managers.'.static::loginType(), []);
+        return config('authentication.login_managers.'.static::loginType(), []);
     }
 
     /**

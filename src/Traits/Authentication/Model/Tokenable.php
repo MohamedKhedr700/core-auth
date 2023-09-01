@@ -13,15 +13,15 @@ trait Tokenable
     {
         $accountType = $this->accountType();
 
-        $accessToken = $this->createUserToken($permissions)->plainTextToken;
+        $accessToken = $this->createAccountToken($permissions)->plainTextToken;
 
         return $this->getTokenResponse($accountType, $accessToken);
     }
 
     /**
-     * Create user token.
+     * Create account token.
      */
-    public function createUserToken(array $permissions = []): NewAccessToken
+    public function createAccountToken(array $permissions = []): NewAccessToken
     {
         $tokenName = $this->attribute('email') ?? $this->attribute('phone') ?? $this->attribute('deviceId');
 

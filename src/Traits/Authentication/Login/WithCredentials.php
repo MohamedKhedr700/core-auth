@@ -1,6 +1,6 @@
 <?php
 
-namespace Raid\Core\Auth\Traits\Authentication\LoginProvider;
+namespace Raid\Core\Auth\Traits\Authentication\Login;
 
 trait WithCredentials
 {

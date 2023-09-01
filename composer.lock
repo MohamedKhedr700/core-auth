@@ -571,12 +571,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "4e16369df61af050ff2ebfe1d8468e1849714d7b"
+                "reference": "835e193fbbe06c59934d9277143e76434bf5da33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/4e16369df61af050ff2ebfe1d8468e1849714d7b",
-                "reference": "4e16369df61af050ff2ebfe1d8468e1849714d7b",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/835e193fbbe06c59934d9277143e76434bf5da33",
+                "reference": "835e193fbbe06c59934d9277143e76434bf5da33",
                 "shasum": ""
             },
             "require": {
@@ -632,7 +632,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-08-30T13:49:22+00:00"
+            "time": "2023-09-01T14:31:25+00:00"
         },
         {
             "name": "illuminate/events",
@@ -903,12 +903,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "e83ceda46b27a8ab0a257662d8a465074b0608e7"
+                "reference": "88cf94abf6eca3d39cbaa63b588e5ba44a30f4f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/e83ceda46b27a8ab0a257662d8a465074b0608e7",
-                "reference": "e83ceda46b27a8ab0a257662d8a465074b0608e7",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/88cf94abf6eca3d39cbaa63b588e5ba44a30f4f1",
+                "reference": "88cf94abf6eca3d39cbaa63b588e5ba44a30f4f1",
                 "shasum": ""
             },
             "require": {
@@ -966,7 +966,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-08-29T13:47:27+00:00"
+            "time": "2023-09-01T14:20:02+00:00"
         },
         {
             "name": "illuminate/view",
@@ -1489,20 +1489,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MohamedKhedr700/core-enum.git",
-                "reference": "8d77a1f171b79421cf6ab2e439d6931ee7aeb155"
+                "reference": "c6be2cd39c35f3ff398ed99442cacb1bf5abc434"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MohamedKhedr700/core-enum/zipball/8d77a1f171b79421cf6ab2e439d6931ee7aeb155",
-                "reference": "8d77a1f171b79421cf6ab2e439d6931ee7aeb155",
+                "url": "https://api.github.com/repos/MohamedKhedr700/core-enum/zipball/c6be2cd39c35f3ff398ed99442cacb1bf5abc434",
+                "reference": "c6be2cd39c35f3ff398ed99442cacb1bf5abc434",
                 "shasum": ""
             },
             "require": {
                 "archtechx/enums": "*",
                 "php": "^8.2"
-            },
-            "require-dev": {
-                "laravel/pint": "^1.10"
             },
             "default-branch": true,
             "type": "library",
@@ -1539,7 +1536,7 @@
                 "issues": "https://github.com/MohamedKhedr700/core-enum/issues",
                 "source": "https://github.com/MohamedKhedr700/core-enum/tree/main"
             },
-            "time": "2023-08-30T20:07:23+00:00"
+            "time": "2023-09-01T23:55:41+00:00"
         },
         {
             "name": "raid/core-model",
@@ -2856,7 +2853,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "laravel/sanctum": 20,
-        "raid/core-enum": 20
+        "raid/core-model": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

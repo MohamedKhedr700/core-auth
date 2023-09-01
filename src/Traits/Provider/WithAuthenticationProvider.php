@@ -30,4 +30,12 @@ trait WithAuthenticationProvider
             require_once $helper;
         }
     }
+
+    /**
+     * Register sanctum personal access token model.
+     */
+    private function registerPersonalAccessTokenModel(): void
+    {
+        AliasLoader::getInstance()->alias(\Laravel\Sanctum\PersonalAccessToken::class, config('authentication.php.access_token_model'));
+    }
 }
