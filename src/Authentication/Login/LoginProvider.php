@@ -113,7 +113,7 @@ abstract class LoginProvider implements LoginProviderInterface
      */
     public function authenticateAccount(AccountInterface $account): void
     {
-        $this->setToken($account->createUserToken());
+        $this->setToken($account->createAccountToken());
 
         $this->authenticated = true;
     }
