@@ -1,6 +1,6 @@
 <?php
 
-namespace Raid\Core\Auth\Auth\Authentication\Contracts\Concerns;
+namespace Raid\Core\Auth\Authentication\Contracts\Concerns;
 
 interface WithCredentialsInterface
 {
