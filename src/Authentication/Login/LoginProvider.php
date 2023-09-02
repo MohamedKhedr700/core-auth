@@ -35,6 +35,14 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
+     * Attempt Login statically.
+     */
+    public static function attempt(string $accountable, array $credentials): LoginProviderInterface
+    {
+        return (new static())->login(new $accountable, $credentials);
+    }
+
+    /**
      * Attempt Login.
      */
     public function login(object $accountable, array $credentials): LoginProviderInterface
