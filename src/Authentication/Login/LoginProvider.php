@@ -43,6 +43,14 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
+     * Attempt Login statically with an account.
+     */
+    public static function attemptWithAccount(string $accountable, AccountInterface $account): LoginProviderInterface
+    {
+        return (new static())->loginWithAccount(new $accountable, $account);
+    }
+
+    /**
      * Attempt Login.
      */
     public function login(object $accountable, array $credentials): LoginProviderInterface
@@ -75,7 +83,7 @@ abstract class LoginProvider implements LoginProviderInterface
 
         $this->setAccount($account);
 
-        if (! $this->checkActiveLoginRules($account)) {
+        if (! $this->checkAccountAuthentication($account)) {
             return $this;
         }
 
@@ -85,15 +93,15 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Login with given user.
+     * Login with a given account model.
      */
-    public function loginByAccount(object $accountable, AccountInterface $account): LoginProviderInterface
+    public function loginWithAccount(object $accountable, AccountInterface $account): LoginProviderInterface
     {
         $this->setAccountable($accountable);
 
         $this->setAccount($account);
 
-        if ($this->checkActiveLoginRules($account)) {
+        if ($this->checkAccountAuthentication($account)) {
             $this->authenticateAccount($this->account());
         }
 
@@ -105,10 +113,10 @@ abstract class LoginProvider implements LoginProviderInterface
      * Method `isLoginActive` found in a user model to control login check.
      * Base method in Accountable trait.
      */
-    public function checkActiveLoginRules(AccountInterface $account): bool
+    public function checkAccountAuthentication(AccountInterface $account): bool
     {
         try {
-            $account->isLoginActive();
+            $account->isAuthenticated();
         } catch (LoginException $exception) {
             $this->errors()->add('error', $exception->getMessage());
 

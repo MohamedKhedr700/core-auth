@@ -4,7 +4,6 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 
-
 if (! function_exists('account')) {
     /**
      * Get an authenticated account.
@@ -14,7 +13,6 @@ if (! function_exists('account')) {
         return auth()->check() ? auth()->user() : null;
     }
 }
-
 
 if (! function_exists('authenticate_account')) {
     /**
