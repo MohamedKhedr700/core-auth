@@ -3,10 +3,10 @@
 namespace Raid\Core\Auth\Models\AccessToken;
 
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Jenssegers\Mongodb\Eloquent\Model;
-use Raid\Core\Auth\Model\Traits\Model\Attributable;
+use Raid\Core\Model\Models\BaseModel;
+use Raid\Core\Model\Traits\Model\Attributable;
 
-class PersonalAccessToken extends Model
+class PersonalAccessToken extends BaseModel
 {
     use Attributable;
 
