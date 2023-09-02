@@ -1,5 +1,7 @@
 <?php
 
+namespace Raid\Core\Auth\Providers;
+
 use Illuminate\Support\ServiceProvider;
 use Raid\Core\Auth\Traits\Provider\WithAuthProvider;
 
