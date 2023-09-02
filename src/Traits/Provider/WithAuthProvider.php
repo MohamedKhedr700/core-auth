@@ -2,6 +2,8 @@
 
 namespace Raid\Core\Auth\Traits\Provider;
 
+use Illuminate\Foundation\AliasLoader;
+
 trait WithAuthProvider
 {
     /**
