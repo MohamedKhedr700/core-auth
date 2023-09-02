@@ -61,7 +61,7 @@ trait WithLoginManager
         $managers = static::getLoginTypeManagers();
 
         foreach ($managers as $manager) {
-            if (empty($credentials[$manager::getColumn()])) {
+            if (empty($credentials[$manager::column()])) {
                 continue;
             }
 
