@@ -26,8 +26,6 @@ abstract class LoginManager implements LoginManagerInterface
      */
     public function fetchUser(object $accountable, array $credentials): ?AccountInterface
     {
-        //        $filters = [Str::snake(static::column()) => $credentials[static::column()]];
-
         $column = Str::snake(static::column());
         $value = $credentials[static::column()];
 

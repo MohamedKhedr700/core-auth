@@ -36,27 +36,9 @@ trait WithLoginManager
     }
 
     /**
-     * Get login manager by login type.
+     * Get login manager by credentials.
      */
-    public function setLoginManagerByType(array $credentials = []): ?LoginManagerInterface
-    {
-        $loginManager = $this->getLoginManagerByType($credentials);
-
-        if (! $loginManager) {
-            return null;
-        }
-
-        $loginManager = new $loginManager();
-
-        $this->setLoginManager($loginManager);
-
-        return $loginManager;
-    }
-
-    /**
-     * Get login manager by login type.
-     */
-    private function getLoginManagerByType(array $credentials = []): ?string
+    private function getLoginManagerByCredentials(array $credentials = []): ?LoginManagerInterface
     {
         $managers = static::getLoginTypeManagers();
 
@@ -65,7 +47,7 @@ trait WithLoginManager
                 continue;
             }
 
-            return $manager;
+            return new $manager;
         }
 
         return null;

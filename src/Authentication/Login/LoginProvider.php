@@ -51,13 +51,15 @@ abstract class LoginProvider implements LoginProviderInterface
 
         $this->setCredentials($credentials);
 
-        $loginManager = $this->setLoginManagerByType($credentials);
+        $loginManager = $this->getLoginManagerByCredentials($credentials);
 
         if (! $loginManager) {
             $this->errors()->add('error', __('auth.login_type_not_found'));
 
             return $this;
         }
+
+        $this->setLoginManager($loginManager);
 
         $account = $loginManager->fetchUser($accountable, $credentials);
 
@@ -129,7 +131,7 @@ abstract class LoginProvider implements LoginProviderInterface
     /**
      * Check login provider rules after fetch user.
      */
-    public function checkLoginProviderRules(AccountInterface $user, array $credentials = []): bool
+    public function checkLoginProviderRules(AccountInterface $account, array $credentials = []): bool
     {
         return true;
     }
