@@ -20,12 +20,10 @@ trait Loginable
      * Check if an account is active to login and authenticated.
      * Throw login exceptions if failed login.
      */
-    public function isLoginActive(): bool
+    public function isLoginActive(): void
     {
         //        if ($this->attribute('disabled')) {
         //            throw new LoginException(__('disabled'));
         //        }
-
-        return true;
     }
 }
