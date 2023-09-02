@@ -3,8 +3,6 @@
 namespace Raid\Core\Auth\Traits\Provider;
 
 use Illuminate\Foundation\AliasLoader;
-use Laravel\Sanctum\PersonalAccessToken;
-
 trait WithAuthProvider
 {
     /**
@@ -39,8 +37,8 @@ trait WithAuthProvider
      */
     private function registerPersonalAccessTokenModel(): void
     {
-        $accessTokenModel = config('authentication.access_token_model', PersonalAccessToken::class);
+        $accessTokenModel = config('authentication.access_token_model', Laravel\Sanctum\PersonalAccessToken::class);
 
-        AliasLoader::getInstance()->alias(PersonalAccessToken::class, $accessTokenModel);
+        AliasLoader::getInstance()->alias(Laravel\Sanctum\PersonalAccessToken::class, $accessTokenModel);
     }
 }
