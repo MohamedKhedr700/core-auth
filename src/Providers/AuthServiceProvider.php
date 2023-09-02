@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\ServiceProvider;
-use Raid\Core\Auth\Traits\Provider\WithAuthenticationProvider;
+use Raid\Core\Auth\Traits\Provider\WithAuthProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
-    use WithAuthenticationProvider;
+    use WithAuthProvider;
 
     /**
      * The commands to be registered.

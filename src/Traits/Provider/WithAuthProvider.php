@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Traits\Provider;
 
-trait WithAuthenticationProvider
+trait WithAuthProvider
 {
     /**
      * Register config.
