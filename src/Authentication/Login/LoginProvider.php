@@ -1,15 +1,15 @@
 <?php
 
-namespace Raid\Core\AuthAuthentication\Login;
+namespace Raid\Core\Auth\Authentication\Login;
 
+use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
 use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
 use Raid\Core\Auth\Traits\Authentication\Login\WithAccount;
 use Raid\Core\Auth\Traits\Authentication\Login\WithAccountable;
 use Raid\Core\Auth\Traits\Authentication\Login\WithCredentials;
 use Raid\Core\Auth\Traits\Authentication\Login\WithLoginManager;
 use Raid\Core\Auth\Traits\Authentication\Login\WithToken;
-use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
-use Raid\Core\AuthAuthentication\Contracts\Login\LoginProviderInterface;
 use Raid\Core\Model\Traits\Error\WithErrors;
 
 abstract class LoginProvider implements LoginProviderInterface

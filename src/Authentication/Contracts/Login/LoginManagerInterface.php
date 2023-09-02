@@ -1,8 +1,8 @@
 <?php
 
-namespace Raid\Core\AuthAuthentication\Contracts\Login;
+namespace Raid\Core\Auth\Authentication\Contracts\Login;
 
-use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 
 interface LoginManagerInterface
 {

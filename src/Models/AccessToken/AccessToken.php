@@ -1,6 +1,6 @@
 <?php
 
-namespace Raid\Core\AuthModels\AccessToken;
+namespace Raid\Core\Auth\Models\AccessToken;
 
 class AccessToken extends PersonalAccessToken
 {

@@ -1,6 +1,6 @@
 <?php
 
-use Raid\Core\AuthModels\Authentication\Enum\LoginType;
+use Raid\Core\Auth\Models\Authentication\Enum\LoginType;
 
 return [
 
@@ -15,12 +15,12 @@ return [
 
     'login_managers' => [
         LoginType::DEVICE => [
-            \Raid\Core\AuthAuthentication\Login\DeviceLogin\Manager\DeviceIdLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\DeviceLogin\Manager\DeviceIdLoginManager::class,
         ],
         LoginType::SYSTEM => [
-            \Raid\Core\AuthAuthentication\Login\SystemLogin\Manager\EmailLoginManager::class,
-            \Raid\Core\AuthAuthentication\Login\SystemLogin\Manager\PhoneLoginManager::class,
-            \Raid\Core\AuthAuthentication\Login\SystemLogin\Manager\EmailOrPhoneLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\EmailLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\PhoneLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\EmailOrPhoneLoginManager::class,
         ],
     ],
 
@@ -35,5 +35,5 @@ return [
     |
     */
 
-    'access_token_model' => \Raid\Core\AuthModels\AccessToken\AccessToken::class,
+    'access_token_model' => \Raid\Core\Auth\Models\AccessToken\AccessToken::class,
 ];

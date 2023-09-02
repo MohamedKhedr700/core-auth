@@ -36,6 +36,6 @@ trait WithAuthenticationProvider
      */
     private function registerPersonalAccessTokenModel(): void
     {
-        AliasLoader::getInstance()->alias(\Laravel\Sanctum\PersonalAccessToken::class, config('authentication.php.access_token_model'));
+        AliasLoader::getInstance()->alias(\Laravel\Sanctum\PersonalAccessToken::class, config('authentication.access_token_model'));
     }
 }

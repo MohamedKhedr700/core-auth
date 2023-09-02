@@ -1,10 +1,10 @@
 <?php
 
-namespace Raid\Core\AuthAuthentication\Login\DeviceLogin;
+namespace Raid\Core\Auth\Authentication\Login\DeviceLogin;
 
-use Raid\Core\AuthAuthentication\Contracts\Login\LoginProviderInterface;
-use Raid\Core\AuthAuthentication\Login\LoginProvider;
-use Raid\Core\AuthModels\Authentication\Enum\LoginType;
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
+use Raid\Core\Auth\Authentication\Login\LoginProvider;
+use Raid\Core\Auth\Models\Authentication\Enum\LoginType;
 
 class DeviceLoginProvider extends LoginProvider implements LoginProviderInterface
 {

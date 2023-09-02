@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Traits\Authentication\Login;
 
-use Raid\Core\AuthAuthentication\Contracts\Login\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
 
 trait WithLoginManager
 {

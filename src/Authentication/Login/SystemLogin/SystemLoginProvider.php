@@ -1,11 +1,11 @@
 <?php
 
-namespace Raid\Core\AuthAuthentication\Login\SystemLogin;
+namespace Raid\Core\Auth\Authentication\Login\SystemLogin;
 
-use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
-use Raid\Core\AuthAuthentication\Contracts\Login\LoginProviderInterface;
-use Raid\Core\AuthAuthentication\Login\LoginProvider;
-use Raid\Core\AuthModels\Authentication\Enum\LoginType;
+use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
+use Raid\Core\Auth\Authentication\Login\LoginProvider;
+use Raid\Core\Auth\Models\Authentication\Enum\LoginType;
 
 class SystemLoginProvider extends LoginProvider implements LoginProviderInterface
 {

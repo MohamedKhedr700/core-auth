@@ -1,11 +1,11 @@
 <?php
 
-namespace Raid\Core\AuthAuthentication\Login\DeviceLogin\Manager;
+namespace Raid\Core\Auth\Authentication\Login\DeviceLogin\Manager;
 
-use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
-use Raid\Core\AuthAuthentication\Contracts\Login\LoginManagerInterface;
-use Raid\Core\AuthAuthentication\Login\LoginManager;
-use Raid\Core\AuthModels\Authentication\Enum\LoginColumn;
+use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Login\LoginManager;
+use Raid\Core\Auth\Models\Authentication\Enum\LoginColumn;
 
 class DeviceIdLoginManager extends LoginManager implements LoginManagerInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Raid\Core\AuthAuthentication\Contracts\Login;
+namespace Raid\Core\Auth\Authentication\Contracts\Login;
 
 interface LoginProviderInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Raid\Core\AuthAuthentication\Login;
+namespace Raid\Core\Auth\Authentication\Login;
 
 use Illuminate\Support\Str;
-use Raid\Core\AuthAuthentication\Contracts\AccountInterface;
-use Raid\Core\AuthAuthentication\Contracts\Login\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
 
 abstract class LoginManager implements LoginManagerInterface
 {

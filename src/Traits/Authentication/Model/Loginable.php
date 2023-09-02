@@ -1,6 +1,6 @@
 <?php
 
-namespace Raid\Core\Auth\Traits\Authentication;
+namespace Raid\Core\Auth\Traits\Authentication\Model;
 
 use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
 

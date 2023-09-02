@@ -3,7 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use Raid\Core\Auth\Traits\Provider\WithAuthenticationProvider;
 
-class AuthenticationServiceProvider extends ServiceProvider
+class AuthServiceProvider extends ServiceProvider
 {
     use WithAuthenticationProvider;
 

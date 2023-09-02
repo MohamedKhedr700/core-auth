@@ -1,10 +1,10 @@
 <?php
 
-namespace Raid\Core\AuthAuthentication\Login\SystemLogin\Manager;
+namespace Raid\Core\Auth\Authentication\Login\SystemLogin\Manager;
 
-use Raid\Core\AuthAuthentication\Contracts\Login\LoginManagerInterface;
-use Raid\Core\AuthAuthentication\Login\LoginManager;
-use Raid\Core\AuthModels\Authentication\Enum\LoginColumn;
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Login\LoginManager;
+use Raid\Core\Auth\Models\Authentication\Enum\LoginColumn;
 
 class PhoneLoginManager extends LoginManager implements LoginManagerInterface
 {
