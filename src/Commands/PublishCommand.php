@@ -18,7 +18,7 @@ class PublishCommand extends Command
     /**
      * Execute the console command.
      */
-    public function fire(): void
+    public function handle(): void
     {
         $this->call('vendor:publish', [
             '--provider' => 'Raid\Core\Providers\CoreServiceProvider',
