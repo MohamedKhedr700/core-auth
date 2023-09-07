@@ -34,6 +34,14 @@ trait WithAuthProvider
     }
 
     /**
+     * Register commands.
+     */
+    private function registerCommands(): void
+    {
+        $this->commands($this->commands);
+    }
+
+    /**
      * Register sanctum personal access token model.
      */
     private function registerPersonalAccessTokenModel(): void

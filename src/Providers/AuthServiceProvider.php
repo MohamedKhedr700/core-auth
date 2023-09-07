@@ -24,7 +24,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerConfig();
         $this->registerHelpers();
-        $this->commands($this->commands);
+        $this->registerCommands();
     }
 
     /**
