@@ -3,7 +3,7 @@
 namespace Raid\Core\Auth\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use PublishCommand;
+use Raid\Core\Auth\Commands\PublishCommand;
 use Raid\Core\Auth\Traits\Provider\WithAuthProvider;
 
 class AuthServiceProvider extends ServiceProvider
