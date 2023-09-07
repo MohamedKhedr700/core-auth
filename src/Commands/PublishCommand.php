@@ -1,5 +1,7 @@
 <?php
 
+namespace Raid\Core\Auth\Commands;
+
 use \Illuminate\Console\Command;
 class PublishCommand extends Command
 {
