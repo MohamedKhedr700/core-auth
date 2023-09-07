@@ -3,6 +3,7 @@
 namespace Raid\Core\Auth\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use PublishCommand;
 use Raid\Core\Auth\Traits\Provider\WithAuthProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -12,7 +13,9 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * The commands to be registered.
      */
-    protected array $commands = [];
+    protected array $commands = [
+        PublishCommand::class,
+    ];
 
     /**
      * Register any application services.
@@ -21,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerConfig();
         $this->registerHelpers();
+        $this->commands($this->commands);
     }
 
     /**

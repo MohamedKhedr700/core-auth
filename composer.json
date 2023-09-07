@@ -28,9 +28,6 @@
     "scripts": {
         "pint": [
             "./vendor/bin/pint --config pint.json "
-        ],
-        "post-autoload-dump": [
-            "@php artisan vendor:publish --provider=\"Raid\\Core\\Auth\\Providers\\AuthServiceProvider\""
         ]
     },
     "extra": {
