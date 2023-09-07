@@ -17,7 +17,7 @@ trait WithAuthProvider
 
             $this->publishes([
                 $config => config_path(basename($config)),
-            ], 'config');
+            ], 'config-auth');
         }
     }
 

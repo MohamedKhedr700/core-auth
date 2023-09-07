@@ -28,6 +28,9 @@
     "scripts": {
         "pint": [
             "./vendor/bin/pint --config pint.json "
+        ],
+        "post-autoload-dump": [
+            "@php artisan vendor:publish --tag=config-auth"
         ]
     },
     "extra": {

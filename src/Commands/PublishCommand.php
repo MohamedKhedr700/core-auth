@@ -21,8 +21,7 @@ class PublishCommand extends Command
     public function handle(): void
     {
         $this->call('vendor:publish', [
-            '--provider' => 'Raid\Core\Providers\CoreServiceProvider',
-//            '--tag' => 'config'
+            '--tag' => 'config-auth'
         ]);
     }
 }
