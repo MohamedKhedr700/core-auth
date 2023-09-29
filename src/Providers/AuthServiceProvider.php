@@ -3,7 +3,7 @@
 namespace Raid\Core\Auth\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Raid\Core\Auth\Commands\PublishCommand;
+use Raid\Core\Auth\Commands\PublishAuthCommand;
 use Raid\Core\Auth\Traits\Provider\WithAuthProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * The commands to be registered.
      */
     protected array $commands = [
-        PublishCommand::class,
+        PublishAuthCommand::class,
     ];
 
     /**

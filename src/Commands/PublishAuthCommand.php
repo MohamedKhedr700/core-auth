@@ -2,13 +2,14 @@
 
 namespace Raid\Core\Auth\Commands;
 
-use \Illuminate\Console\Command;
-class PublishCommand extends Command
+use Raid\Core\Command\Commands\PublishCommand;
+
+class PublishAuthCommand extends PublishCommand
 {
     /**
      * The console command name.
      */
-    protected $name = 'publish:raid-auth';
+    protected $name = 'core:publish-auth';
 
     /**
      * The console command description.
@@ -20,8 +21,6 @@ class PublishCommand extends Command
      */
     public function handle(): void
     {
-        $this->call('vendor:publish', [
-            '--tag' => 'config-auth'
-        ]);
+        $this->publishCommand('config-auth');
     }
 }
