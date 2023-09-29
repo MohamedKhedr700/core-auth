@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f74f6dbddefed0c3a9b0ecab27fcdb4",
+    "content-hash": "68b746638acd034fd82ed5be0b5fec45",
     "packages": [
         {
             "name": "archtechx/enums",
@@ -1418,6 +1418,63 @@
             "time": "2022-04-08T16:41:45+00:00"
         },
         {
+            "name": "raid/core-command",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MohamedKhedr700/core-command.git",
+                "reference": "6fbd6389463c229851cd559024c116db26856cff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MohamedKhedr700/core-command/zipball/6fbd6389463c229851cd559024c116db26856cff",
+                "reference": "6fbd6389463c229851cd559024c116db26856cff",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.10"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Raid\\Core\\Command\\Providers\\CommandServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Raid\\Core\\Command\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mohamed_khedr",
+                    "email": "mohamedkhedr700@gmail.com"
+                }
+            ],
+            "description": "Raid Core Command Package",
+            "keywords": [
+                "command",
+                "core",
+                "laravel",
+                "raid"
+            ],
+            "support": {
+                "issues": "https://github.com/MohamedKhedr700/core-command/issues",
+                "source": "https://github.com/MohamedKhedr700/core-command/tree/main"
+            },
+            "time": "2023-09-28T22:59:26+00:00"
+        },
+        {
             "name": "raid/core-enum",
             "version": "dev-main",
             "source": {
@@ -2785,10 +2842,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "raid/core-model": 20,
-        "raid/core-enum": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

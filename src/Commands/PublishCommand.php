@@ -13,7 +13,7 @@ class PublishCommand extends Command
     /**
      * The console command description.
      */
-    protected $description = 'Publish Raid auth config files.';
+    protected $description = 'Publish core auth config files.';
 
     /**
      * Execute the console command.

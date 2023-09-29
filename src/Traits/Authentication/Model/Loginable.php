@@ -10,6 +10,16 @@ use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
 trait Loginable
 {
     /**
+     * Login an account with credentials or instance of account model.
+     */
+    public static function attempt(array|AccountInterface $credentials): LoginProviderInterface
+    {
+        $method = $credentials instanceof AccountInterface ? 'loginWithAccount' : 'login';
+
+        return static::{$method}($credentials);
+    }
+
+    /**
      * Login an account with credentials.
      */
     public static function login(array $credentials): LoginProviderInterface
