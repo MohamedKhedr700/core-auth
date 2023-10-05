@@ -10,6 +10,8 @@ class LoginManager extends Enum
 
     public const EMAIL = 'email';
 
+    public const USERNAME = 'username';
+
     public const PHONE = 'phone';
 
     public const EMAIL_OR_PHONE = 'emailOrPhone';
