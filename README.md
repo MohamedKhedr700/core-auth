@@ -18,25 +18,27 @@ php artisan core:publish-auth
 ## Usage
 
 ``` php
-class PostController extends Controller
+class UserController extends Controller
 {
     /**
      * Invoke the controller method.
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request, SystemLoginProvider $systemLoginProvider): JsonResponse
     {
-        $post = new Post();
+        $credentials = $request->only(['email', 'phone', 'emailOrPhone', 'password']);
 
-        // instead of this pattern.
-        // $post->title = $request->get('title');
-        // $title = $post->title;
-        
-        // we can use this pattern.
-        $post->fillAttribute('title', $request->get('title'));
-        
-        $title = $post->attribute('title', '');
-        
-        // this didn't save the model, but we can deal with that later.
+        $loginProvider = $systemLoginProvider->login(new User(), $credentials);
+
+        // or using static call
+        $loginProvider = SystemLoginProvider::attempt(User::class, $credentials);
+
+        // or using accountable static call
+        $loginProvider = User::login($credentials);
+
+        return response()->json([
+            'token' => $loginProvider->getStringToken(),
+            'resource' => $loginProvider->account(),
+        ]);
     }
 }
 ```
