@@ -10,5 +10,5 @@ class $CLASS_NAME$ extends LoginProvider implements LoginProviderInterface
     /**
      * {@inheritdoc}
      */
-    public const LOGIN_TYPE = '';
+    public const PROVIDER = '';
 }

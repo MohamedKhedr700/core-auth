@@ -10,5 +10,5 @@ class $CLASS_NAME$ extends LoginManager implements LoginManagerInterface
     /**
      * {@inheritdoc}
      */
-    public const COLUMN = '';
+    public const MANAGER = '';
 }
