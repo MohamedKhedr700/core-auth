@@ -38,7 +38,7 @@ abstract class LoginManager implements LoginManagerInterface
      */
     public function getColumn(object $accountable, array $credentials): string
     {
-        return static::queryColumn() ?? static::manager();
+        return static::queryColumn() ?: static::manager();
     }
 
     /**
