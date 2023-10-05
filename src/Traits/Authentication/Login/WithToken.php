@@ -30,7 +30,7 @@ trait WithToken
     /**
      * Get user string token if presentable.
      */
-    public function getStringToken(): ?string
+    public function stringToken(): ?string
     {
         return $this->token('plainTextToken');
     }
@@ -38,10 +38,10 @@ trait WithToken
     /**
      * Get token response.
      */
-    public function getTokenResponse(): array
+    public function tokenResponse(): array
     {
         $account = $this->account();
 
-        return $account->getTokenResponse($account->accountType(), $this->getStringToken());
+        return $account->getTokenResponse($account->accountType(), $this->stringToken());
     }
 }
