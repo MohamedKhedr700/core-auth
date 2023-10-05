@@ -2,7 +2,6 @@
 
 namespace Raid\Core\Auth\Authentication\Login;
 
-use Illuminate\Support\Str;
 use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
 
