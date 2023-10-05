@@ -2,6 +2,7 @@
 
 namespace Raid\Core\Auth\Authentication\Login;
 
+use Exception;
 use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
 use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
@@ -133,7 +134,7 @@ abstract class LoginProvider implements LoginProviderInterface
     {
         try {
             $account->isAuthenticated();
-        } catch (LoginException $exception) {
+        } catch (LoginException|Exception $exception) {
             $this->errors()->add('error', $exception->getMessage());
 
             return false;

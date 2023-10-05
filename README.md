@@ -199,6 +199,75 @@ class UserController extends Controller
     }
 }
 ```
+
+The `SystemLoginProvider` login method accepts two parameters,
+
+The first parameter is the accountable model class.
+
+The second parameter is the credentials array.
+
+The `SystemLoginProvider` login method returns the `LoginProvider` class instance.
+
+The `LoginProvider` class instance uses the credentials array to match with login manager.
+
+The `LoginManager` class instance used to query the accountable class to find the matched account.
+
+The `LoginProvider` class apply its own login rules after finding the account.
+
+Then, you apply authentication rules on the account itself using the method `isAuthenticated`.
+
+``` php
+<?php
+
+namespace App\Models;
+
+use Raid\Core\Auth\Models\Authentication\Account;
+
+class User extends Account
+{
+    /**
+     * {@inheritdoc}
+     */
+    protected $fillable = [
+        'user_name',
+        'email',
+        'password',
+    ];
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected $hidden = [
+        'password',
+    ];
+    
+    /**
+     * Check if an account is active to log in and authenticated.
+     * Throw login exceptions if failed to log in.
+     */
+    public function isAuthenticated(): void
+    {
+        if ($this->isBanned()) {
+            throw new Exception(__('auth.user_is_banned.'));
+        }
+    }
+    
+        /**
+     * Determine if user is banned.
+     */
+    public function isBanned(): bool
+    {
+        return $this->attribute('is_banned', false);
+    }
+}
+```
+
+The `isAuthenticated` method is responsible for checking if the account is authenticated or not.
+
+The `isAuthenticated` method should throw an exception if the account is not authenticated.
+
+The `Exception` will not be thrown in the system, but it will be returned in the `LoginProvider` class instance as an error.
+
 And that's it.
 
 ## License
