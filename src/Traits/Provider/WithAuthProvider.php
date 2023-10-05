@@ -3,10 +3,9 @@
 namespace Raid\Core\Auth\Traits\Provider;
 
 use Illuminate\Foundation\AliasLoader;
-use \Laravel\Sanctum\PersonalAccessToken;
+use Laravel\Sanctum\PersonalAccessToken;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
-use Raid\Core\Auth\Authentication\Login\LoginProvider;
-use Raid\Core\Auth\Facades\Login;
+use Raid\Core\Auth\Facades\Authentication;
 
 trait WithAuthProvider
 {
@@ -60,7 +59,7 @@ trait WithAuthProvider
     {
         $loginProvider = config('authentication.default_provider');
 
-        $this->app->singleton(Login::facade(), $loginProvider);
+        $this->app->singleton(Authentication::facade(), $loginProvider);
 
         $this->app->singleton(LoginProviderInterface::class, $loginProvider);
     }

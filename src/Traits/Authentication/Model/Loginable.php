@@ -4,9 +4,8 @@ namespace Raid\Core\Auth\Traits\Authentication\Model;
 
 use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
-use Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider;
 use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
-use Raid\Core\Auth\Facades\Login;
+use Raid\Core\Auth\Facades\Authentication;
 
 trait Loginable
 {
@@ -25,7 +24,7 @@ trait Loginable
      */
     public static function login(array $credentials): LoginProviderInterface
     {
-        return Login::attempt(static::class, $credentials);
+        return Authentication::attempt(static::class, $credentials);
     }
 
     /**
@@ -33,7 +32,7 @@ trait Loginable
      */
     public static function loginAccount(AccountInterface $account): LoginProviderInterface
     {
-        return Login::attemptAccount(static::class, $account);
+        return Authentication::attemptAccount(static::class, $account);
     }
 
     /**

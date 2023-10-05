@@ -7,10 +7,10 @@ use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
 /**
  * @mixin LoginProviderInterface
  */
-class Login extends Facade
+class Authentication extends Facade
 {
     /**
      * {@inheritdoc}
      */
-    public const FACADE = 'Login';
+    public const FACADE = 'Authentication';
 }

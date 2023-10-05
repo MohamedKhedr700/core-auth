@@ -426,6 +426,45 @@ The `checkLoginRules` method should add errors to the `errors` method if the log
 
 <br>
 
+You can define a default login provider and use the `` facade to process the login.
+
+In `config/authentication.php` file.
+
+``` php 
+'default_provider' => \App\Http\Authentication\Providers\OtpLoginProvider::class,
+```
+
+``` php
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Raid\Core\Auth\Facades\Login;
+
+class UserController extends Controller
+{
+    /**
+     * Invoke the controller method.
+     */
+    public function __invoke(Request $request): JsonResponse
+    {
+        $credentials = $request->only([
+            'username', 'password',
+        ]);
+
+        $loginProvider = Login::login(new User(), $credentials);
+
+        return response()->json([
+            'provider' => $loginProvider->provider(),
+            'token' => $loginProvider->getStringToken(),
+            'resource' => $loginProvider->account(),
+        ]);
+    }
+}
+```
+
+
 And that's it.
 
 ## License

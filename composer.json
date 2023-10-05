@@ -39,7 +39,7 @@
         }
     },
     "aliases": {
-        "Login": "Raid\\Core\\Auth\\Facades\\Login"
+        "Authentication": "Raid\\Core\\Auth\\Facades\\Authentication"
     },
     "authors": [
         {
