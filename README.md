@@ -336,7 +336,6 @@ class UserController extends Controller
         $lastError = $loginProvider->errors()->last();
         $lastError = $loginProvider->errors()->last('error');
     }
-
 ```
 
 <br>
