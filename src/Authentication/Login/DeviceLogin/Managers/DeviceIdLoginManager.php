@@ -17,9 +17,9 @@ class DeviceIdLoginManager extends LoginManager implements LoginManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchUser(object $accountable, array $credentials): ?AccountInterface
+    public function findAccount(object $accountable, array $credentials): ?AccountInterface
     {
-        $device = parent::fetchUser($accountable, $credentials);
+        $device = parent::findAccount($accountable, $credentials);
 
         return $device ? $accountable->update($device->accountId(), $credentials) : $accountable->create($credentials);
     }

@@ -14,6 +14,11 @@ abstract class LoginManager implements LoginManagerInterface
     public const MANAGER = '';
 
     /**
+     * Query column.
+     */
+    public const QUERY_COLUMN = '';
+
+    /**
      * {@inheritDoc}
      */
     public static function manager(): string
@@ -24,11 +29,35 @@ abstract class LoginManager implements LoginManagerInterface
     /**
      * {@inheritDoc}
      */
-    public function fetchUser(object $accountable, array $credentials): ?AccountInterface
+    public static function queryColumn(): string
     {
-        $column = Str::snake(static::manager());
+        return static::QUERY_COLUMN;
+    }
 
-        $value = $credentials[static::manager()];
+    /**
+     * {@inheritDoc}
+     */
+    public function getColumn(object $accountable, array $credentials): string
+    {
+        return static::queryColumn() ?? static::manager();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCredentialValue(array $credentials): string
+    {
+        return $credentials[static::manager()];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findAccount(object $accountable, array $credentials): ?AccountInterface
+    {
+        $column = $this->getColumn($accountable, $credentials);
+
+        $value = $this->getCredentialValue($credentials);
 
         return $accountable->where($column, $value)->first();
     }

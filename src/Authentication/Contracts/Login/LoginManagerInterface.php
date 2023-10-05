@@ -12,7 +12,22 @@ interface LoginManagerInterface
     public static function manager(): string;
 
     /**
-     * Fetch user with login manager if exists.
+     * Get query column.
      */
-    public function fetchUser(object $accountable, array $credentials): ?AccountInterface;
+    public static function queryColumn(): string;
+
+    /**
+     * Get column name.
+     */
+    public function getColumn(object $accountable, array $credentials): string;
+
+    /**
+     * Get credential value.
+     */
+    public function getCredentialValue(array $credentials): string;
+
+    /**
+     * Find an account with login manager if exists.
+     */
+    public function findAccount(object $accountable, array $credentials): ?AccountInterface;
 }

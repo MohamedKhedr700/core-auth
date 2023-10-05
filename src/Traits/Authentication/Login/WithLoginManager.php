@@ -36,9 +36,9 @@ trait WithLoginManager
     }
 
     /**
-     * Get login manager by credentials.
+     * Get credentials login manager.
      */
-    private function getLoginManagerByCredentials(array $credentials = []): ?LoginManagerInterface
+    private function getCredentialsManager(array $credentials = []): ?LoginManagerInterface
     {
         $managers = static::getLoginProviderManagers();
 

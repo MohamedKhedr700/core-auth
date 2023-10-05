@@ -59,7 +59,7 @@ abstract class LoginProvider implements LoginProviderInterface
 
         $this->setCredentials($credentials);
 
-        $loginManager = $this->getLoginManagerByCredentials($credentials);
+        $loginManager = $this->getCredentialsManager($credentials);
 
         if (! $loginManager) {
             $this->errors()->add('error', __('auth.login_type_not_found'));
@@ -69,7 +69,7 @@ abstract class LoginProvider implements LoginProviderInterface
 
         $this->setLoginManager($loginManager);
 
-        $account = $loginManager->fetchUser($accountable, $credentials);
+        $account = $loginManager->findAccount($accountable, $credentials);
 
         if (! $account) {
             $this->errors()->add('error', __('auth.not_found'));
