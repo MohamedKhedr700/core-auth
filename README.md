@@ -26,7 +26,7 @@ class UserController extends Controller
     public function __invoke(Request $request, SystemLoginProvider $systemLoginProvider): JsonResponse
     {
         $credentials = $request->only([
-            'email', 'phone', 'username', 'password',
+            'email', 'phone', 'emailOrPhone', 'password',
         ]);
 
         $loginProvider = $systemLoginProvider->login(new User(), $credentials);
@@ -47,8 +47,8 @@ class UserController extends Controller
 
 # How to work this
 
-Let's start with our accountable class ex:`User` model.
-to create our model class we can use this command.
+Let's start with our accountable class ex:`User` model,
+to create our model class, we can use this command.
 
 ``` bash
 php artisan core:make-auth-model User
@@ -88,19 +88,116 @@ Great, now we have to take a look at our login providers and managers in `config
     SystemLoginProvider::PROVIDER => [
         EmailLoginManager::class,
         PhoneLoginManager::class,
-        UsernameLoginManager::class,
         EmailOrPhoneLoginManager::class,
     ],
 ],
 ```
 
-As you can see we have two providers `DeviceLoginProvider` and `SystemLoginProvider`.
+The `provider_managers` array is responsible for defining the login providers and their managers.
+and we can add our custom login providers and managers to this array.
 
 The `DeviceLoginProvider` is responsible for handling the device login process.
 
 The `SystemLoginProvider` is responsible for handling the system login process.
 
+Each login provider has its own login managers, and each login manager has its own login method.
 
+<br>
+
+When we call the `SystemLoginProvider` login method,
+it will call the matched login manager with the given credentials.
+
+We can add a custom login manager to use it with the `SystemLoginProvider` login provider or any other new login provider.
+
+Let's create a new login manager class.
+
+``` bash
+php artisan core:make-auth-login-manager UsernameLoginManager
+```
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Managers;
+
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Login\LoginManager;
+
+class UsernameLoginManager extends LoginManager implements LoginManagerInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const MANAGER = '';
+}
+
+```
+
+The `LoginManager` class must extend the package `LoginManager` class.
+
+The `MANAGER` constant is responsible for defining the login manager name.
+
+The `MANAGER` constant is used to match the login manager with the given credentials.
+
+The `MANAGER` constant is used to define the accountable query column,
+and you can override using same key for credentials and query by defining the `QUERY_COLUMN` constant.
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Managers;
+
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Login\LoginManager;
+
+class UsernameLoginManager extends LoginManager implements LoginManagerInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const MANAGER = 'username';
+    
+    /**
+     * {@inheritdoc}
+     */
+    public const QUERY_COLUMN = 'user_name';
+}
+```
+
+The `QUERY_COLUMN` constant is used to define the accountable query column.
+
+<br>
+
+Now let's go back to our `UserController` class.
+
+``` php
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider;
+
+class UserController extends Controller
+{
+    /**
+     * Invoke the controller method.
+     */
+    public function __invoke(Request $request, SystemLoginProvider $systemLoginProvider): JsonResponse
+    {
+        $credentials = $request->only([
+            'username', 'password',
+        ]);
+
+        $loginProvider = $systemLoginProvider->login(new User(), $credentials);
+
+        return response()->json([
+            'token' => $loginProvider->getStringToken(),
+            'resource' => $loginProvider->account(),
+        ]);
+    }
+}
+```
 And that's it.
 
 ## License
