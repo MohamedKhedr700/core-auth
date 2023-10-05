@@ -440,7 +440,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Raid\Core\Auth\Facades\Login;
+use Raid\Core\Auth\Facades\Authentication;
 
 class UserController extends Controller
 {
@@ -453,7 +453,7 @@ class UserController extends Controller
             'username', 'password',
         ]);
 
-        $loginProvider = Login::login(new User(), $credentials);
+        $loginProvider = Authentication::login(new User(), $credentials);
 
         return response()->json([
             'provider' => $loginProvider->provider(),
@@ -464,6 +464,11 @@ class UserController extends Controller
 }
 ```
 
+The `Authentication` facade is responsible for handling the login process.
+
+The `Authentication` facade uses the `default_provider` key in `config/authentication.php` file to process the login.
+
+<br>
 
 And that's it.
 
