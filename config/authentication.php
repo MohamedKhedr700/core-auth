@@ -4,6 +4,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Default Login Provider
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the default login provider that will be used.
+    | The provider is used to determine which login provider should be used
+    | while authenticating accounts.
+    |
+    */
+
+    'default_provider' => '',
+
+    /*
+    |--------------------------------------------------------------------------
     | Provider Managers
     |--------------------------------------------------------------------------
     |

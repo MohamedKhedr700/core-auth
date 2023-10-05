@@ -113,7 +113,7 @@ We can add a custom login manager to use it with the `SystemLoginProvider` login
 Let's create a new login manager class.
 
 ``` bash
-php artisan core:make-auth-login-manager UsernameLoginManager
+php artisan core:make-auth-manager UsernameLoginManager
 ```
 
 ``` php
@@ -328,15 +328,102 @@ class UserController extends Controller
         
         $allErrors = $loginProvider->errors()->all();
         
-        $singleErrorArray = $loginProvider->errors()->get('error');
+        $errorsByKey = $loginProvider->errors()->get('error');
 
         $firstError = $loginProvider->errors()->first();
-        $firstError = $loginProvider->errors()->first('error');
+        $firstErrorByKey = $loginProvider->errors()->first('error');
 
         $lastError = $loginProvider->errors()->last();
-        $lastError = $loginProvider->errors()->last('error');
+        $lastErrorByKey = $loginProvider->errors()->last('error');
     }
 ```
+
+The `errors` method returns an `Raid\Core\Model\Errors\Errors` class instance.
+
+The `toArray` method returns an array of errors.
+
+The `toJson` method returns a json string of errors.
+
+The `all` method returns all errors as an array.
+
+The `get` method returns an array of errors for the given key.
+
+The `first` method returns the first error, or the first error for the given key.
+
+The `last` method returns the last error, or the last error for the given key.
+
+<br>
+
+You can work with `errors` method again in the `LoginProvider` class.
+
+You can create your own login provider using this command.
+
+``` bash
+php artisan core:make-auth-provider CustomLoginProvider
+```
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Providers;
+
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
+use Raid\Core\Auth\Authentication\Login\LoginProvider;
+
+class OtpLoginProvider extends LoginProvider implements LoginProviderInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const PROVIDER = '';
+}
+```
+
+The `LoginProvider` class must extend the package `LoginProvider` class.
+
+The `PROVIDER` constant is responsible for defining the login provider name.
+
+The login provider is the main class that handles the login process,
+and it defines his own login rules.
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Providers;
+
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
+use Raid\Core\Auth\Authentication\Login\LoginProvider;
+
+class OtpLoginProvider extends LoginProvider implements LoginProviderInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const PROVIDER = 'otp';
+
+    /**
+     * Check login provider rules after fetch user.
+     */
+    public function checkLoginRules(AccountInterface $account, array $credentials = []): bool
+    {
+        if (! $account->verifiedPhone()) {
+            $this->errors()->add('error', __('Your phone number is not verified.'));
+
+            return false;
+        }
+
+        return parent::checkLoginRules($account, $credentials);
+    }
+}
+```
+
+The `checkLoginRules` method is responsible for checking the login provider rules.
+
+The `checkLoginRules` method should return `true` if the login provider rules are passed,
+
+and should return `false` if the login provider rules are not passed.
+
+The `checkLoginRules` method should add errors to the `errors` method if the login provider rules are not passed.
 
 <br>
 
