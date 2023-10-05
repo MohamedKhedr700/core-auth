@@ -62,7 +62,7 @@ abstract class LoginProvider implements LoginProviderInterface
         $loginManager = $this->getCredentialsManager($credentials);
 
         if (! $loginManager) {
-            $this->errors()->add('error', __('auth.login_type_not_found'));
+            $this->errors()->add('error', __('auth.login_manager_not_found'));
 
             return $this;
         }
