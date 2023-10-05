@@ -38,6 +38,9 @@
             ]
         }
     },
+    "aliases": {
+        "Login": "Raid\\Core\\Auth\\Facades\\Login"
+    },
     "authors": [
         {
             "name": "mohamed_khedr",

@@ -6,6 +6,7 @@ use Illuminate\Foundation\AliasLoader;
 use \Laravel\Sanctum\PersonalAccessToken;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
 use Raid\Core\Auth\Authentication\Login\LoginProvider;
+use Raid\Core\Auth\Facades\Login;
 
 trait WithAuthProvider
 {
@@ -49,24 +50,19 @@ trait WithAuthProvider
      */
     private function registerAuth(): void
     {
-        $this->registerDefaultLoginProvider();
-        $this->registerLoginProviderInterface();
+        $this->registerLoginFacade();
     }
 
     /**
-     * Register default login provider.
+     * Register login facade.
      */
-    private function registerDefaultLoginProvider(): void
+    private function registerLoginFacade(): void
     {
-        $this->app->singleton(LoginProvider::class, config('authentication.default_provider'));
-    }
+        $loginProvider = config('authentication.default_provider');
 
-    /**
-     * Register login provider interface.
-     */
-    private function registerLoginProviderInterface(): void
-    {
-        $this->app->singleton(LoginProviderInterface::class, LoginProvider::class);
+        $this->app->singleton(Login::facade(), $loginProvider);
+
+        $this->app->singleton(LoginProviderInterface::class, $loginProvider);
     }
 
     /**
