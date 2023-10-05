@@ -339,8 +339,7 @@ class UserController extends Controller
 
 ```
 
-
-
+<br>
 
 And that's it.
 
