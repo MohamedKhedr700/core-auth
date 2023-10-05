@@ -16,7 +16,7 @@ trait WithLoginManager
      */
     public static function getLoginTypeManagers(): array
     {
-        return config('authentication.login_managers.'.static::loginType(), []);
+        return config('authentication.provider_managers.'.static::loginType(), []);
     }
 
     /**

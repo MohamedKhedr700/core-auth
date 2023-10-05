@@ -1,23 +1,21 @@
 <?php
 
-use Raid\Core\Auth\Models\Authentication\Enum\LoginType;
-
 return [
 
     /*
     |--------------------------------------------------------------------------
-    | Login Managers
+    | Provider Managers
     |--------------------------------------------------------------------------
     |
-    | Here you can define the login managers that will be used in the application.
+    | Here you can define the login provider managers that will be used in the application.
     |
     */
 
-    'login_managers' => [
-        LoginType::DEVICE => [
+    'provider_managers' => [
+        \Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider::LOGIN_TYPE => [
             \Raid\Core\Auth\Authentication\Login\DeviceLogin\Manager\DeviceIdLoginManager::class,
         ],
-        LoginType::SYSTEM => [
+        \Raid\Core\Auth\Authentication\Login\DeviceLogin\DeviceLoginProvider::LOGIN_TYPE => [
             \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\EmailLoginManager::class,
             \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\PhoneLoginManager::class,
             \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\EmailOrPhoneLoginManager::class,
