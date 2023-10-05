@@ -141,7 +141,7 @@ The `MANAGER` constant is responsible for defining the login manager name.
 The `MANAGER` constant is used to match the login manager with the given credentials.
 
 The `MANAGER` constant is used to define the accountable query column,
-and you can override using same key for credentials and query by defining the `QUERY_COLUMN` constant.
+you can override using same key for credentials and query by defining the `QUERY_COLUMN` constant.
 
 ``` php
 <?php
@@ -194,16 +194,16 @@ class UserController extends Controller
 
         return response()->json([
             'provider' => $loginProvider->provider(),
-            'token' => $loginProvider->getStringToken(),
+            'token' => $loginProvider->stringToken(),
             'resource' => $loginProvider->account(),
         ]);
     }
 }
 ```
 
-The `SystemLoginProvider` login method accepts two parameters,
+The `SystemLoginProvider` login method accepts two parameters.
 
-The first parameter is the accountable model class.
+The first parameter is the accountable class instance.
 
 The second parameter is the credentials array.
 
@@ -323,9 +323,18 @@ class UserController extends Controller
 
         $loginProvider = $systemLoginProvider->login(new User(), $credentials);
 
-        $errorArray = $loginProvider->errors()->get('error');
+        $errorsAsArray = $loginProvider->errors()->toArray();
+        $errorsAsJson = $loginProvider->errors()->toJson();
         
+        $allErrors = $loginProvider->errors()->all();
+        
+        $singleErrorArray = $loginProvider->errors()->get('error');
 
+        $firstError = $loginProvider->errors()->first();
+        $firstError = $loginProvider->errors()->first('error');
+
+        $lastError = $loginProvider->errors()->last();
+        $lastError = $loginProvider->errors()->last('error');
     }
 
 ```
