@@ -12,10 +12,10 @@ return [
     */
 
     'provider_managers' => [
-        \Raid\Core\Auth\Authentication\Login\DeviceLogin\DeviceLoginProvider::LOGIN_TYPE => [
+        \Raid\Core\Auth\Authentication\Login\DeviceLogin\DeviceLoginProvider::PROVIDER => [
             \Raid\Core\Auth\Authentication\Login\DeviceLogin\Manager\DeviceIdLoginManager::class,
         ],
-        \Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider::LOGIN_TYPE => [
+        \Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider::PROVIDER => [
             \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\EmailLoginManager::class,
             \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\PhoneLoginManager::class,
             \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\EmailOrPhoneLoginManager::class,

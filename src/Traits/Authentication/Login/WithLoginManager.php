@@ -12,11 +12,11 @@ trait WithLoginManager
     protected LoginManagerInterface $loginManager;
 
     /**
-     * Get login type managers.
+     * Get login provider managers.
      */
-    public static function getLoginTypeManagers(): array
+    public static function getLoginProviderManagers(): array
     {
-        return config('authentication.provider_managers.'.static::loginType(), []);
+        return config('authentication.provider_managers.'.static::provider(), []);
     }
 
     /**
@@ -40,7 +40,7 @@ trait WithLoginManager
      */
     private function getLoginManagerByCredentials(array $credentials = []): ?LoginManagerInterface
     {
-        $managers = static::getLoginTypeManagers();
+        $managers = static::getLoginProviderManagers();
 
         foreach ($managers as $manager) {
             if (empty($credentials[$manager::column()])) {

@@ -5,14 +5,14 @@ namespace Raid\Core\Auth\Authentication\Login\SystemLogin;
 use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
 use Raid\Core\Auth\Authentication\Login\LoginProvider;
-use Raid\Core\Auth\Models\Authentication\Enum\LoginType;
+use Raid\Core\Auth\Models\Authentication\Enum\LoginProvider as LoginProviderEnum;
 
 class SystemLoginProvider extends LoginProvider implements LoginProviderInterface
 {
     /**
      * {@inheritdoc}
      */
-    public const LOGIN_TYPE = LoginType::SYSTEM;
+    public const PROVIDER = LoginProviderEnum::SYSTEM;
 
     /**
      * {@inheritdoc}

@@ -22,20 +22,20 @@ abstract class LoginProvider implements LoginProviderInterface
         WithToken;
 
     /**
-     * Login type.
+     * Login provider.
      */
-    public const LOGIN_TYPE = '';
+    public const PROVIDER = '';
 
     /**
-     * Get a login type.
+     * Get a login provider.
      */
-    public static function loginType(): string
+    public static function provider(): string
     {
-        return static::LOGIN_TYPE;
+        return static::PROVIDER;
     }
 
     /**
-     * Attempt Login statically.
+     * Attempt Log in statically.
      */
     public static function attempt(string $accountable, array $credentials): LoginProviderInterface
     {
@@ -43,7 +43,7 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Attempt Login statically with an account.
+     * Attempt Log in statically with an account.
      */
     public static function attemptWithAccount(string $accountable, AccountInterface $account): LoginProviderInterface
     {
@@ -51,7 +51,7 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Attempt Login.
+     * Attempt Log in.
      */
     public function login(object $accountable, array $credentials): LoginProviderInterface
     {
@@ -93,9 +93,9 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Login with a given account model.
+     * Log in with a given account model.
      */
-    public function loginWithAccount(object $accountable, AccountInterface $account): LoginProviderInterface
+    public function loginAccount(object $accountable, AccountInterface $account): LoginProviderInterface
     {
         $this->setAccountable($accountable);
 
