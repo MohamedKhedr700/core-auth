@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d8b474b41549c5d6b0b6694dc2037e2",
+    "content-hash": "408bad532e9f2e85c378a2c79f2251f1",
     "packages": [
         {
             "name": "archtechx/enums",
@@ -1480,17 +1480,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MohamedKhedr700/core-enum.git",
-                "reference": "7bbf9df9464bea61c55ec6ffbda74f11bb9e1bd9"
+                "reference": "1e4fca70eb42c196e9ec130bd5b2055d0425800a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MohamedKhedr700/core-enum/zipball/7bbf9df9464bea61c55ec6ffbda74f11bb9e1bd9",
-                "reference": "7bbf9df9464bea61c55ec6ffbda74f11bb9e1bd9",
+                "url": "https://api.github.com/repos/MohamedKhedr700/core-enum/zipball/1e4fca70eb42c196e9ec130bd5b2055d0425800a",
+                "reference": "1e4fca70eb42c196e9ec130bd5b2055d0425800a",
                 "shasum": ""
             },
             "require": {
                 "archtechx/enums": "*",
-                "php": "^8.2"
+                "php": "^8.2",
+                "raid/core-command": "dev-main"
             },
             "default-branch": true,
             "type": "library",
@@ -1527,7 +1528,7 @@
                 "issues": "https://github.com/MohamedKhedr700/core-enum/issues",
                 "source": "https://github.com/MohamedKhedr700/core-enum/tree/main"
             },
-            "time": "2023-09-02T00:31:44+00:00"
+            "time": "2023-10-05T20:07:02+00:00"
         },
         {
             "name": "raid/core-model",
@@ -2844,6 +2845,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "raid/core-model": 20,
         "raid/core-command": 20
     },
     "prefer-stable": false,

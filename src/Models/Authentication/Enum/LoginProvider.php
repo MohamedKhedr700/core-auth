@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Models\Authentication\Enum;
 
-use Raid\Core\Enum\Models\Enum;
+use Raid\Core\Enum\Enums\Enum;
 
 class LoginProvider extends Enum
 {
