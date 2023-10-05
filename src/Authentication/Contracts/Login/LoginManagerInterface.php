@@ -7,9 +7,9 @@ use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 interface LoginManagerInterface
 {
     /**
-     * Get column name.
+     * Get login manager name.
      */
-    public static function column(): string;
+    public static function manager(): string;
 
     /**
      * Fetch user with login manager if exists.

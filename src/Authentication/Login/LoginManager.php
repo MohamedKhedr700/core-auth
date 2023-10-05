@@ -9,16 +9,16 @@ use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
 abstract class LoginManager implements LoginManagerInterface
 {
     /**
-     * @const string
+     * Login manager.
      */
-    public const COLUMN = '';
+    public const MANAGER = '';
 
     /**
      * {@inheritDoc}
      */
-    public static function column(): string
+    public static function manager(): string
     {
-        return static::COLUMN;
+        return static::MANAGER;
     }
 
     /**
@@ -26,8 +26,9 @@ abstract class LoginManager implements LoginManagerInterface
      */
     public function fetchUser(object $accountable, array $credentials): ?AccountInterface
     {
-        $column = Str::snake(static::column());
-        $value = $credentials[static::column()];
+        $column = Str::snake(static::manager());
+
+        $value = $credentials[static::manager()];
 
         return $accountable->where($column, $value)->first();
     }

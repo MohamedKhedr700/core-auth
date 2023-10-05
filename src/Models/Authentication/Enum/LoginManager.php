@@ -4,7 +4,7 @@ namespace Raid\Core\Auth\Models\Authentication\Enum;
 
 use Raid\Core\Enum\Models\Enum;
 
-class LoginColumn extends Enum
+class LoginManager extends Enum
 {
     public const DEVICE_ID = 'deviceId';
 

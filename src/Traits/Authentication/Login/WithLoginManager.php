@@ -43,7 +43,7 @@ trait WithLoginManager
         $managers = static::getLoginProviderManagers();
 
         foreach ($managers as $manager) {
-            if (empty($credentials[$manager::column()])) {
+            if (! array_key_exists($manager::manager(), $credentials)) {
                 continue;
             }
 

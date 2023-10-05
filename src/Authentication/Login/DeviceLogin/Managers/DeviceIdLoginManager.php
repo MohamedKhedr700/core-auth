@@ -5,14 +5,14 @@ namespace Raid\Core\Auth\Authentication\Login\DeviceLogin\Managers;
 use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
 use Raid\Core\Auth\Authentication\Login\LoginManager;
-use Raid\Core\Auth\Models\Authentication\Enum\LoginColumn;
+use Raid\Core\Auth\Models\Authentication\Enum\LoginManager as LoginManagerEnum;
 
 class DeviceIdLoginManager extends LoginManager implements LoginManagerInterface
 {
     /**
-     * @const string
+     * {@inheritdoc}
      */
-    public const COLUMN = LoginColumn::DEVICE_ID;
+    public const MANAGER = LoginManagerEnum::DEVICE_ID;
 
     /**
      * {@inheritdoc}
