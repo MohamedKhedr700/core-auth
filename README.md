@@ -193,6 +193,7 @@ class UserController extends Controller
         $loginProvider = $systemLoginProvider->login(new User(), $credentials);
 
         return response()->json([
+            'provider' => $loginProvider->provider(),
             'token' => $loginProvider->getStringToken(),
             'resource' => $loginProvider->account(),
         ]);
@@ -266,7 +267,71 @@ The `isAuthenticated` method is responsible for checking if the account is authe
 
 The `isAuthenticated` method should throw an exception if the account is not authenticated.
 
-The `Exception` will not be thrown in the system, but it will be returned in the `LoginProvider` class instance as an error.
+The `Exception` will not be thrown in the system,
+but the errors can be called with the `errors` method in the `LoginProvider` class instance.
+
+The `errors` method will return an `Raid\Core\Model\Errors\Errors` class instance.
+
+
+``` php
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider;
+
+class UserController extends Controller
+{
+    /**
+     * Invoke the controller method.
+     */
+    public function __invoke(Request $request, SystemLoginProvider $systemLoginProvider): JsonResponse
+    {
+        $credentials = $request->only([
+            'username', 'password',
+        ]);
+
+        $loginProvider = $systemLoginProvider->login(new User(), $credentials);
+
+        return response()->json([
+            'provider' => $loginProvider->provider(),
+            'token' => $loginProvider->getStringToken(),
+            'resource' => $loginProvider->account(),
+            'errors' => $loginProvider->errors()->toArray(),
+        ]);
+    }
+}
+```
+
+<br>
+
+You can work with the `errors` method as a `Illuminate\Support\MessageBag` class instance,
+and you can get the errors with many ways.
+
+``` php
+class UserController extends Controller
+{
+    /**
+     * Invoke the controller method.
+     */
+    public function __invoke(Request $request, SystemLoginProvider $systemLoginProvider): JsonResponse
+    {
+        $credentials = $request->only([
+            'username', 'password',
+        ]);
+
+        $loginProvider = $systemLoginProvider->login(new User(), $credentials);
+
+        $errorArray = $loginProvider->errors()->get('error');
+        
+
+    }
+
+```
+
+
+
 
 And that's it.
 
