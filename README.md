@@ -38,7 +38,8 @@ class UserController extends Controller
         $loginProvider = User::login($credentials);
 
         return response()->json([
-            'token' => $loginProvider->getStringToken(),
+            'provider' => $loginProvider->provider(),
+            'token' => $loginProvider->stringToken(),
             'resource' => $loginProvider->account(),
         ]);
     }
