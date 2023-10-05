@@ -1,0 +1,14 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
+use Raid\Core\Auth\Authentication\Login\LoginProvider;
+
+class $CLASS_NAME$ extends LoginProvider implements LoginProviderInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const LOGIN_TYPE = '';
+}
