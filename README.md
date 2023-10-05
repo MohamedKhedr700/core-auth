@@ -383,8 +383,7 @@ The `LoginProvider` class must extend the package `LoginProvider` class.
 
 The `PROVIDER` constant is responsible for defining the login provider name.
 
-The login provider is the main class that handles the login process,
-and it defines his own login rules.
+The login provider is the main class that handles the login process, and it defines his own login rules.
 
 ``` php
 <?php
