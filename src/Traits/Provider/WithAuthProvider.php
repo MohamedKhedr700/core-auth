@@ -44,6 +44,9 @@ trait WithAuthProvider
         $this->commands($this->commands);
     }
 
+    /**
+     * Register auth.
+     */
     private function registerAuth(): void
     {
         $this->registerDefaultLoginProvider();
