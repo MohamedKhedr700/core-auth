@@ -77,15 +77,11 @@ abstract class LoginProvider implements LoginProviderInterface
             return $this;
         }
 
-        if (! $this->checkLoginProviderRules($account, $credentials)) {
+        if (! $this->checkLoginRules($account, $credentials)) {
             return $this;
         }
 
         $this->setAccount($account);
-
-        if (! $this->checkAccountAuthentication($account)) {
-            return $this;
-        }
 
         $this->authenticateAccount($account);
 
@@ -101,11 +97,31 @@ abstract class LoginProvider implements LoginProviderInterface
 
         $this->setAccount($account);
 
-        if ($this->checkAccountAuthentication($account)) {
-            $this->authenticateAccount($this->account());
-        }
+        $this->authenticateAccount($account);
 
         return $this;
+    }
+
+    /**
+     * Check login provider rules after fetch user.
+     */
+    public function checkLoginRules(AccountInterface $account, array $credentials = []): bool
+    {
+        return true;
+    }
+
+    /**
+     * Authenticate account.
+     */
+    public function authenticateAccount(AccountInterface $account): void
+    {
+        if (! $this->checkAccountAuthentication($account)) {
+            return;
+        }
+
+        $this->setToken($account->createAccountToken());
+
+        $this->authenticated = true;
     }
 
     /**
@@ -123,24 +139,6 @@ abstract class LoginProvider implements LoginProviderInterface
             return false;
         }
 
-        return true;
-    }
-
-    /**
-     * Authenticate account.
-     */
-    public function authenticateAccount(AccountInterface $account): void
-    {
-        $this->setToken($account->createAccountToken());
-
-        $this->authenticated = true;
-    }
-
-    /**
-     * Check login provider rules after fetch user.
-     */
-    public function checkLoginProviderRules(AccountInterface $account, array $credentials = []): bool
-    {
         return true;
     }
 }

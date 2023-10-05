@@ -17,7 +17,7 @@ class SystemLoginProvider extends LoginProvider implements LoginProviderInterfac
     /**
      * {@inheritdoc}
      */
-    public function checkLoginProviderRules(AccountInterface $account, array $credentials = []): bool
+    public function checkLoginRules(AccountInterface $account, array $credentials = []): bool
     {
         if (! $account->isMatchingPassword($credentials['password'] ?? '')) {
             $this->errors()->add('error', __('auth.not_found'));
