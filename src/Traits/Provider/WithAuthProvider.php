@@ -3,6 +3,9 @@
 namespace Raid\Core\Auth\Traits\Provider;
 
 use Illuminate\Foundation\AliasLoader;
+use \Laravel\Sanctum\PersonalAccessToken;
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
+use Raid\Core\Auth\Authentication\Login\LoginProvider;
 
 trait WithAuthProvider
 {
@@ -41,13 +44,35 @@ trait WithAuthProvider
         $this->commands($this->commands);
     }
 
+    private function registerAuth(): void
+    {
+        $this->registerDefaultLoginProvider();
+        $this->registerLoginProviderInterface();
+    }
+
+    /**
+     * Register default login provider.
+     */
+    private function registerDefaultLoginProvider(): void
+    {
+        $this->app->singleton(LoginProvider::class, config('authentication.default_provider'));
+    }
+
+    /**
+     * Register login provider interface.
+     */
+    private function registerLoginProviderInterface(): void
+    {
+        $this->app->singleton(LoginProviderInterface::class, LoginProvider::class);
+    }
+
     /**
      * Register sanctum personal access token model.
      */
     private function registerPersonalAccessTokenModel(): void
     {
-        $accessTokenModel = config('authentication.access_token_model', \Laravel\Sanctum\PersonalAccessToken::class);
+        $accessTokenModel = config('authentication.access_token_model', PersonalAccessToken::class);
 
-        AliasLoader::getInstance()->alias(\Laravel\Sanctum\PersonalAccessToken::class, config('authentication.access_token_model'));
+        AliasLoader::getInstance()->alias(PersonalAccessToken::class, $accessTokenModel);
     }
 }

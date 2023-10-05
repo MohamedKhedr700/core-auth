@@ -38,6 +38,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->registerAuth();
         $this->registerPersonalAccessTokenModel();
     }
 }

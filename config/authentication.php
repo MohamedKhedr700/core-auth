@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default_provider' => '',
+    'default_provider' => \Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider::class,
 
     /*
     |--------------------------------------------------------------------------
