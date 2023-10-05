@@ -13,12 +13,12 @@ return [
 
     'provider_managers' => [
         \Raid\Core\Auth\Authentication\Login\DeviceLogin\DeviceLoginProvider::PROVIDER => [
-            \Raid\Core\Auth\Authentication\Login\DeviceLogin\Manager\DeviceIdLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\DeviceLogin\Managers\DeviceIdLoginManager::class,
         ],
         \Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider::PROVIDER => [
-            \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\EmailLoginManager::class,
-            \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\PhoneLoginManager::class,
-            \Raid\Core\Auth\Authentication\Login\SystemLogin\Manager\EmailOrPhoneLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\EmailLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\PhoneLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\EmailOrPhoneLoginManager::class,
         ],
     ],
 

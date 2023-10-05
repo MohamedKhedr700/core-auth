@@ -1,6 +1,6 @@
 <?php
 
-namespace Raid\Core\Auth\Authentication\Login\DeviceLogin\Manager;
+namespace Raid\Core\Auth\Authentication\Login\DeviceLogin\Managers;
 
 use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;

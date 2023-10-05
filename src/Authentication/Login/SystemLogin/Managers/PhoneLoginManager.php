@@ -1,6 +1,6 @@
 <?php
 
-namespace Raid\Core\Auth\Authentication\Login\SystemLogin\Manager;
+namespace Raid\Core\Auth\Authentication\Login\SystemLogin\Managers;
 
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
 use Raid\Core\Auth\Authentication\Login\LoginManager;
