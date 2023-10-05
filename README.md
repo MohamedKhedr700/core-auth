@@ -1,17 +1,17 @@
-# Core Model Package
+# Core Auth Package
 
-This package is responsible for handling all models in the system.
+This package is responsible for handling all auth models and login providers in the system.
 
 ## Installation
 
 ``` bash
-composer require raid/core-model
+composer require raid/core-auth
 ```
 
 ## Configuration
 
 ``` bash
-php artisan core:publish-model
+php artisan core:publish-auth
 ```
 
 
