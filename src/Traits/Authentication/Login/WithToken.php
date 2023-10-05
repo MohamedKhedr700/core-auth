@@ -30,9 +30,9 @@ trait WithToken
     /**
      * Get user string token if presentable.
      */
-    public function stringToken(): ?string
+    public function stringToken(): string
     {
-        return $this->token('plainTextToken');
+        return (string) $this->token('plainTextToken');
     }
 
     /**

@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "raid/core-model": "*",
+        "raid/core-model": "dev-main",
         "raid/core-enum": "*",
         "raid/core-command": "dev-main"
     },
