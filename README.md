@@ -401,7 +401,7 @@ class OtpLoginProvider extends LoginProvider implements LoginProviderInterface
     public const PROVIDER = 'otp';
 
     /**
-     * Check login provider rules after fetch user.
+     * Check login provider rules after find user.
      */
     public function checkLoginRules(AccountInterface $account, array $credentials = []): bool
     {

@@ -28,7 +28,7 @@ abstract class LoginProvider implements LoginProviderInterface
     public const PROVIDER = '';
 
     /**
-     * Get a login provider.
+     * {@inheritdoc}
      */
     public static function provider(): string
     {
@@ -36,7 +36,7 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Attempt Log in statically.
+     * {@inheritdoc}
      */
     public static function attempt(string $accountable, array $credentials): LoginProviderInterface
     {
@@ -44,7 +44,7 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Attempt Log in statically with an account.
+     * {@inheritdoc}
      */
     public static function attemptAccount(string $accountable, AccountInterface $account): LoginProviderInterface
     {
@@ -52,7 +52,7 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Attempt Log in.
+     * {@inheritdoc}
      */
     public function login(object $accountable, array $credentials): LoginProviderInterface
     {
@@ -90,7 +90,7 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Log in with a given account model.
+     * {@inheritdoc}
      */
     public function loginAccount(object $accountable, AccountInterface $account): LoginProviderInterface
     {
@@ -104,7 +104,7 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Check login provider rules after fetch user.
+     * {@inheritdoc}
      */
     public function checkLoginRules(AccountInterface $account, array $credentials = []): bool
     {
@@ -112,7 +112,7 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Authenticate account.
+     * {@inheritdoc}
      */
     public function authenticateAccount(AccountInterface $account): void
     {
@@ -126,9 +126,7 @@ abstract class LoginProvider implements LoginProviderInterface
     }
 
     /**
-     * Check active user login based on a model.
-     * Method `isLoginActive` found in a user model to control login check.
-     * Base method in Accountable trait.
+     * {@inheritdoc}
      */
     public function checkAccountAuthentication(AccountInterface $account): bool
     {
