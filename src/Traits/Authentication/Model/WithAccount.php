@@ -54,13 +54,4 @@ trait WithAccount
     {
         return $this->accountType() === $type;
     }
-
-    public function findAccount($accountable, array $credentials): ?AccountInterface
-    {
-        $column = $this->getColumn($accountable, $credentials);
-
-        $value = $this->getCredentialValue($credentials);
-
-        return $this->where($column, $value)->first();
-    }
 }

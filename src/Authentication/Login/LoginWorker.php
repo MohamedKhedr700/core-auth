@@ -18,21 +18,33 @@ abstract class LoginWorker implements LoginWorkerInterface
      */
     public const QUERY_COLUMN = '';
 
+    /**
+     * Get the worker name.
+     */
     public static function worker(): string
     {
         return static::WORKER;
     }
 
+    /**
+     * Get the query column.
+     */
     public static function queryColumn(): string
     {
         return static::QUERY_COLUMN;
     }
 
+    /**
+     * Get the column name.
+     */
     public function getColumn(AccountableInterface $accountable, array $credentials): string
     {
         return static::queryColumn() ?: static::worker();
     }
 
+    /**
+     * Get the credential value.
+     */
     public function getCredentialValue(array $credentials): string
     {
         return $credentials[static::worker()];
@@ -47,8 +59,6 @@ abstract class LoginWorker implements LoginWorkerInterface
 
         $value = $this->getCredentialValue($credentials);
 
-        $accountable->findAccount($column, $value);
-
-        return $accountable->where($column, $value)->first();
+        return $accountable->findAccount($column, $value);
     }
 }
