@@ -1,13 +1,13 @@
 <?php
 
-namespace Raid\Core\Auth\Traits\Authentication\Accountable;
+namespace Raid\Core\Auth\Traits\Authentication\Model;
 
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
 trait Accountable
 {
     /**
-     * {@inheritDoc}
+     * Find an account by key and value.
      */
     public function findAccount(string $key, mixed $value): ?AccountInterface
     {

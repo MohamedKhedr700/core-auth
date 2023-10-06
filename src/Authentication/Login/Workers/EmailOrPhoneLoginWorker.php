@@ -4,6 +4,7 @@ namespace Raid\Core\Auth\Authentication\Login\Workers;
 
 use Raid\Core\Auth\Authentication\Login\Contracts\LoginWorkerInterface;
 use Raid\Core\Auth\Authentication\Login\LoginWorker;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Enum\Worker;
 
 class EmailOrPhoneLoginWorker extends LoginWorker implements LoginWorkerInterface
@@ -16,7 +17,7 @@ class EmailOrPhoneLoginWorker extends LoginWorker implements LoginWorkerInterfac
     /**
      * {@inheritDoc}
      */
-    public function getColumn(object $accountable, array $credentials): string
+    public function getColumn(AccountableInterface $accountable, array $credentials): string
     {
         return filter_var($this->getCredentialValue($credentials), FILTER_VALIDATE_EMAIL) ? LoginManagerEnum::EMAIL : LoginManagerEnum::PHONE;
     }
