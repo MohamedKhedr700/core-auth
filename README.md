@@ -224,6 +224,8 @@ The `accountable` class instance must work with query builder to find the accoun
 Under the hood,
 the `LoginManager` class uses the query method `where` on the accountable class passed with the credentials.
 
+The returned account must be an instance of `AccountInterface` interface.
+
 After finding the account, you apply authentication rules on the account itself using `isAuthenticated` method.
 
 ``` php
