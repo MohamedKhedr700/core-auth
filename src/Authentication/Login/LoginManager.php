@@ -62,9 +62,7 @@ abstract class LoginManager implements LoginManagerInterface
      */
     public function rulers(): array
     {
-        return [
-            LoginRuler::class,
-        ];
+        return [];
     }
 
     /**

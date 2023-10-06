@@ -17,33 +17,21 @@ abstract class LoginWorker
      */
     public const QUERY_COLUMN = '';
 
-    /**
-     * {@inheritDoc}
-     */
     public static function worker(): string
     {
         return static::WORKER;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function queryColumn(): string
     {
         return static::QUERY_COLUMN;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getColumn(AccountableInterface $accountable, array $credentials): string
     {
         return static::queryColumn() ?: static::worker();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getCredentialValue(array $credentials): string
     {
         return $credentials[static::worker()];

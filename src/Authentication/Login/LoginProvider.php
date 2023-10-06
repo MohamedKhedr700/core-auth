@@ -2,7 +2,6 @@
 
 namespace Raid\Core\Auth\Authentication\Login;
 
-use Exception;
 use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
 use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;

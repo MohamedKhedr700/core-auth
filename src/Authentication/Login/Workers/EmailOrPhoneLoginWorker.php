@@ -1,17 +1,18 @@
 <?php
 
-namespace Raid\Core\Auth\Authentication\Login\SystemLogin\Managers;
+namespace Raid\Core\Auth\Authentication\Login\Workers;
 
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
-use Raid\Core\Auth\Authentication\Login\LoginManager;
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginWorkerInterface;
+use Raid\Core\Auth\Authentication\Login\LoginWorker;
 use Raid\Core\Auth\Models\Authentication\Enum\LoginManager as LoginManagerEnum;
+use Raid\Core\Auth\Models\Authentication\Enum\Worker;
 
-class EmailOrPhoneLoginManager extends LoginManager implements LoginManagerInterface
+class EmailOrPhoneLoginWorker extends LoginWorker implements LoginWorkerInterface
 {
     /**
      * {@inheritdoc}
      */
-    public const MANAGER = LoginManagerEnum::EMAIL_OR_PHONE;
+    public const WORKER = Worker::EMAIL_OR_PHONE;
 
     /**
      * {@inheritDoc}

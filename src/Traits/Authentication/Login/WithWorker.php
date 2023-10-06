@@ -4,7 +4,6 @@ namespace Raid\Core\Auth\Traits\Authentication\Login;
 
 use Raid\Core\Auth\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginWorkerInterface;
 
 trait WithWorker
