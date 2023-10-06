@@ -18,7 +18,7 @@ trait WithRuler
     public function checkRulers(array $rulers): bool
     {
         foreach ($rulers as $ruler) {
-            if ($ruler->rule($this)) {
+            if (app($ruler)->rule($this)) {
                 continue;
             }
 
