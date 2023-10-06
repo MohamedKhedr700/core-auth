@@ -85,10 +85,9 @@ Great, now we have to take a look at our login providers and managers in `config
 
 ``` php
 'provider_managers' => [
-    DeviceLoginProvider::PROVIDER => [
-        DeviceIdLoginManager::class,
-    ],
+    // here we define our login providers.
     SystemLoginProvider::PROVIDER => [
+        // here we define our login managers.
         EmailLoginManager::class,
         PhoneLoginManager::class,
         EmailOrPhoneLoginManager::class,
@@ -220,7 +219,12 @@ The `LoginManager` class instance used to query the accountable class to find th
 
 The `LoginProvider` class apply its own login rules after finding the account.
 
-Then, you apply authentication rules on the account itself using the method `isAuthenticated`.
+The `accountable` class instance must work with query builder to find the account.
+
+Under the hood,
+the `LoginManager` class uses the query method `where` on the accountable class passed with the credentials.
+
+After finding the account, you apply authentication rules on the account itself using `isAuthenticated` method.
 
 ``` php
 <?php
