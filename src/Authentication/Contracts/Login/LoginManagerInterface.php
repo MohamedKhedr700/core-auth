@@ -12,7 +12,7 @@ use Raid\Core\Auth\Authentication\Contracts\Concerns\WithRulerInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithTokenInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithWorkerInterface;
 
-interface LoginManagerInterface extends WithAccountInterface, WithAccountableInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRulerInterface, WithTokenInterface, WithWorkerInterface
+interface LoginManagerInterface extends WithAccountableInterface, WithAccountInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRulerInterface, WithTokenInterface, WithWorkerInterface
 {
     /**
      * Get a login manager.
@@ -38,6 +38,4 @@ interface LoginManagerInterface extends WithAccountInterface, WithAccountableInt
      * Attempt Log in with an account.
      */
     public function loginAccount(AccountableInterface $accountable, AccountInterface $account): static;
-
-
 }
