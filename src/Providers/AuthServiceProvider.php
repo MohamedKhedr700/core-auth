@@ -5,7 +5,8 @@ namespace Raid\Core\Auth\Providers;
 use Illuminate\Support\ServiceProvider;
 use Raid\Core\Auth\Commands\CreateAuthManagerCommand;
 use Raid\Core\Auth\Commands\CreateAuthModelCommand;
-use Raid\Core\Auth\Commands\CreateAuthProviderCommand;
+use Raid\Core\Auth\Commands\CreateAuthRulerCommand;
+use Raid\Core\Auth\Commands\CreateAuthWorkerCommand;
 use Raid\Core\Auth\Commands\PublishAuthCommand;
 use Raid\Core\Auth\Traits\Provider\WithAuthProvider;
 
@@ -19,7 +20,8 @@ class AuthServiceProvider extends ServiceProvider
     protected array $commands = [
         CreateAuthManagerCommand::class,
         CreateAuthModelCommand::class,
-        CreateAuthProviderCommand::class,
+        CreateAuthRulerCommand::class,
+        CreateAuthWorkerCommand::class,
         PublishAuthCommand::class,
     ];
 

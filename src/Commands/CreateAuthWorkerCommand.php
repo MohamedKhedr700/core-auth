@@ -4,17 +4,17 @@ namespace Raid\Core\Auth\Commands;
 
 use Raid\Core\Command\Commands\CreateCommand;
 
-class CreateAuthProviderCommand extends CreateCommand
+class CreateAuthWorkerCommand extends CreateCommand
 {
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'core:make-auth-provider {classname}';
+    protected $signature = 'core:make-auth-worker {classname}';
 
     /**
      * The console command description.
      */
-    protected $description = 'Make an auth provider class';
+    protected $description = 'Make an auth worker class';
 
     /**
      * Execute the console command.
@@ -29,7 +29,7 @@ class CreateAuthProviderCommand extends CreateCommand
      */
     public function getStubPath(): string
     {
-        return __DIR__.'/../../resources/stubs/auth-provider.stub';
+        return __DIR__.'/../../resources/stubs/auth-worker.stub';
     }
 
     /**
@@ -38,7 +38,7 @@ class CreateAuthProviderCommand extends CreateCommand
     public function getStubVariables(): array
     {
         return [
-            'NAMESPACE' => 'App\\Http\\Authentication\\Providers',
+            'NAMESPACE' => 'App\\Http\\Authentication\\Workers',
             'CLASS_NAME' => $this->getClassName(),
         ];
     }
@@ -48,6 +48,6 @@ class CreateAuthProviderCommand extends CreateCommand
      */
     public function getSourceFilePath(): string
     {
-        return app_path('Http/Authentication/Providers/'.$this->getClassName()).'.php';
+        return app_path('Http/Authentication/Workers/'.$this->getClassName()).'.php';
     }
 }
