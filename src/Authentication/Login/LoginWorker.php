@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Authentication\Login;
 
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginWorkerInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\LoginWorkerInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 

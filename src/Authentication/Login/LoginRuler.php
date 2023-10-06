@@ -2,8 +2,8 @@
 
 namespace Raid\Core\Auth\Authentication\Login;
 
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginRulerInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\LoginRulerInterface;
 
 abstract class LoginRuler implements LoginRulerInterface
 {

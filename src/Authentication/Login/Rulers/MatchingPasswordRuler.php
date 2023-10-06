@@ -2,8 +2,9 @@
 
 namespace Raid\Core\Auth\Authentication\Login\Rulers;
 
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginRulerInterface;
+
+use Raid\Core\Auth\Authentication\Login\Contracts\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\LoginRulerInterface;
 
 class MatchingPasswordRuler implements LoginRulerInterface
 {

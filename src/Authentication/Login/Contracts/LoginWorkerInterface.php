@@ -1,6 +1,6 @@
 <?php
 
-namespace Raid\Core\Auth\Authentication\Contracts\Login;
+namespace Raid\Core\Auth\Authentication\Login\Contracts;
 
 interface LoginWorkerInterface
 {
