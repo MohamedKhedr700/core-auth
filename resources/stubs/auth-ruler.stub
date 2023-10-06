@@ -1,0 +1,16 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Raid\Core\Auth\Authentication\Contracts\Login\LoginRulerInterface;
+
+class $CLASS_NAME$ implements LoginRulerInterface
+{
+    /**
+     * Run login ruler.
+     */
+    public function rule(LoginManagerInterface $loginManager): bool
+    {
+
+    }
+}
