@@ -2,6 +2,6 @@
 
 namespace Raid\Core\Auth\Authentication\Contracts\Concerns;
 
-interface WithLoginManagerInterface
+interface WithWorkerInterface
 {
 }
