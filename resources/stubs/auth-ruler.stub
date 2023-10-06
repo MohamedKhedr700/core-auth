@@ -11,6 +11,5 @@ class $CLASS_NAME$ implements LoginRulerInterface
      */
     public function rule(LoginManagerInterface $loginManager): bool
     {
-
     }
 }
