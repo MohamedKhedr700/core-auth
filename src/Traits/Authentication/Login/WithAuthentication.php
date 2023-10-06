@@ -2,8 +2,8 @@
 
 namespace Raid\Core\Auth\Traits\Authentication\Login;
 
-use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
 trait WithAuthentication
 {

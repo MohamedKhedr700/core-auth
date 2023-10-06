@@ -4,7 +4,6 @@ namespace Raid\Core\Auth\Authentication\Login\Workers;
 
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginWorkerInterface;
 use Raid\Core\Auth\Authentication\Login\LoginWorker;
-use Raid\Core\Auth\Models\Authentication\Enum\LoginManager as LoginManagerEnum;
 use Raid\Core\Auth\Models\Authentication\Enum\Worker;
 
 class EmailOrPhoneLoginWorker extends LoginWorker implements LoginWorkerInterface

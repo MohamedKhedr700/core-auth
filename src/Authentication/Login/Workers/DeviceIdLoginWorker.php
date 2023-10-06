@@ -2,10 +2,10 @@
 
 namespace Raid\Core\Auth\Authentication\Login\Workers;
 
-use Raid\Core\Auth\Authentication\Contracts\AccountableInterface;
-use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginWorkerInterface;
 use Raid\Core\Auth\Authentication\Login\LoginWorker;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Models\Authentication\Enum\Worker;
 
 class DeviceIdLoginWorker extends LoginWorker implements LoginWorkerInterface

@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Traits\Authentication\Login;
 
-use Raid\Core\Auth\Authentication\Contracts\AccountableInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 
 trait WithAccountable
 {

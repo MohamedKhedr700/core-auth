@@ -2,17 +2,17 @@
 
 namespace Raid\Core\Auth\Traits\Authentication\Model;
 
-use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\LoginManagerInterface;
 use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
 use Raid\Core\Auth\Facades\Authentication;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
 trait Loginable
 {
     /**
      * Log in with credentials or instance of an account.
      */
-    public static function attempt(array|AccountInterface $credentials): LoginProviderInterface
+    public static function attempt(array|AccountInterface $credentials): LoginManagerInterface
     {
         $method = $credentials instanceof AccountInterface ? 'loginAccount' : 'login';
 
@@ -22,7 +22,7 @@ trait Loginable
     /**
      * Log in with credentials.
      */
-    public static function login(array $credentials): LoginProviderInterface
+    public static function login(array $credentials): LoginManagerInterface
     {
         return Authentication::attempt(static::class, $credentials);
     }
@@ -30,14 +30,14 @@ trait Loginable
     /**
      * Log in with an account model.
      */
-    public static function loginAccount(AccountInterface $account): LoginProviderInterface
+    public static function loginAccount(AccountInterface $account): LoginManagerInterface
     {
         return Authentication::attemptAccount(static::class, $account);
     }
 
     /**
-     * Check if an account is active to log in and authenticated.
-     * Throw login exceptions if failed log in.
+     * Check if an account is active to log-in and authenticated.
+     * Throw login exceptions if failed log-in.
      */
     public function isAuthenticated(): void
     {

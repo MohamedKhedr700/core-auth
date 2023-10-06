@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Authentication\Login\Managers;
 
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\LoginManagerInterface;
 use Raid\Core\Auth\Authentication\Login\LoginManager;
 use Raid\Core\Auth\Models\Authentication\Enum\Manager;
 

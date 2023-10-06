@@ -1,16 +1,16 @@
 <?php
 
-namespace Raid\Core\Auth\Authentication\Contracts\Login;
+namespace Raid\Core\Auth\Authentication\Login\Contracts;
 
-use Raid\Core\Auth\Authentication\Contracts\AccountableInterface;
-use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
-use Raid\Core\Auth\Authentication\Contracts\Concerns\WithAccountableInterface;
-use Raid\Core\Auth\Authentication\Contracts\Concerns\WithAccountInterface;
-use Raid\Core\Auth\Authentication\Contracts\Concerns\WithAuthenticationInterface;
-use Raid\Core\Auth\Authentication\Contracts\Concerns\WithCredentialsInterface;
-use Raid\Core\Auth\Authentication\Contracts\Concerns\WithRulerInterface;
-use Raid\Core\Auth\Authentication\Contracts\Concerns\WithTokenInterface;
-use Raid\Core\Auth\Authentication\Contracts\Concerns\WithWorkerInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\Concerns\WithAccountableInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\Concerns\WithAccountInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\Concerns\WithAuthenticationInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\Concerns\WithCredentialsInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\Concerns\WithRulerInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\Concerns\WithTokenInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\Concerns\WithWorkerInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
 interface LoginManagerInterface extends WithAccountableInterface, WithAccountInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRulerInterface, WithTokenInterface, WithWorkerInterface
 {

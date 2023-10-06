@@ -4,7 +4,7 @@ namespace Raid\Core\Auth\Models\Authentication;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
-use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Traits\Authentication\Model\Authenticatable as AuthenticatableResolver;
 use Raid\Core\Auth\Traits\Authentication\Model\Deviceable;
 use Raid\Core\Auth\Traits\Authentication\Model\Loginable;

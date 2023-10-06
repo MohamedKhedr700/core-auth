@@ -2,7 +2,7 @@
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
-use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
 if (! function_exists('account')) {
     /**

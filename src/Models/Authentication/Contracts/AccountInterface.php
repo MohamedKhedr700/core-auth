@@ -1,6 +1,6 @@
 <?php
 
-namespace Raid\Core\Auth\Authentication\Contracts;
+namespace Raid\Core\Auth\Models\Authentication\Contracts;
 
 interface AccountInterface
 {

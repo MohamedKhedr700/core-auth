@@ -1,8 +1,8 @@
 <?php
 
-namespace Raid\Core\Auth\Authentication\Contracts\Concerns;
+namespace Raid\Core\Auth\Authentication\Login\Contracts\Concerns;
 
-use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
 interface WithAuthenticationInterface
 {
