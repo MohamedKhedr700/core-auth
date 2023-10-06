@@ -132,7 +132,7 @@ abstract class LoginProvider implements LoginProviderInterface
     {
         try {
             $account->isAuthenticated();
-        } catch (LoginException|Exception $exception) {
+        } catch (LoginException $exception) {
             $this->errors()->add('error', $exception->getMessage());
 
             return false;

@@ -14,7 +14,6 @@ composer require raid/core-auth
 php artisan core:publish-auth
 ```
 
-
 ## Usage
 
 ``` php
@@ -37,6 +36,9 @@ class UserController extends Controller
         // or using accountable static call
         $loginProvider = User::login($credentials);
 
+        // or using facade
+        $loginProvider = Authentication::login(new User(), $credentials);
+        
         return response()->json([
             'provider' => $loginProvider->provider(),
             'token' => $loginProvider->stringToken(),
@@ -49,7 +51,7 @@ class UserController extends Controller
 # How to work this
 
 Let's start with our accountable class ex:`User` model,
-to create our model class, we can use this command.
+we can use this command to create an accountable model.
 
 ``` bash
 php artisan core:make-auth-model User
@@ -73,11 +75,11 @@ class User extends Account
 }
 ```
 
-The `Model` class must extend the package `Account` class.
+The `Model` class must extend `Account` class.
 
 Now the `User` model class is ready to use as an accountable model.
 
-<br>
+### Login Providers and Managers
 
 Great, now we have to take a look at our login providers and managers in `config/authentication.php` file.
 
@@ -103,14 +105,17 @@ The `SystemLoginProvider` is responsible for handling the system login process.
 
 Each login provider has its own login managers, and each login manager has its own login method.
 
-<br>
-
-When we call the `SystemLoginProvider` login method,
+When we call `SystemLoginProvider` login method,
 it will call the matched login manager with the given credentials.
 
 We can add a custom login manager to use it with the `SystemLoginProvider` login provider or any other new login provider.
 
-Let's create a new login manager class.
+
+### Login Managers
+
+Let's create a new login manager class,
+you can use this command to create a new login manager.
+
 
 ``` bash
 php artisan core:make-auth-manager UsernameLoginManager
@@ -134,7 +139,9 @@ class UsernameLoginManager extends LoginManager implements LoginManagerInterface
 
 ```
 
-The `LoginManager` class must extend the package `LoginManager` class.
+The `LoginManager` class must implement `LoginManagerInterface` interface.
+
+The `LoginManager` class must extend `LoginManager` class.
 
 The `MANAGER` constant is responsible for defining the login manager name.
 
@@ -167,9 +174,7 @@ class UsernameLoginManager extends LoginManager implements LoginManagerInterface
 
 The `QUERY_COLUMN` constant is used to define the accountable query column.
 
-<br>
-
-Now let's go back to our `UserController` class.
+Now let's try our new login manager.
 
 ``` php
 namespace App\Http\Controllers;
@@ -222,6 +227,7 @@ Then, you apply authentication rules on the account itself using the method `isA
 
 namespace App\Models;
 
+use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
 use Raid\Core\Auth\Models\Authentication\Account;
 
 class User extends Account
@@ -249,7 +255,7 @@ class User extends Account
     public function isAuthenticated(): void
     {
         if ($this->isBanned()) {
-            throw new Exception(__('auth.user_is_banned.'));
+            throw new LoginException(__('User is banned.'));
         }
     }
     
@@ -267,11 +273,12 @@ The `isAuthenticated` method is responsible for checking if the account is authe
 
 The `isAuthenticated` method should throw an exception if the account is not authenticated.
 
-The `Exception` will not be thrown in the system,
-but the errors can be called with the `errors` method in the `LoginProvider` class instance.
+The `LoginException` will not be thrown in the system,
+but the errors can be called with the `errors` method in the `LoginProvider` instance.
 
-The `errors` method will return an `Raid\Core\Model\Errors\Errors` class instance.
+The `errors` method will return an `Raid\Core\Model\Errors\Errors` instance.
 
+Remember, any other exception but `LoginException` will be thrown in the system.
 
 ``` php
 namespace App\Http\Controllers;
@@ -304,38 +311,26 @@ class UserController extends Controller
 }
 ```
 
-<br>
+### Errors
 
-You can work with the `errors` method as a `Illuminate\Support\MessageBag` class instance,
-and you can get the errors with many ways.
+You can work with the `errors` method as a `Illuminate\Support\MessageBag` instance,
+and you can get your errors with different methods.
 
 ``` php
-class UserController extends Controller
-{
-    /**
-     * Invoke the controller method.
-     */
-    public function __invoke(Request $request, SystemLoginProvider $systemLoginProvider): JsonResponse
-    {
-        $credentials = $request->only([
-            'username', 'password',
-        ]);
+$loginProvider = $systemLoginProvider->login(new User(), $credentials);
 
-        $loginProvider = $systemLoginProvider->login(new User(), $credentials);
+$errorsAsArray = $loginProvider->errors()->toArray();
+$errorsAsJson = $loginProvider->errors()->toJson();
 
-        $errorsAsArray = $loginProvider->errors()->toArray();
-        $errorsAsJson = $loginProvider->errors()->toJson();
-        
-        $allErrors = $loginProvider->errors()->all();
-        
-        $errorsByKey = $loginProvider->errors()->get('error');
+$allErrors = $loginProvider->errors()->all();
 
-        $firstError = $loginProvider->errors()->first();
-        $firstErrorByKey = $loginProvider->errors()->first('error');
+$errorsByKey = $loginProvider->errors()->get('error');
 
-        $lastError = $loginProvider->errors()->last();
-        $lastErrorByKey = $loginProvider->errors()->last('error');
-    }
+$firstError = $loginProvider->errors()->first();
+$firstErrorByKey = $loginProvider->errors()->first('error');
+
+$lastError = $loginProvider->errors()->last();
+$lastErrorByKey = $loginProvider->errors()->last('error');
 ```
 
 The `errors` method returns an `Raid\Core\Model\Errors\Errors` class instance.
@@ -352,9 +347,9 @@ The `first` method returns the first error, or the first error for the given key
 
 The `last` method returns the last error, or the last error for the given key.
 
-<br>
-
 You can work with `errors` method again in the `LoginProvider` class.
+
+### Login Providers
 
 You can create your own login provider using this command.
 
@@ -379,11 +374,13 @@ class OtpLoginProvider extends LoginProvider implements LoginProviderInterface
 }
 ```
 
-The `LoginProvider` class must extend the package `LoginProvider` class.
+The `LoginProvider` class must implement `LoginProviderInterface` interface.
+
+The `LoginProvider` class must extend `LoginProvider` class.
 
 The `PROVIDER` constant is responsible for defining the login provider name.
 
-The login provider is the main class that handles the login process, and it defines his own login rules.
+The login provider is the main class that handles the login process, and it defines his own login rules or steps.
 
 ``` php
 <?php
@@ -418,17 +415,15 @@ class OtpLoginProvider extends LoginProvider implements LoginProviderInterface
 
 The `checkLoginRules` method is responsible for checking the login provider rules.
 
-The `checkLoginRules` method should return `true` if the login provider rules are passed,
-
-and should return `false` if the login provider rules are not passed.
+The `checkLoginRules` method should return a boolean value.
 
 The `checkLoginRules` method should add errors to the `errors` method if the login provider rules are not passed.
 
-<br>
+### Login Facade
 
-You can define a default login provider and use the `` facade to process the login.
+You can define a default login provider and use the `Raid\Core\Auth\Facades\Authentication` facade to process the login.
 
-In `config/authentication.php` file.
+Define the default login provider in `config/authentication.php` file.
 
 ``` php 
 'default_provider' => \App\Http\Authentication\Providers\OtpLoginProvider::class,
@@ -466,7 +461,7 @@ class UserController extends Controller
 
 The `Authentication` facade is responsible for handling the login process.
 
-The `Authentication` facade uses the `default_provider` key in `config/authentication.php` file to process the login.
+The `Authentication` facade uses the `default_provider` from the `config/authentication.php` file to process the login.
 
 <br>
 
