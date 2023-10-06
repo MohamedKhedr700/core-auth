@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Login\Contracts\LoginManagerInterface;
 use Raid\Core\Auth\Authentication\Login\LoginManager;
 
 class $CLASS_NAME$ extends LoginManager implements LoginManagerInterface

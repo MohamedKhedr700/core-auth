@@ -70,6 +70,8 @@ abstract class LoginManager implements LoginManagerInterface
         }
 
         if (method_exists($this, 'steps')) {
+            $this->steps();
+
             return $this;
         }
 
