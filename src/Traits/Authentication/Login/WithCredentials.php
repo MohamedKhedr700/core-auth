@@ -2,6 +2,8 @@
 
 namespace Raid\Core\Auth\Traits\Authentication\Login;
 
+use Illuminate\Support\Arr;
+
 trait WithCredentials
 {
     /**
@@ -20,8 +22,8 @@ trait WithCredentials
     /**
      * Get login credentials.
      */
-    public function credentials(): array
+    public function credentials(string $key = null, mixed $default = null): mixed
     {
-        return $this->credentials;
+        return $key ? Arr::get($this->credentials, $key, $default) : $this->credentials;
     }
 }

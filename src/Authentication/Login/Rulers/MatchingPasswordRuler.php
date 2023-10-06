@@ -13,7 +13,7 @@ class MatchingPasswordRuler implements LoginRulerInterface
      */
     public function rule(LoginManagerInterface $loginManager): bool
     {
-        if ($loginManager->account()->isMatchingPassword($loginManager->credentials()['password'] ?? '')) {
+        if ($loginManager->account()->isMatchingPassword($loginManager->credentials('password',''))) {
             return true;
         }
 
