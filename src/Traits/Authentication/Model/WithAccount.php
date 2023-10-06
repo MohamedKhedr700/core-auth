@@ -2,10 +2,10 @@
 
 namespace Raid\Core\Auth\Traits\Authentication\Model;
 
-trait Accountable
+trait WithAccount
 {
     /**
-     * @const string
+     * Account type.
      */
     public const ACCOUNT_TYPE = '';
 
@@ -53,5 +53,14 @@ trait Accountable
     public function typeIs(string $type): bool
     {
         return $this->accountType() === $type;
+    }
+
+    public function findAccount($accountable, array $credentials): ?AccountInterface
+    {
+        $column = $this->getColumn($accountable, $credentials);
+
+        $value = $this->getCredentialValue($credentials);
+
+        return $this->where($column, $value)->first();
     }
 }

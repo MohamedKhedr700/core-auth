@@ -13,28 +13,8 @@ return [
     |
     */
 
-    'default_provider' => \Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider::class,
+    'default_login_manager' => \Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider::class,
 
-    /*
-    |--------------------------------------------------------------------------
-    | Provider Managers
-    |--------------------------------------------------------------------------
-    |
-    | Here you can define the login provider managers that will be used in the application.
-    |
-    */
-
-    'provider_managers' => [
-        \Raid\Core\Auth\Authentication\Login\DeviceLogin\DeviceLoginProvider::PROVIDER => [
-            \Raid\Core\Auth\Authentication\Login\DeviceLogin\Managers\DeviceIdLoginManager::class,
-        ],
-        \Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider::PROVIDER => [
-            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\EmailLoginManager::class,
-            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\PhoneLoginManager::class,
-            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\UsernameLoginManager::class,
-            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\EmailOrPhoneLoginManager::class,
-        ],
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -48,4 +28,25 @@ return [
     */
 
     'access_token_model' => \Raid\Core\Auth\Models\AccessToken\AccessToken::class,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Provider Managers
+    |--------------------------------------------------------------------------
+    |
+    | Here you can define the login provider managers that will be used in the application.
+    |
+    */
+
+    'manager_workers' => [
+        \Raid\Core\Auth\Authentication\Login\DeviceLogin\DeviceLoginProvider::PROVIDER => [
+            \Raid\Core\Auth\Authentication\Login\DeviceLogin\Managers\DeviceIdLoginManager::class,
+        ],
+        \Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider::PROVIDER => [
+            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\EmailLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\PhoneLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\UsernameLoginManager::class,
+            \Raid\Core\Auth\Authentication\Login\SystemLogin\Managers\EmailOrPhoneLoginManager::class,
+        ],
+    ],
 ];

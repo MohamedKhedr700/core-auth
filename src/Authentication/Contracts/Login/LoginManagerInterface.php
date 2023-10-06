@@ -7,27 +7,7 @@ use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
 interface LoginManagerInterface
 {
     /**
-     * Get login manager name.
+     * Apply login manager steps.
      */
-    public static function manager(): string;
-
-    /**
-     * Get query column.
-     */
-    public static function queryColumn(): string;
-
-    /**
-     * Get column name.
-     */
-    public function getColumn(object $accountable, array $credentials): string;
-
-    /**
-     * Get credential value.
-     */
-    public function getCredentialValue(array $credentials): string;
-
-    /**
-     * Find an account with login manager if exists.
-     */
-    public function findAccount(object $accountable, array $credentials): ?AccountInterface;
+    public function steps(): bool;
 }

@@ -28,14 +28,6 @@ trait WithToken
     }
 
     /**
-     * Get user string token if presentable.
-     */
-    public function stringToken(): string
-    {
-        return (string) $this->token('plainTextToken');
-    }
-
-    /**
      * Get token response.
      */
     public function tokenResponse(): array
@@ -43,5 +35,13 @@ trait WithToken
         $account = $this->account();
 
         return $account->getTokenResponse($account->accountType(), $this->stringToken());
+    }
+
+    /**
+     * Get user string token if presentable.
+     */
+    public function stringToken(): string
+    {
+        return (string) $this->token('plainTextToken');
     }
 }

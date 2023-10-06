@@ -12,11 +12,6 @@ trait WithAccount
     protected ?AccountInterface $account = null;
 
     /**
-     * Authenticated account flag.
-     */
-    protected bool $authenticated = false;
-
-    /**
      * Set account model if found.
      */
     public function setAccount(AccountInterface $account = null): void
@@ -35,15 +30,15 @@ trait WithAccount
     /**
      * Determine if an account is found.
      */
-    public function accountFound(): bool
+    public function found(): bool
     {
-        return ! empty($this->account);
+        return ! is_null($this->account);
     }
 
     /**
      * Determine if an account is authenticated.
      */
-    public function isAuthenticated(): bool
+    public function authenticated(): bool
     {
         return $this->authenticated;
     }

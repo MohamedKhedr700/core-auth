@@ -2,62 +2,84 @@
 
 namespace Raid\Core\Auth\Authentication\Login;
 
-use Raid\Core\Auth\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
+use Raid\Core\Auth\Traits\Authentication\Login\WithAccount;
+use Raid\Core\Auth\Traits\Authentication\Login\WithAccountable;
+use Raid\Core\Auth\Traits\Authentication\Login\WithAuthentication;
+use Raid\Core\Auth\Traits\Authentication\Login\WithCredentials;
+use Raid\Core\Auth\Traits\Authentication\Login\WithToken;
+use Raid\Core\Auth\Traits\Authentication\Login\WithWorker;
+use Raid\Core\Model\Traits\Error\WithErrors;
 
 abstract class LoginManager implements LoginManagerInterface
 {
+    use WithAccount;
+    use WithAccountable;
+    use WithAuthentication;
+    use WithCredentials;
+    use WithErrors;
+    use WithToken;
+    use WithWorker;
+
     /**
      * Login manager.
      */
     public const MANAGER = '';
 
     /**
-     * Query column.
+     * {@inheritdoc}
      */
-    public const QUERY_COLUMN = '';
-
-    /**
-     * {@inheritDoc}
-     */
-    public static function manager(): string
+    public function login(AccountableInterface $accountable, array $credentials): static
     {
-        return static::MANAGER;
+        $this->setAccountable($accountable);
+
+        $this->setCredentials($credentials);
+
+        $account = $this->findWorkerAccount($accountable, $credentials);
+
+        if ($this->errors()->any()) {
+            return $this;
+        }
+
+        if (method_exists($this, 'steps')) {
+            return $this;
+        }
+
+        $rulers = $this->rulers();
+
+        if (! empty($rulers) && ! $this->checkRulers($rulers)) {
+            return $this;
+        }
+
+        $this->authenticate($account);
+
+        return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public static function queryColumn(): string
+    public function rulers(): array
     {
-        return static::QUERY_COLUMN;
+        return [
+            LoginRuler::class,
+        ];
     }
 
     /**
-     * {@inheritDoc}
+     * Check login rulers.
      */
-    public function getColumn(object $accountable, array $credentials): string
+    public function checkRulers(array $rulers): bool
     {
-        return static::queryColumn() ?: static::manager();
-    }
+        foreach ($rulers as $ruler) {
+            if ($ruler->rule($this)) {
+                continue;
+            }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCredentialValue(array $credentials): string
-    {
-        return $credentials[static::manager()];
-    }
+            return false;
+        }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function findAccount(object $accountable, array $credentials): ?AccountInterface
-    {
-        $column = $this->getColumn($accountable, $credentials);
-
-        $value = $this->getCredentialValue($credentials);
-
-        return $accountable->where($column, $value)->first();
+        return true;
     }
 }

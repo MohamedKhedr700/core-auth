@@ -2,17 +2,19 @@
 
 namespace Raid\Core\Auth\Traits\Authentication\Login;
 
+use Raid\Core\Auth\Authentication\Contracts\AccountableInterface;
+
 trait WithAccountable
 {
     /**
      * Accountable instance.
      */
-    protected object $accountable;
+    protected AccountableInterface $accountable;
 
     /**
      * Set login accountable.
      */
-    public function setAccountable(object $accountable): void
+    public function setAccountable(AccountableInterface $accountable): void
     {
         $this->accountable = $accountable;
     }
@@ -20,7 +22,7 @@ trait WithAccountable
     /**
      * Get login accountable.
      */
-    public function accountable(): object
+    public function accountable(): AccountableInterface
     {
         return $this->accountable;
     }
