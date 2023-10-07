@@ -41,23 +41,23 @@ abstract class AuthManager implements AuthManagerInterface
     /**
      * {@inheritdoc}
      */
-    public static function attempt(string $accountable, array $credentials): static
+    public static function auth(string $accountable, array $credentials): static
     {
-        return (new static())->login(new $accountable, $credentials);
+        return (new static())->authenticate(new $accountable, $credentials);
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function attemptAccount(string $accountable, AccountInterface $account): static
+    public static function authAccount(string $accountable, AccountInterface $account): static
     {
-        return (new static())->loginAccount(new $accountable, $account);
+        return (new static())->authenticateAccount(new $accountable, $account);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function login(AccountableInterface $accountable, array $credentials): static
+    public function authenticate(AccountableInterface $accountable, array $credentials): static
     {
         $this->setAccountable($accountable);
 
@@ -83,7 +83,7 @@ abstract class AuthManager implements AuthManagerInterface
             return $this;
         }
 
-        $this->authenticate($account);
+        $this->createToken($account);
 
         return $this;
     }
@@ -91,7 +91,7 @@ abstract class AuthManager implements AuthManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function loginAccount(AccountableInterface $accountable, AccountInterface $account): static
+    public function authenticateAccount(AccountableInterface $accountable, AccountInterface $account): static
     {
         $this->setAccountable($accountable);
 
@@ -101,7 +101,7 @@ abstract class AuthManager implements AuthManagerInterface
             return $this;
         }
 
-        $this->authenticate($account);
+        $this->createToken($account);
 
         return $this;
     }

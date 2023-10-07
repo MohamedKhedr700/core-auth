@@ -15,16 +15,6 @@ trait WithAuthentication
     /**
      * {@inheritdoc}
      */
-    public function authenticate(AccountInterface $account): void
-    {
-        $this->setToken($account->createAccountToken());
-
-        $this->authenticated = true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function checkAuthentication(AccountInterface $account): bool
     {
         try {

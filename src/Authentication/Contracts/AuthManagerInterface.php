@@ -20,22 +20,22 @@ interface AuthManagerInterface extends WithAccountableInterface, WithAccountInte
     public static function manager(): string;
 
     /**
-     * Attempt Log in statically.
+     * Attempt to authenticate an accountable in statically.
      */
-    public static function attempt(string $accountable, array $credentials): static;
+    public static function auth(string $accountable, array $credentials): static;
 
     /**
-     * Attempt Log in statically with an account.
+     * Attempt to authenticate an account in statically.
      */
-    public static function attemptAccount(string $accountable, AccountInterface $account): static;
+    public static function authAccount(string $accountable, AccountInterface $account): static;
 
     /**
-     * Attempt Log in.
+     * Authenticate an accountable.
      */
-    public function login(AccountableInterface $accountable, array $credentials): static;
+    public function authenticate(AccountableInterface $accountable, array $credentials): static;
 
     /**
-     * Attempt Log in with an account.
+     * Authenticate an account.
      */
-    public function loginAccount(AccountableInterface $accountable, AccountInterface $account): static;
+    public function authenticateAccount(AccountableInterface $accountable, AccountInterface $account): static;
 }

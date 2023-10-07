@@ -3,6 +3,7 @@
 namespace Raid\Core\Auth\Traits\Authentication;
 
 use Laravel\Sanctum\NewAccessToken;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
 trait WithToken
 {
@@ -25,6 +26,16 @@ trait WithToken
     public function token(string $key = null, mixed $default = null): mixed
     {
         return $key ? ($this->token->{$key} ?? $default) : $this->token;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createToken(AccountInterface $account): void
+    {
+        $this->setToken($account->createAccountToken());
+
+        $this->authenticated = true;
     }
 
     /**
