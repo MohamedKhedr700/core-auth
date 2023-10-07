@@ -8,7 +8,7 @@ use Raid\Core\Auth\Authentication\Contracts\AuthStepInterface;
 abstract class AuthStep implements AuthStepInterface
 {
     /**
-     * Run an authentication step.
+     * {@inheritdoc}
      */
     public function step(AuthManagerInterface $authManager): void
     {

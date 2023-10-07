@@ -8,7 +8,7 @@ use Raid\Core\Auth\Authentication\Contracts\AuthRulerInterface;
 abstract class AuthRuler implements AuthRulerInterface
 {
     /**
-     * Run login ruler.
+     * {@inheritdoc}
      */
     public function rule(AuthManagerInterface $loginManager): bool
     {

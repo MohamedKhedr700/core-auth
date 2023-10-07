@@ -19,7 +19,7 @@ abstract class AuthWorker implements AuthWorkerInterface
     public const QUERY_COLUMN = '';
 
     /**
-     * Get the worker name.
+     * {@inheritdoc}
      */
     public static function worker(): string
     {
@@ -27,7 +27,7 @@ abstract class AuthWorker implements AuthWorkerInterface
     }
 
     /**
-     * Get the query column.
+     * {@inheritdoc}
      */
     public static function queryColumn(): string
     {
@@ -35,7 +35,7 @@ abstract class AuthWorker implements AuthWorkerInterface
     }
 
     /**
-     * Get the query column name.
+     * {@inheritdoc}
      */
     public function getQueryColumn(AccountableInterface $accountable, array $credentials): string
     {
@@ -43,7 +43,7 @@ abstract class AuthWorker implements AuthWorkerInterface
     }
 
     /**
-     * Get the worker credential value.
+     * {@inheritdoc}
      */
     public function getWorkerValue(array $credentials): string
     {
@@ -51,7 +51,7 @@ abstract class AuthWorker implements AuthWorkerInterface
     }
 
     /**
-     * Find a worker account.
+     * {@inheritdoc}
      */
     public function find(AccountableInterface $accountable, array $credentials): ?AccountInterface
     {
