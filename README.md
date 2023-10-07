@@ -17,12 +17,12 @@ php artisan core:publish-auth
 ## Usage
 
 ``` php
-class UserController extends Controller
+class AuthController extends Controller
 {
     /**
      * Invoke the controller method.
      */
-    public function __invoke(Request $request, OtpAuthManager $authManager): JsonResponse
+    public function __invoke(Request $request, SystemAuthManager $authManager): JsonResponse
     {
         $credentials = $request->only([
             'email', 'phone', 'username', 'password',
@@ -31,7 +31,7 @@ class UserController extends Controller
         $authManager = $authManager->authenticate(new User(), $credentials);
 
         // or using static call
-        $authManager = OtpAuthManager::auth(User::class, $credentials);
+        $authManager = SystemAuthManager::auth(User::class, $credentials);
 
         // or using accountable static call
         $authManager = User::authenticate($credentials);
@@ -51,23 +51,39 @@ class UserController extends Controller
 
 # How to work this
 
-Let's start with our accountable class ex:`User` model,
-we can use this command to create an accountable model.
+The authentication process is divided into two parts.
+
+The first part is the accountable class, and the second part is the auth manager.
+
+The `Accountable` class is the class that will be authenticated, and it must implement `AccountableInterface` interface.
+
+The `AuthManager` class is the class that will handle the authentication process,
+and it must implement `AuthManagerInterface` interface.
+
+The `AuthManager` uses the accountable class to query the account using the given credentials.
+
+The `Accountable` class must define `findAccount` method to query the account,
+and return an instance of `AccountInterface` interface.
+
+The `Accountable` can be different from the `AccountInterface` class,
+but it must query the account and return an instance of `AccountInterface` interface.
+
+Let's start with our `Accountable` and `AccountInterface` class ex:`User` model,
+we can use this command to create an account model.
 
 ``` bash
-php artisan core:make-auth-model User
+php artisan core:make-auth-account User
 ```
-
-Here is the model class.
-
 ``` php
 <?php
 
 namespace App\Models;
 
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Models\Authentication\Account;
 
-class User extends Account implements AccountInterface
+class User extends Account implements AccountableInterface, AccountInterface
 {
     /**
      * {@inheritdoc}
@@ -76,9 +92,9 @@ class User extends Account implements AccountInterface
 }
 ```
 
-The `Model` class must implement `AccountInterface` interface.
+The `Account` class must implement `AccountInterface` interface.
 
-The `Model` class must extend `Account` class.
+The `Account` class must extend `Account` class.
 
 Now the `User` model class is ready to use as an accountable model.
 
@@ -133,7 +149,7 @@ class UsernameAuthWorker extends AuthWorker implements AuthWorkerInterface
     /**
      * {@inheritdoc}
      */
-    public const WORKER = 'phone';
+    public const WORKER = '';
 }
 
 ```
@@ -199,7 +215,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Raid\Core\Auth\Authentication\Managers\SystemAuthManager;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
     /**
      * Invoke the controller method.
@@ -414,7 +430,7 @@ and use the `Raid\Core\Auth\Facades\Authentication` facade to process the authen
 Define the default auth manager in `config/authentication.php` file.
 
 ``` php 
-    'default_auth_manager' => \App\Http\Authentication\Managers\OtpAuthManager::class,
+'default_auth_manager' => \App\Http\Authentication\Managers\OtpAuthManager::class,
 ```
 
 ``` php
@@ -425,7 +441,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Raid\Core\Auth\Authentication\Managers\SystemAuthManager;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
     /**
      * Invoke the controller method.
