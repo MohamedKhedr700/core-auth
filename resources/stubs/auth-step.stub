@@ -1,0 +1,16 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthStepInterface;
+
+class $CLASS_NAME$ implements AuthStepInterface
+{
+    /**
+     * Run an authentication step.
+     */
+    public function step(AuthManagerInterface $authManager): bool
+    {
+    }
+}

@@ -15,7 +15,7 @@ trait WithRuler
     /**
      * {@inheritdoc}
      */
-    public function checkRulers(array $rulers): bool
+    public function runRulers(array $rulers): bool
     {
         foreach ($rulers as $ruler) {
             if (app($ruler)->rule($this)) {

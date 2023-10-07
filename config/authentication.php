@@ -4,16 +4,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Default Login Provider
+    | Default Authentication Manager
     |--------------------------------------------------------------------------
     |
-    | This option controls the default login provider that will be used.
-    | The provider is used to determine which login provider should be used
-    | while authenticating accounts.
+    | This option controls the default authentication manager that will be used.
+    | The provider is used to determine which login manager should be used
+    | while authenticating accounts using the authentication facade.
     |
     */
 
-    'default_login_manager' => \Raid\Core\Auth\Authentication\Managers\SystemAuthManager::class,
+    'default_manager' => \Raid\Core\Auth\Authentication\Managers\SystemAuthManager::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ return [
     | Provider Managers
     |--------------------------------------------------------------------------
     |
-    | Here you can define the login provider managers that will be used in the application.
+    | Here you can define the authentication manager workers that will be used in the application.
     |
     */
 

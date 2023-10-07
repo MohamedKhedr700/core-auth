@@ -2,15 +2,15 @@
 
 namespace $NAMESPACE$;
 
-use Raid\Core\Auth\Authentication\Contracts\LoginManagerInterface;
-use Raid\Core\Auth\Authentication\Contracts\LoginRulerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthRulerInterface;
 
-class $CLASS_NAME$ implements LoginRulerInterface
+class $CLASS_NAME$ implements AuthRulerInterface
 {
     /**
-     * Run login ruler.
+     * Run an authentication ruler.
      */
-    public function rule(LoginManagerInterface $loginManager): bool
+    public function rule(AuthManagerInterface $authManager): bool
     {
     }
 }

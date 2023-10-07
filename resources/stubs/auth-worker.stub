@@ -2,10 +2,10 @@
 
 namespace $NAMESPACE$;
 
-use Raid\Core\Auth\Authentication\Contracts\LoginWorkerInterface;
-use Raid\Core\Auth\Authentication\LoginWorker;
+use Raid\Core\Auth\Authentication\Contracts\AuthWorkerInterface;
+use Raid\Core\Auth\Authentication\AuthWorker;
 
-class $CLASS_NAME$ extends LoginWorker implements LoginWorkerInterface
+class $CLASS_NAME$ extends AuthWorker implements AuthWorkerInterface
 {
     /**
      * {@inheritdoc}
