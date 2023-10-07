@@ -22,7 +22,7 @@ trait WithSteps
         }
 
         foreach ($steps as $step) {
-            $step->step();
+            $step->step($this);
         }
 
         return true;
