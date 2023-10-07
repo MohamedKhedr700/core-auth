@@ -22,20 +22,20 @@ interface AuthManagerInterface extends WithAccountableInterface, WithAccountInte
     /**
      * Attempt to authenticate an accountable in statically.
      */
-    public static function auth(string $accountable, array $credentials): static;
+    public static function auth(string $accountable, array $credentials): AuthManagerInterface;
 
     /**
      * Attempt to authenticate an account in statically.
      */
-    public static function authAccount(string $accountable, AccountInterface $account): static;
+    public static function authAccount(string $accountable, AccountInterface $account): AuthManagerInterface;
 
     /**
      * Authenticate an accountable.
      */
-    public function authenticate(AccountableInterface $accountable, array $credentials): static;
+    public function authenticate(AccountableInterface $accountable, array $credentials): AuthManagerInterface;
 
     /**
      * Authenticate an account.
      */
-    public function authenticateAccount(AccountableInterface $accountable, AccountInterface $account): static;
+    public function authenticateAccount(AccountableInterface $accountable, AccountInterface $account): AuthManagerInterface;
 }
