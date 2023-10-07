@@ -1,0 +1,11 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Traits\Authentication\Model\Accountable;
+
+class $CLASS_NAME$ implements AccountableInterface
+{
+    use Accountable;
+}

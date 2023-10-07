@@ -3,9 +3,10 @@
 namespace $NAMESPACE$;
 
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Models\Authentication\Account;
 
-class $CLASS_NAME$ extends Account implements AccountInterface
+class $CLASS_NAME$ extends Account implements AccountInterface, AccountableInterface
 {
     /**
      * {@inheritdoc}
