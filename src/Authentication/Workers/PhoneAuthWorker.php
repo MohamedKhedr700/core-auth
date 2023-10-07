@@ -2,11 +2,11 @@
 
 namespace Raid\Core\Auth\Authentication\Workers;
 
-use Raid\Core\Auth\Authentication\Contracts\LoginWorkerInterface;
-use Raid\Core\Auth\Authentication\LoginWorker;
+use Raid\Core\Auth\Authentication\Contracts\AuthWorkerInterface;
+use Raid\Core\Auth\Authentication\AuthWorker;
 use Raid\Core\Auth\Models\Authentication\Enum\Worker;
 
-class PhoneLoginWorker extends LoginWorker implements LoginWorkerInterface
+class PhoneAuthWorker extends AuthWorker implements AuthWorkerInterface
 {
     /**
      * {@inheritdoc}

@@ -2,12 +2,12 @@
 
 namespace Raid\Core\Auth\Authentication\Managers;
 
-use Raid\Core\Auth\Authentication\Contracts\LoginManagerInterface;
-use Raid\Core\Auth\Authentication\LoginManager;
-use Raid\Core\Auth\Authentication\Rulers\MatchingPasswordRuler;
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\AuthManager;
+use Raid\Core\Auth\Authentication\Rulers\MatchingPasswordRule;
 use Raid\Core\Auth\Models\Authentication\Enum\Manager;
 
-class SystemLoginManager extends LoginManager implements LoginManagerInterface
+class SystemAuthManager extends AuthManager implements AuthManagerInterface
 {
     /**
      * {@inheritdoc}
@@ -20,7 +20,7 @@ class SystemLoginManager extends LoginManager implements LoginManagerInterface
     public function rulers(): array
     {
         return [
-            MatchingPasswordRuler::class,
+            MatchingPasswordRule::class,
         ];
     }
 }

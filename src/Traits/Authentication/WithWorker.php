@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Traits\Authentication;
 
-use Raid\Core\Auth\Authentication\Contracts\LoginWorkerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthWorkerInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
@@ -11,7 +11,7 @@ trait WithWorker
     /**
      * Login worker instance.
      */
-    protected LoginWorkerInterface $loginWorker;
+    protected AuthWorkerInterface $loginWorker;
 
     /**
      * Get login manager workers.
@@ -24,7 +24,7 @@ trait WithWorker
     /**
      * {@inheritDoc}
      */
-    public function setLoginWorker(LoginWorkerInterface $loginWorker): void
+    public function setLoginWorker(AuthWorkerInterface $loginWorker): void
     {
         $this->loginWorker = $loginWorker;
     }
@@ -32,7 +32,7 @@ trait WithWorker
     /**
      * {@inheritDoc}
      */
-    public function loginWorker(): LoginWorkerInterface
+    public function loginWorker(): AuthWorkerInterface
     {
         return $this->loginWorker;
     }
@@ -40,7 +40,7 @@ trait WithWorker
     /**
      * Get credential login worker.
      */
-    private function getCredentialWorker(array $credentials = []): ?LoginWorkerInterface
+    private function getCredentialWorker(array $credentials = []): ?AuthWorkerInterface
     {
         $workers = static::getLoginManagerWorkers();
 
@@ -68,7 +68,7 @@ trait WithWorker
     /**
      * Find worker.
      */
-    public function findWorker(array $credentials = []): ?LoginWorkerInterface
+    public function findWorker(array $credentials = []): ?AuthWorkerInterface
     {
         $loginWorker = $this->getCredentialWorker($credentials);
 
@@ -82,7 +82,7 @@ trait WithWorker
     /**
      * Find account.
      */
-    public function findAccount(LoginWorkerInterface $loginWorker, AccountableInterface $accountable, array $credentials): ?AccountInterface
+    public function findAccount(AuthWorkerInterface $loginWorker, AccountableInterface $accountable, array $credentials): ?AccountInterface
     {
         $account = $loginWorker->find($accountable, $credentials);
 

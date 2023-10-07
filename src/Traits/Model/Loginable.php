@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Traits\Model;
 
-use Raid\Core\Auth\Authentication\Contracts\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
 use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
 use Raid\Core\Auth\Facades\Authentication;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
@@ -12,7 +12,7 @@ trait Loginable
     /**
      * Log in with credentials or instance of an account.
      */
-    public static function attempt(array|AccountInterface $credentials): LoginManagerInterface
+    public static function attempt(array|AccountInterface $credentials): AuthManagerInterface
     {
         $method = $credentials instanceof AccountInterface ? 'loginAccount' : 'login';
 
@@ -22,7 +22,7 @@ trait Loginable
     /**
      * Log in with credentials.
      */
-    public static function login(array $credentials): LoginManagerInterface
+    public static function login(array $credentials): AuthManagerInterface
     {
         return Authentication::attempt(static::class, $credentials);
     }
@@ -30,7 +30,7 @@ trait Loginable
     /**
      * Log in with an account model.
      */
-    public static function loginAccount(AccountInterface $account): LoginManagerInterface
+    public static function loginAccount(AccountInterface $account): AuthManagerInterface
     {
         return Authentication::attemptAccount(static::class, $account);
     }

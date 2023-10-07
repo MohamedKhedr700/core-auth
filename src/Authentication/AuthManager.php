@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Authentication;
 
-use Raid\Core\Auth\Authentication\Contracts\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Traits\Authentication\WithAccount;
@@ -14,7 +14,7 @@ use Raid\Core\Auth\Traits\Authentication\WithToken;
 use Raid\Core\Auth\Traits\Authentication\WithWorker;
 use Raid\Core\Model\Traits\Error\WithErrors;
 
-abstract class LoginManager implements LoginManagerInterface
+abstract class AuthManager implements AuthManagerInterface
 {
     use WithAccount;
     use WithAccountable;

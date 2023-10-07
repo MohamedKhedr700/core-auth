@@ -12,7 +12,7 @@ use Raid\Core\Auth\Authentication\Contracts\Concerns\WithWorkerInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
-interface LoginManagerInterface extends WithAccountableInterface, WithAccountInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRulerInterface, WithTokenInterface, WithWorkerInterface
+interface AuthManagerInterface extends WithAccountableInterface, WithAccountInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRulerInterface, WithTokenInterface, WithWorkerInterface
 {
     /**
      * Get a login manager.

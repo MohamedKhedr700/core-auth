@@ -2,11 +2,11 @@
 
 namespace Raid\Core\Auth\Authentication;
 
-use Raid\Core\Auth\Authentication\Contracts\LoginWorkerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthWorkerInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
-abstract class LoginWorker implements LoginWorkerInterface
+abstract class AuthWorker implements AuthWorkerInterface
 {
     /**
      * Login worker name.

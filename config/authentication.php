@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default_login_manager' => \Raid\Core\Auth\Authentication\Managers\SystemLoginManager::class,
+    'default_login_manager' => \Raid\Core\Auth\Authentication\Managers\SystemAuthManager::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -38,14 +38,14 @@ return [
     */
 
     'manager_workers' => [
-        \Raid\Core\Auth\Authentication\Managers\DeviceLoginManager::MANAGER => [
-            \Raid\Core\Auth\Authentication\Workers\DeviceIdLoginWorker::class,
+        \Raid\Core\Auth\Authentication\Managers\DeviceAuthManager::MANAGER => [
+            \Raid\Core\Auth\Authentication\Workers\DeviceIdAuthWorker::class,
         ],
-        \Raid\Core\Auth\Authentication\Managers\SystemLoginManager::MANAGER => [
-            \Raid\Core\Auth\Authentication\Workers\EmailLoginWorker::class,
-            \Raid\Core\Auth\Authentication\Workers\PhoneLoginWorker::class,
-            \Raid\Core\Auth\Authentication\Workers\UsernameLoginWorker::class,
-            \Raid\Core\Auth\Authentication\Workers\EmailOrPhoneLoginWorker::class,
+        \Raid\Core\Auth\Authentication\Managers\SystemAuthManager::MANAGER => [
+            \Raid\Core\Auth\Authentication\Workers\EmailAuthWorker::class,
+            \Raid\Core\Auth\Authentication\Workers\PhoneAuthWorker::class,
+            \Raid\Core\Auth\Authentication\Workers\UsernameAuthWorker::class,
+            \Raid\Core\Auth\Authentication\Workers\EmailOrPhoneAuthWorker::class,
         ],
     ],
 ];
