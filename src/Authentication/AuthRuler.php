@@ -10,7 +10,7 @@ abstract class AuthRuler implements AuthRulerInterface
     /**
      * {@inheritdoc}
      */
-    public function rule(AuthManagerInterface $loginManager): bool
+    public function rule(AuthManagerInterface $authManager): bool
     {
         return true;
     }
