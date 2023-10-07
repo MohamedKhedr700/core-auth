@@ -57,7 +57,7 @@ trait WithAuthProvider
      */
     private function registerLoginFacade(): void
     {
-        $authManager = config('authentication.default_manager');
+        $authManager = config('authentication.default_auth_manager');
 
         $this->app->singleton(Authentication::facade(), $authManager);
 

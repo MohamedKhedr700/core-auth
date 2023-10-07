@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default_manager' => \Raid\Core\Auth\Authentication\Managers\SystemAuthManager::class,
+    'default_auth_manager' => \Raid\Core\Auth\Authentication\Managers\SystemAuthManager::class,
 
     /*
     |--------------------------------------------------------------------------

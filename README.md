@@ -28,18 +28,23 @@ class UserController extends Controller
             'email', 'phone', 'username', 'password',
         ]);
 
-        $authManager->authenticate(new User(), $credentials);
+        $authManager = $authManager->authenticate(new User(), $credentials);
 
         // or using static call
-        $loginProvider = SystemLoginProvider::attempt(User::class, $credentials);
-        
+        $authManager = OtpAuthManager::auth(User::class, $credentials);
+
+        // or using accountable static call
+        $authManager = User::authenticate($credentials);
+
+        // or using facade
+        $authManager = Authentication::authenticate(new User(), $credentials);
+
         return response()->json([
             'manager' => $authManager->manager(),
             'token' => $authManager->stringToken(),
             'errors' => $authManager->errors()->toArray(),
             'resource' => $authManager->account(),
         ]);
-    }
     }
 }
 ```
@@ -62,7 +67,7 @@ namespace App\Models;
 
 use Raid\Core\Auth\Models\Authentication\Account;
 
-class User extends Account
+class User extends Account implements AccountInterface
 {
     /**
      * {@inheritdoc}
@@ -71,105 +76,120 @@ class User extends Account
 }
 ```
 
+The `Model` class must implement `AccountInterface` interface.
+
 The `Model` class must extend `Account` class.
 
 Now the `User` model class is ready to use as an accountable model.
 
-### Login Providers and Managers
+### Auth Managers and Workers
 
-Great, now we have to take a look at our login providers and managers in `config/authentication.php` file.
+Great, now we have to take a look at our authentication managers and workers in `config/authentication.php` file.
 
 ``` php
-'provider_managers' => [
-    // here we define our login providers.
-    SystemLoginProvider::PROVIDER => [
-        // here we define our login managers.
-        EmailLoginManager::class,
-        PhoneLoginManager::class,
-        EmailOrPhoneLoginManager::class,
+'manager_workers' => [
+    // here we define our auth managers.
+    SystemAuthManager::MANAGER => [
+        // here we define our auth workers.
+        EmailAuthWorker::class,
+        PhoneAuthWorker::class,
+        EmailOrPhoneAuthWorker::class,
     ],
 ],
 ```
 
-The `provider_managers` array is responsible for defining the login providers and their managers.
-and we can add our custom login providers and managers to this array.
+The `manager_workers` array is responsible for defining the auth managers and workers.
+and we can add our custom auth managers and workers.
 
-The `DeviceLoginProvider` is responsible for handling the device login process.
+The `SystemAuthManager` is responsible for handling the system authentication process.
 
-The `SystemLoginProvider` is responsible for handling the system login process.
+Each auth manager has its own workers, and each auth worker has its own authentication name/worker.
 
-Each login provider has its own login managers, and each login manager has its own login method.
+When we call `SystemAuthManager` authenticate method,
+it will call the matched auth worker with the given credentials.
 
-When we call `SystemLoginProvider` login method,
-it will call the matched login manager with the given credentials.
-
-We can add a custom login manager to use it with the `SystemLoginProvider` login provider or any other new login provider.
+We can add a custom auth worker to use it with the `SystemLoginProvider` login provider or any other new login provider.
 
 
-### Login Managers
+### Auth Workers
 
-Let's create a new login manager class,
-you can use this command to create a new login manager.
+you can use this command to create a new auth worker.
 
 
 ``` bash
-php artisan core:make-auth-manager UsernameLoginManager
+php artisan core:make-auth-worker UsernameAuthWorker
 ```
 
 ``` php
 <?php
 
-namespace App\Http\Authentication\Managers;
+namespace App\Http\Authentication\Workers;
 
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
-use Raid\Core\Auth\Authentication\Login\LoginManager;
+use Raid\Core\Auth\Authentication\Contracts\AuthWorkerInterface;
+use Raid\Core\Auth\Authentication\AuthWorker;
 
-class UsernameLoginManager extends LoginManager implements LoginManagerInterface
+class UsernameAuthWorker extends AuthWorker implements AuthWorkerInterface
 {
     /**
      * {@inheritdoc}
      */
-    public const MANAGER = '';
+    public const WORKER = 'phone';
 }
 
 ```
 
-The `LoginManager` class must implement `LoginManagerInterface` interface.
+The `AuthWorker` class must implement `AuthWorkerInterface` interface.
 
-The `LoginManager` class must extend `LoginManager` class.
+The `AuthWorker` class must extend `AuthWorker` class.
 
-The `MANAGER` constant is responsible for defining the login manager name.
+The `WORKER` constant is responsible for defining the auth worker name.
 
-The `MANAGER` constant is used to match the login manager with the given credentials.
+The `WORKER` constant is used to match the auth worker with the given credentials.
 
-The `MANAGER` constant is used to define the accountable query column,
-you can override using same key for credentials and query by defining the `QUERY_COLUMN` constant.
+The `WORKER` constant is used to define the accountable query column,
+to override using same key for credentials and query, define the `QUERY_COLUMN` constant.
 
 ``` php
 <?php
 
-namespace App\Http\Authentication\Managers;
+namespace App\Http\Authentication\Workers;
 
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginManagerInterface;
-use Raid\Core\Auth\Authentication\Login\LoginManager;
+use Raid\Core\Auth\Authentication\Contracts\AuthWorkerInterface;
+use Raid\Core\Auth\Authentication\AuthWorker;
 
-class UsernameLoginManager extends LoginManager implements LoginManagerInterface
+class UsernameAuthWorker extends AuthWorker implements AuthWorkerInterface
 {
     /**
      * {@inheritdoc}
      */
-    public const MANAGER = 'username';
+    public const WORKER = 'username';
     
     /**
      * {@inheritdoc}
      */
     public const QUERY_COLUMN = 'user_name';
 }
+
 ```
 
 The `QUERY_COLUMN` constant is used to define the accountable query column.
 
-Now let's try our new login manager.
+We need to define the new auth worker in `config/authentication.php` file.
+
+``` php
+'manager_workers' => [
+    // here we define our auth managers.
+    SystemAuthManager::MANAGER => [
+        // here we define our auth workers.
+        EmailAuthWorker::class,
+        PhoneAuthWorker::class,
+        EmailOrPhoneAuthWorker::class,
+        UsernameAuthWorker::class,
+    ],
+],
+```
+
+Now let's try our new auth worker.
 
 ``` php
 namespace App\Http\Controllers;
@@ -177,52 +197,54 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider;
+use Raid\Core\Auth\Authentication\Managers\SystemAuthManager;
 
 class UserController extends Controller
 {
     /**
      * Invoke the controller method.
      */
-    public function __invoke(Request $request, SystemLoginProvider $systemLoginProvider): JsonResponse
+    public function __invoke(Request $request, SystemAuthManager $authManager): JsonResponse
     {
         $credentials = $request->only([
             'username', 'password',
         ]);
 
-        $loginProvider = $systemLoginProvider->login(new User(), $credentials);
+        $authManager = $authManager->authenticate(new User(), $credentials);
 
         return response()->json([
-            'provider' => $loginProvider->provider(),
-            'token' => $loginProvider->stringToken(),
-            'resource' => $loginProvider->account(),
+            'manager' => $authManager->manager(),
+            'token' => $authManager->stringToken(),
+            'errors' => $authManager->errors()->toArray(),
+            'resource' => $authManager->account(),
         ]);
     }
 }
 ```
 
-The `SystemLoginProvider` login method accepts two parameters.
+The `SystemAuthManager` authenticate method accepts two parameters.
 
 The first parameter is the accountable class instance.
 
 The second parameter is the credentials array.
 
-The `SystemLoginProvider` login method returns the `LoginProvider` class instance.
+The `SystemAuthManager` authenticate method returns the `AuthManager` class instance.
 
-The `LoginProvider` class instance uses the credentials array to match with login manager.
+The `AuthManager` class instance uses the credentials array to match with auth worker.
 
-The `LoginManager` class instance used to query the accountable class to find the matched account.
+The `AuthManager` class instance used to query the accountable class to find the matched account.
 
-The `LoginProvider` class apply its own login rules after finding the account.
+The `AuthManager` class apply its own authentication rules after finding the account.
 
 The `accountable` class instance must work with query builder to find the account.
 
 Under the hood,
-the `LoginManager` class uses the query method `where` on the accountable class passed with the credentials.
+the `AuthWorker` class uses the query method `where` on the accountable class passed with the credentials.
 
 The returned account must be an instance of `AccountInterface` interface.
 
-After finding the account, you apply authentication rules on the account itself using `isAuthenticated` method.
+After finding the account, and apply the `AuthManager` rules,
+you can apply authentication rules on the account itself using `isAuthenticated` method.
 
 ``` php
 <?php
@@ -230,9 +252,10 @@ After finding the account, you apply authentication rules on the account itself 
 namespace App\Models;
 
 use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Models\Authentication\Account;
 
-class User extends Account
+class User extends Account implements AccountInterface
 {
     /**
      * {@inheritdoc}
@@ -276,42 +299,11 @@ The `isAuthenticated` method is responsible for checking if the account is authe
 The `isAuthenticated` method should throw an exception if the account is not authenticated.
 
 The `LoginException` will not be thrown in the system,
-but the errors can be called with the `errors` method in the `LoginProvider` instance.
+but the errors can be called with the `errors` method in the `AuthManager` instance.
 
 The `errors` method will return an `Raid\Core\Model\Errors\Errors` instance.
 
 Remember, any other exception but `LoginException` will be thrown in the system.
-
-``` php
-namespace App\Http\Controllers;
-
-use App\Models\User;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Raid\Core\Auth\Authentication\Login\SystemLogin\SystemLoginProvider;
-
-class UserController extends Controller
-{
-    /**
-     * Invoke the controller method.
-     */
-    public function __invoke(Request $request, SystemLoginProvider $systemLoginProvider): JsonResponse
-    {
-        $credentials = $request->only([
-            'username', 'password',
-        ]);
-
-        $loginProvider = $systemLoginProvider->login(new User(), $credentials);
-
-        return response()->json([
-            'provider' => $loginProvider->provider(),
-            'token' => $loginProvider->getStringToken(),
-            'resource' => $loginProvider->account(),
-            'errors' => $loginProvider->errors()->toArray(),
-        ]);
-    }
-}
-```
 
 ### Errors
 
@@ -319,20 +311,20 @@ You can work with the `errors` method as a `Illuminate\Support\MessageBag` insta
 and you can get your errors with different methods.
 
 ``` php
-$loginProvider = $systemLoginProvider->login(new User(), $credentials);
+$loginProvider = $authManager->login(new User(), $credentials);
 
-$errorsAsArray = $loginProvider->errors()->toArray();
-$errorsAsJson = $loginProvider->errors()->toJson();
+$errorsAsArray = $authManager->errors()->toArray();
+$errorsAsJson = $authManager->errors()->toJson();
 
-$allErrors = $loginProvider->errors()->all();
+$allErrors = $authManager->errors()->all();
 
-$errorsByKey = $loginProvider->errors()->get('error');
+$errorsByKey = $authManager->errors()->get('error');
 
-$firstError = $loginProvider->errors()->first();
-$firstErrorByKey = $loginProvider->errors()->first('error');
+$firstError = $authManager->errors()->first();
+$firstErrorByKey = $authManager->errors()->first('error');
 
-$lastError = $loginProvider->errors()->last();
-$lastErrorByKey = $loginProvider->errors()->last('error');
+$lastError = $authManager->errors()->last();
+$lastErrorByKey = $authManager->errors()->last('error');
 ```
 
 The `errors` method returns an `Raid\Core\Model\Errors\Errors` class instance.
@@ -349,14 +341,14 @@ The `first` method returns the first error, or the first error for the given key
 
 The `last` method returns the last error, or the last error for the given key.
 
-You can work with `errors` method again in the `LoginProvider` class.
+You can work with `errors` method again in the `AuthManager` class.
 
-### Login Providers
+### Auth Managers
 
-You can create your own login provider using this command.
+You can create your own auth manager using this command.
 
 ``` bash
-php artisan core:make-auth-provider CustomLoginProvider
+php artisan core:make-auth-manager OtpAuthManager
 ```
 
 ``` php
@@ -364,71 +356,65 @@ php artisan core:make-auth-provider CustomLoginProvider
 
 namespace App\Http\Authentication\Providers;
 
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
-use Raid\Core\Auth\Authentication\Login\LoginProvider;
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\AuthManager;
 
-class OtpLoginProvider extends LoginProvider implements LoginProviderInterface
+class OtpAuthManager extends AuthManager implements LoginProviderInterface
 {
     /**
      * {@inheritdoc}
      */
-    public const PROVIDER = '';
+    public const MANAGER = 'otp';
 }
 ```
 
-The `LoginProvider` class must implement `LoginProviderInterface` interface.
+The `AuthManager` class must implement `AuthManagerInterface` interface.
 
-The `LoginProvider` class must extend `LoginProvider` class.
+The `AuthManager` class must extend `AuthManager` class.
 
-The `PROVIDER` constant is responsible for defining the login provider name.
+The `Manager` constant is responsible for defining the authentication manager name.
 
-The login provider is the main class that handles the login process, and it defines his own login rules or steps.
+The login provider is the main class that handles the authentication process,
+and it defines his own authentication rules and steps.
 
 ``` php
 <?php
 
 namespace App\Http\Authentication\Providers;
 
-use Raid\Core\Auth\Authentication\Contracts\Login\LoginProviderInterface;
-use Raid\Core\Auth\Authentication\Login\LoginProvider;
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\AuthManager;
 
-class OtpLoginProvider extends LoginProvider implements LoginProviderInterface
+class OtpAuthManager extends AuthManager implements LoginProviderInterface
 {
     /**
      * {@inheritdoc}
      */
-    public const PROVIDER = 'otp';
+    public const MANAGER = 'otp';
 
     /**
-     * Check login provider rules after find user.
+     * Get authentication rulers.
      */
-    public function checkLoginRules(AccountInterface $account, array $credentials = []): bool
+    public function rules(): array
     {
-        if (! $account->verifiedPhone()) {
-            $this->errors()->add('error', __('Your phone number is not verified.'));
-
-            return false;
-        }
-
-        return parent::checkLoginRules($account, $credentials);
+        return [];
     }
 }
 ```
 
-The `checkLoginRules` method is responsible for checking the login provider rules.
+The `rules` method is responsible for defining the `AuthManager` authentication rules.
 
-The `checkLoginRules` method should return a boolean value.
+The `rules` method should return an array of authentication rules.
 
-The `checkLoginRules` method should add errors to the `errors` method if the login provider rules are not passed.
+### Authentication Facade
 
-### Login Facade
+You can define a default authentication manager,
+and use the `Raid\Core\Auth\Facades\Authentication` facade to process the authentication.
 
-You can define a default login provider and use the `Raid\Core\Auth\Facades\Authentication` facade to process the login.
-
-Define the default login provider in `config/authentication.php` file.
+Define the default auth manager in `config/authentication.php` file.
 
 ``` php 
-'default_provider' => \App\Http\Authentication\Providers\OtpLoginProvider::class,
+    'default_auth_manager' => \App\Http\Authentication\Managers\OtpAuthManager::class,
 ```
 
 ``` php
@@ -437,7 +423,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Raid\Core\Auth\Facades\Authentication;
+use Raid\Core\Auth\Authentication\Managers\SystemAuthManager;
 
 class UserController extends Controller
 {
@@ -450,20 +436,21 @@ class UserController extends Controller
             'username', 'password',
         ]);
 
-        $loginProvider = Authentication::login(new User(), $credentials);
+        $authManager = Authentication::authenticate(new User(), $credentials);
 
         return response()->json([
-            'provider' => $loginProvider->provider(),
-            'token' => $loginProvider->getStringToken(),
-            'resource' => $loginProvider->account(),
+            'manager' => $authManager->manager(),
+            'token' => $authManager->stringToken(),
+            'errors' => $authManager->errors()->toArray(),
+            'resource' => $authManager->account(),
         ]);
     }
 }
 ```
 
-The `Authentication` facade is responsible for handling the login process.
+The `Authentication` facade is responsible for handling the authentication process.
 
-The `Authentication` facade uses the `default_provider` from the `config/authentication.php` file to process the login.
+The `Authentication` facade uses the `default_auth_manager` from the `config/authentication.php` file.
 
 <br>
 
