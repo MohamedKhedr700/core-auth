@@ -22,28 +22,24 @@ class UserController extends Controller
     /**
      * Invoke the controller method.
      */
-    public function __invoke(Request $request, SystemLoginProvider $systemLoginProvider): JsonResponse
+    public function __invoke(Request $request, OtpAuthManager $authManager): JsonResponse
     {
         $credentials = $request->only([
-            'email', 'phone', 'emailOrPhone', 'password',
+            'email', 'phone', 'username', 'password',
         ]);
 
-        $loginProvider = $systemLoginProvider->login(new User(), $credentials);
+        $authManager->authenticate(new User(), $credentials);
 
         // or using static call
         $loginProvider = SystemLoginProvider::attempt(User::class, $credentials);
-
-        // or using accountable static call
-        $loginProvider = User::login($credentials);
-
-        // or using facade
-        $loginProvider = Authentication::login(new User(), $credentials);
         
         return response()->json([
-            'provider' => $loginProvider->provider(),
-            'token' => $loginProvider->stringToken(),
-            'resource' => $loginProvider->account(),
+            'manager' => $authManager->manager(),
+            'token' => $authManager->stringToken(),
+            'errors' => $authManager->errors()->toArray(),
+            'resource' => $authManager->account(),
         ]);
+    }
     }
 }
 ```

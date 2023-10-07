@@ -12,7 +12,7 @@ trait Authenticatable
     /**
      * Authenticate with credentials or instance of an account.
      */
-    public static function auth(array|AccountInterface $credentials): Authentication
+    public static function auth(array|AccountInterface $credentials): AuthManagerInterface
     {
         $method = $credentials instanceof AccountInterface ? 'authenticateAccount' : 'authenticate';
 
@@ -22,7 +22,7 @@ trait Authenticatable
     /**
      * Authenticate with credentials.
      */
-    public static function authenticate(array $credentials): Authentication
+    public static function authenticate(array $credentials): AuthManagerInterface
     {
         return Authentication::auth(static::class, $credentials);
     }
@@ -30,7 +30,7 @@ trait Authenticatable
     /**
      * Authenticate with an account model.
      */
-    public static function authenticateAccount(AccountInterface $account): Authentication
+    public static function authenticateAccount(AccountInterface $account): AuthManagerInterface
     {
         return Authentication::authAccount(static::class, $account);
     }
