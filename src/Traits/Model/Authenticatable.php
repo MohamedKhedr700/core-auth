@@ -2,53 +2,47 @@
 
 namespace Raid\Core\Auth\Traits\Model;
 
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
+use Raid\Core\Auth\Facades\Authentication;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
+
 trait Authenticatable
 {
     /**
-     * {@inheritDoc}
+     * Authenticate with credentials or instance of an account.
      */
-    public function getAuthIdentifierName()
+    public static function auth(array|AccountInterface $credentials): Authentication
     {
-        // TODO: Implement getAuthIdentifierName() method.
+        $method = $credentials instanceof AccountInterface ? 'authenticateAccount' : 'authenticate';
+
+        return static::{$method}($credentials);
     }
 
     /**
-     * {@inheritDoc}
+     * Authenticate with credentials.
      */
-    public function getAuthIdentifier()
+    public static function authenticate(array $credentials): Authentication
     {
-        // TODO: Implement getAuthIdentifier() method.
+        return Authentication::auth(static::class, $credentials);
     }
 
     /**
-     * {@inheritDoc}
+     * Authenticate with an account model.
      */
-    public function getAuthPassword()
+    public static function authenticateAccount(AccountInterface $account): Authentication
     {
-        // TODO: Implement getAuthPassword() method.
+        return Authentication::authAccount(static::class, $account);
     }
 
     /**
-     * {@inheritDoc}
+     * Check if an account is active to authenticate.
+     * Throw login exceptions if failed authentication.
      */
-    public function getRememberToken()
+    public function isAuthenticated(): void
     {
-        // TODO: Implement getRememberToken() method.
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setRememberToken($value)
-    {
-        // TODO: Implement setRememberToken() method.
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getRememberTokenName()
-    {
-        // TODO: Implement getRememberTokenName() method.
+        //        if ($this->attribute('disabled')) {
+        //            throw new LoginException(__('disabled'));
+        //        }
     }
 }
