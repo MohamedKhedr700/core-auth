@@ -35,17 +35,17 @@ abstract class LoginWorker implements LoginWorkerInterface
     }
 
     /**
-     * Get the column name.
+     * Get the query column name.
      */
-    public function getColumn(AccountableInterface $accountable, array $credentials): string
+    public function getQueryColumn(AccountableInterface $accountable, array $credentials): string
     {
         return static::queryColumn() ?: static::worker();
     }
 
     /**
-     * Get the credential value.
+     * Get the worker credential value.
      */
-    public function getCredentialValue(array $credentials): string
+    public function getWorkerValue(array $credentials): string
     {
         return $credentials[static::worker()];
     }
@@ -55,9 +55,9 @@ abstract class LoginWorker implements LoginWorkerInterface
      */
     public function find(AccountableInterface $accountable, array $credentials): ?AccountInterface
     {
-        $column = $this->getColumn($accountable, $credentials);
+        $column = $this->getQueryColumn($accountable, $credentials);
 
-        $value = $this->getCredentialValue($credentials);
+        $value = $this->getWorkerValue($credentials);
 
         return $accountable->findAccount($column, $value);
     }

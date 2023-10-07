@@ -17,8 +17,8 @@ class EmailOrPhoneLoginWorker extends LoginWorker implements LoginWorkerInterfac
     /**
      * {@inheritDoc}
      */
-    public function getColumn(AccountableInterface $accountable, array $credentials): string
+    public function getQueryColumn(AccountableInterface $accountable, array $credentials): string
     {
-        return filter_var($this->getCredentialValue($credentials), FILTER_VALIDATE_EMAIL) ? LoginManagerEnum::EMAIL : LoginManagerEnum::PHONE;
+        return filter_var($this->getWorkerValue($credentials), FILTER_VALIDATE_EMAIL) ? Worker::EMAIL : Worker::PHONE;
     }
 }
