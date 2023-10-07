@@ -17,10 +17,6 @@ trait WithAuthentication
      */
     public function authenticate(AccountInterface $account): void
     {
-        if (! $this->checkAuthentication($account)) {
-            return;
-        }
-
         $this->setToken($account->createAccountToken());
 
         $this->authenticated = true;
@@ -38,6 +34,8 @@ trait WithAuthentication
 
             return false;
         }
+
+        $this->authenticated = true;
 
         return true;
     }

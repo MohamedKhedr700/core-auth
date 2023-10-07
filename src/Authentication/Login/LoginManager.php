@@ -69,15 +69,17 @@ abstract class LoginManager implements LoginManagerInterface
             return $this;
         }
 
+        if (! $this->checkRulers($this->rulers())) {
+            return $this;
+        }
+
         if (method_exists($this, 'steps')) {
             $this->steps();
 
             return $this;
         }
 
-        $rulers = $this->rulers();
-
-        if (! empty($rulers) && ! $this->checkRulers($rulers)) {
+        if (! $this->checkAuthentication($account)) {
             return $this;
         }
 
@@ -94,6 +96,10 @@ abstract class LoginManager implements LoginManagerInterface
         $this->setAccountable($accountable);
 
         $this->setAccount($account);
+
+        if (! $this->checkAuthentication($account)) {
+            return $this;
+        }
 
         $this->authenticate($account);
 
