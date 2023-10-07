@@ -10,7 +10,7 @@ class $CLASS_NAME$ implements AuthStepInterface
     /**
      * Run an authentication step.
      */
-    public function step(AuthManagerInterface $authManager): bool
+    public function step(AuthManagerInterface $authManager): void
     {
     }
 }
