@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Facades;
 
-use Raid\Core\Auth\Authentication\Login\Contracts\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\LoginManagerInterface;
 
 /**
  * @mixin LoginManagerInterface

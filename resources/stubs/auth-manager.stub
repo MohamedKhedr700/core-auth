@@ -2,8 +2,8 @@
 
 namespace $NAMESPACE$;
 
-use Raid\Core\Auth\Authentication\Login\Contracts\LoginManagerInterface;
-use Raid\Core\Auth\Authentication\Login\LoginManager;
+use Raid\Core\Auth\Authentication\Contracts\LoginManagerInterface;
+use Raid\Core\Auth\Authentication\LoginManager;
 
 class $CLASS_NAME$ extends LoginManager implements LoginManagerInterface
 {

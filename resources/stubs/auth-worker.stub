@@ -2,8 +2,8 @@
 
 namespace $NAMESPACE$;
 
-use Raid\Core\Auth\Authentication\Login\Contracts\LoginWorkerInterface;
-use Raid\Core\Auth\Authentication\Login\LoginWorker;
+use Raid\Core\Auth\Authentication\Contracts\LoginWorkerInterface;
+use Raid\Core\Auth\Authentication\LoginWorker;
 
 class $CLASS_NAME$ extends LoginWorker implements LoginWorkerInterface
 {
