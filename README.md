@@ -472,8 +472,193 @@ php artisan core:make-auth-rule VerifiedPhoneAuthRule
 ```
 
 ``` php
+<?php
 
+namespace App\Http\Authentication\Rules;
+
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthRuleInterface;
+
+class VerifiedPhoneAuthRule implements AuthRuleInterface
+{
+    /**
+     * Run an authentication ruler.
+     */
+    public function rule(AuthManagerInterface $authManager): bool
+    {
+    }
+}
 ```
+
+The `AuthRule` class must implement `AuthRuleInterface` interface.
+
+The `rule` method is responsible for running the authentication rule.
+
+The `rule` method should return a boolean value.
+
+The `rule` method should return `true` if the authentication rule passed,
+
+The `rule` method should add `errors` to `AuthManager` and return `false` if the authentication rule failed.
+
+The `AuthManager` class instance will stop the authentication process if any authentication rule failed.
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Rules;
+
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthRuleInterface;
+
+class VerifiedPhoneAuthRule implements AuthRuleInterface
+{
+    /**
+     * Run an authentication ruler.
+     */
+    public function rule(AuthManagerInterface $authManager): bool
+    {
+        if ($authManager->account()->isVerified()) {
+            return true;
+        }
+
+        $authManager->errors()->add('phone', __('Phone number is not verified.'));
+
+        return false;
+    }
+}
+```
+
+We need to define the new auth rule in `AuthManager` class.
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Providers;
+
+use App\Http\Authentication\Rules\VerifiedPhoneAuthRule;
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\AuthManager;
+
+class OtpAuthManager extends AuthManager implements LoginProviderInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const MANAGER = 'otp';
+
+    /**
+     * Get authentication rules.
+     */
+    public function rules(): array
+    {
+        return [
+            VerifiedPhoneAuthRule::class,
+        ];
+    }
+}
+```
+
+The `AuthManager` class instance will stop the authentication process if the authentication rule failed.
+
+#### Auth Steps
+
+you can use this command to create a new auth step.
+
+``` bash
+php artisan core:make-auth-step OtpAuthStep
+```
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Steps;
+
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthStepInterface;
+
+class OtpAuthStep implements AuthStepInterface
+{
+    /**
+     * Run an authentication step.
+     */
+    public function step(AuthManagerInterface $authManager): void
+    {
+    }
+}
+```
+
+The `AuthStep` class must implement `AuthStepInterface` interface.
+
+The `step` method is responsible for running the authentication step.
+
+The `step` method should execute the authentication step.
+
+The `step` method should add `errors` to `AuthManager` if the authentication step failed.
+
+We need to define the new auth step in `AuthManager` class.
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Providers;
+
+use App\Http\Authentication\Steps\OtpAuthStep;
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\AuthManager;
+
+class OtpAuthManager extends AuthManager implements LoginProviderInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const MANAGER = 'otp';
+
+    /**
+     * Get authentication steps.
+     */
+    public function steps(): array
+    {
+        return [
+            OtpAuthStep::class,
+        ];
+    }
+}
+```
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Steps;
+
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthStepInterface;
+
+class OtpAuthStep implements AuthStepInterface
+{
+    /**
+     * Otp service.
+     */
+    protected OtpService $otpService;
+
+    /**
+     * Otp service.
+     */
+    public function __construct(OtpService $otpService)
+    {
+        $this->otpService = $otpService;
+    }
+
+    /**
+     * Run an authentication step.
+     */
+    public function step(AuthManagerInterface $authManager): void
+    {
+        $this->otpService->send($authManager->account());
+    }
+}
+```
+
+The `AuthManager` class instance will stop the authentication process after running all authentication steps.
 
 ### Authentication Facade
 
@@ -521,7 +706,7 @@ The `Authentication` facade is responsible for handling the authentication proce
 
 The `Authentication` facade uses the `default_auth_manager` from the `config/authentication.php` file.
 
-<br>
+#
 
 And that's it.
 
