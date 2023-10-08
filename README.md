@@ -289,7 +289,7 @@ you can apply authentication rules on the account itself using `isAuthenticated`
 
 namespace App\Models;
 
-use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
+use Raid\Core\Auth\Exceptions\Authentication\AuthenticationException;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Models\Authentication\Account;
 
@@ -312,13 +312,13 @@ class User extends Account implements AccountInterface
     ];
     
     /**
-     * Check if an account is active to log in and authenticated.
-     * Throw login exceptions if failed to log in.
+     * Check if an account is active to authenticated.
+     * Throw Authentication exception if failed to authenticate.
      */
     public function isAuthenticated(): void
     {
         if ($this->isBanned()) {
-            throw new LoginException(__('User is banned.'));
+            throw new AuthenticationException(__('Account is banned.'));
         }
     }
     
@@ -336,12 +336,12 @@ The `isAuthenticated` method is responsible for checking if the account is authe
 
 The `isAuthenticated` method should throw an exception if the account is not authenticated.
 
-The `LoginException` will not be thrown in the system,
+The `AuthenticationException` will not be thrown in the system,
 but the errors can be called with the `errors` method in the `AuthManager` instance.
 
 The `errors` method will return an `Raid\Core\Model\Errors\Errors` instance.
 
-Remember, any other exception but `LoginException` will be thrown in the system.
+Remember, any other exception but `AuthenticationException` will be thrown in the system.
 
 ### Errors
 
@@ -500,8 +500,6 @@ The `rule` method should return `true` if the authentication rule passed,
 
 The `rule` method should add `errors` to `AuthManager` and return `false` if the authentication rule failed.
 
-The `AuthManager` class instance will stop the authentication process if any authentication rule failed.
-
 ``` php
 <?php
 
@@ -591,8 +589,6 @@ The `AuthStep` class must implement `AuthStepInterface` interface.
 
 The `step` method is responsible for running the authentication step.
 
-The `step` method should execute the authentication step.
-
 The `step` method should add `errors` to `AuthManager` if the authentication step failed.
 
 We need to define the new auth step in `AuthManager` class.
@@ -624,6 +620,7 @@ class OtpAuthManager extends AuthManager implements LoginProviderInterface
     }
 }
 ```
+We can run our authentication step.
 
 ``` php
 <?php
@@ -706,7 +703,7 @@ The `Authentication` facade is responsible for handling the authentication proce
 
 The `Authentication` facade uses the `default_auth_manager` from the `config/authentication.php` file.
 
-#
+<br>
 
 And that's it.
 

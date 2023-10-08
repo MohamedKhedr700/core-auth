@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Traits\Authentication;
 
-use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
+use Raid\Core\Auth\Exceptions\Authentication\Login\AuthenticationException;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
 trait WithAuthentication
@@ -19,7 +19,7 @@ trait WithAuthentication
     {
         try {
             $account->isAuthenticated();
-        } catch (LoginException $exception) {
+        } catch (AuthenticationException $exception) {
             $this->errors()->add('error', $exception->getMessage());
 
             return false;

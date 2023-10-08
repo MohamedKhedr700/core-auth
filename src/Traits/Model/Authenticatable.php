@@ -3,7 +3,7 @@
 namespace Raid\Core\Auth\Traits\Model;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
-use Raid\Core\Auth\Exceptions\Authentication\Login\LoginException;
+use Raid\Core\Auth\Exceptions\Authentication\AuthenticationException;
 use Raid\Core\Auth\Facades\Authentication;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
@@ -37,12 +37,12 @@ trait Authenticatable
 
     /**
      * Check if an account is active to authenticate.
-     * Throw login exceptions if failed authentication.
+     * Throw Authentication exception if failed to authenticate.
      */
     public function isAuthenticated(): void
     {
-        //        if ($this->attribute('disabled')) {
-        //            throw new LoginException(__('disabled'));
+        //        if ($this->attribute('banned', false)) {
+        //            throw new AuthenticationException(__('Account is banned.'));
         //        }
     }
 }
