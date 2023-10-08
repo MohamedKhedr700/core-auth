@@ -6,13 +6,14 @@ use Raid\Core\Auth\Authentication\Contracts\Concerns\WithAccountableInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithAccountInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithAuthenticationInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithCredentialsInterface;
-use Raid\Core\Auth\Authentication\Contracts\Concerns\WithRulerInterface;
+use Raid\Core\Auth\Authentication\Contracts\Concerns\WithRuleInterface;
+use Raid\Core\Auth\Authentication\Contracts\Concerns\WithStepInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithTokenInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithWorkerInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
-interface AuthManagerInterface extends WithAccountableInterface, WithAccountInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRulerInterface, WithTokenInterface, WithWorkerInterface
+interface AuthManagerInterface extends WithAccountableInterface, WithAccountInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRuleInterface, WithStepInterface, WithTokenInterface, WithWorkerInterface
 {
     /**
      * Get a login manager.

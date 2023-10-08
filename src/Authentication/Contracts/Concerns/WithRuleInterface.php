@@ -2,15 +2,15 @@
 
 namespace Raid\Core\Auth\Authentication\Contracts\Concerns;
 
-interface WithRulerInterface
+interface WithRuleInterface
 {
     /**
-     * Get authentication rulers.
+     * Get authentication rules.
      */
     public function rules(): array;
 
     /**
-     * Run all authentication rulers.
+     * Run authentication rules.
      */
     public function runRules(array $rules): bool;
 }

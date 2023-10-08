@@ -431,7 +431,7 @@ class OtpAuthManager extends AuthManager implements LoginProviderInterface
     public const MANAGER = 'otp';
 
     /**
-     * Get authentication rulers.
+     * Get authentication rules.
      */
     public function rules(): array
     {
@@ -468,7 +468,7 @@ We can skip using authentication rules and steps by returning an empty array.
 you can use this command to create a new auth rule.
 
 ``` bash
-php artisan core:make-auth-ruler VerifiedPhoneRuler
+php artisan core:make-auth-rule VerifiedPhoneAuthRule
 ```
 
 ``` php
