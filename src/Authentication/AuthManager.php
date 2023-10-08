@@ -65,7 +65,7 @@ abstract class AuthManager implements AuthManagerInterface
 
         $this->setCredentials($credentials);
 
-        $account = $this->findWorkerAccount($accountable, $credentials);
+        $account = $this->findWorkerAccount($this->workers(), $accountable, $credentials);
 
         if ($this->errors()->any()) {
             return $this;

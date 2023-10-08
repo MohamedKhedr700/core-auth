@@ -9,14 +9,14 @@ use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 trait WithWorker
 {
     /**
-     * Login worker instance.
+     * Auth worker instance.
      */
-    protected AuthWorkerInterface $loginWorker;
+    protected AuthWorkerInterface $authWorker;
 
     /**
-     * Get login manager workers.
+     * {@inheritDoc}
      */
-    public static function getLoginManagerWorkers(): array
+    public function workers(): array
     {
         return config('authentication.manager_workers.'.static::manager(), []);
     }
@@ -24,26 +24,24 @@ trait WithWorker
     /**
      * {@inheritDoc}
      */
-    public function setLoginWorker(AuthWorkerInterface $loginWorker): void
+    public function setAuthWorker(AuthWorkerInterface $authWorker): void
     {
-        $this->loginWorker = $loginWorker;
+        $this->authWorker = $authWorker;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function loginWorker(): AuthWorkerInterface
+    public function authWorker(): AuthWorkerInterface
     {
-        return $this->loginWorker;
+        return $this->authWorker;
     }
 
     /**
-     * Get credential login worker.
+     * Get credential authentication worker.
      */
-    private function getCredentialWorker(array $credentials = []): ?AuthWorkerInterface
+    private function getCredentialWorker(array $workers, array $credentials): ?AuthWorkerInterface
     {
-        $workers = static::getLoginManagerWorkers();
-
         foreach ($workers as $worker) {
             if (! array_key_exists($worker::worker(), $credentials)) {
                 continue;
@@ -58,33 +56,33 @@ trait WithWorker
     /**
      * Find a worker account.
      */
-    public function findWorkerAccount(AccountableInterface $accountable, array $credentials): ?AccountInterface
+    public function findWorkerAccount(array $workers, AccountableInterface $accountable, array $credentials): ?AccountInterface
     {
-        $loginWorker = $this->findWorker($credentials);
+        $authWorker = $this->findWorker($workers, $credentials);
 
-        return $loginWorker ? $this->findAccount($loginWorker, $accountable, $credentials) : null;
+        return $authWorker ? $this->findAccount($authWorker, $accountable, $credentials) : null;
     }
 
     /**
      * Find worker.
      */
-    public function findWorker(array $credentials = []): ?AuthWorkerInterface
+    public function findWorker(array $workers, array $credentials): ?AuthWorkerInterface
     {
-        $loginWorker = $this->getCredentialWorker($credentials);
+        $authWorker = $this->getCredentialWorker($workers, $credentials);
 
-        $loginWorker ?
-            $this->setLoginWorker($loginWorker) :
+        $authWorker ?
+            $this->setAuthWorker($authWorker) :
             $this->errors()->add('error', __('auth.not_found_login_worker'));
 
-        return $loginWorker;
+        return $authWorker;
     }
 
     /**
      * Find account.
      */
-    public function findAccount(AuthWorkerInterface $loginWorker, AccountableInterface $accountable, array $credentials): ?AccountInterface
+    public function findAccount(AuthWorkerInterface $authWorker, AccountableInterface $accountable, array $credentials): ?AccountInterface
     {
-        $account = $loginWorker->find($accountable, $credentials);
+        $account = $authWorker->find($accountable, $credentials);
 
         $account ?
             $this->setAccount($account) :
