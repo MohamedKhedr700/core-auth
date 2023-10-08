@@ -35,21 +35,3 @@ if (! function_exists('get_account_avatar')) {
         return 'https://ui-avatars.com/api/?name='.str_replace(' ', '-', $name);
     }
 }
-
-if(! function_exists('try_exception')) {
-    /**
-     * Try exception.
-     */
-    function try_exception(callable $callback, callable $catch = null): mixed
-    {
-        try {
-            return $callback();
-        } catch (Throwable $exception) {
-            if ($catch) {
-                return $catch($exception);
-            }
-        }
-
-        return null;
-    }
-}
