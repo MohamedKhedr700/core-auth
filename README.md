@@ -1,6 +1,6 @@
 # Core Auth Package
 
-This package is responsible for handling all auth models and login providers in the system.
+This package is responsible for handling all authentication models and managers in the system.
 
 ## Installation
 
@@ -119,7 +119,7 @@ class User extends Account implements AccountInterface, AccountableInterface
     protected $fillable = [];
 }
 ```
-
+#
 ### Auth Managers and Workers
 
 Great, now we have to take a look at our authentication managers and workers in `config/authentication.php` file.
@@ -148,6 +148,7 @@ it will call the matched auth worker with the given credentials.
 
 We can add a custom auth worker to use it with the `SystemLoginProvider` auth manager or any other new auth manager.
 
+#
 ### Auth Workers
 
 you can use this command to create a new auth worker.
@@ -276,8 +277,7 @@ The `AuthManager` class apply its own authentication rules after finding the acc
 The `Accountable` class instance must work with query builder to find the account.
 
 Under the hood,
-the `AuthWorker` class calles `findAccount` method in the `Accountable` class instance.
-
+the `AuthWorker` class calls `findAccount` method in the `Accountable` class instance.
 
 The returned account must be an instance of `AccountInterface` interface.
 
@@ -346,6 +346,7 @@ The `errors` method will return an `Raid\Core\Model\Errors\Errors` instance.
 
 Remember, any other exception but `AuthenticationException` will be thrown in the system.
 
+#
 ### Errors
 
 You can work with the `errors` method as a `Illuminate\Support\MessageBag` instance,
@@ -416,7 +417,7 @@ The `AuthManager` class must extend `AuthManager` class.
 The `Manager` constant is responsible for defining the authentication manager name.
 
 The auth manager is the main class that handles the authentication process,
-and it defines his own authentication rules and steps.
+and it defines his own authentication `rules` and `steps`.
 
 ``` php
 <?php
@@ -426,7 +427,7 @@ namespace App\Http\Authentication\Providers;
 use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
 use Raid\Core\Auth\Authentication\AuthManager;
 
-class OtpAuthManager extends AuthManager implements LoginProviderInterface
+class OtpAuthManager extends AuthManager implements AuthManagerInterface
 {
     /**
      * {@inheritdoc}
@@ -466,6 +467,7 @@ and the `AuthManager` will return the `AuthManager` instance.
 
 We can skip using authentication rules and steps by returning an empty array.
 
+#
 #### Auth Rules
 
 you can use this command to create a new auth rule.
@@ -540,7 +542,7 @@ use App\Http\Authentication\Rules\VerifiedPhoneAuthRule;
 use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
 use Raid\Core\Auth\Authentication\AuthManager;
 
-class OtpAuthManager extends AuthManager implements LoginProviderInterface
+class OtpAuthManager extends AuthManager implements AuthManagerInterface
 {
     /**
      * {@inheritdoc}
@@ -561,6 +563,7 @@ class OtpAuthManager extends AuthManager implements LoginProviderInterface
 
 The `AuthManager` class instance will stop the authentication process if the authentication rule failed.
 
+#
 #### Auth Steps
 
 you can use this command to create a new auth step.
@@ -668,6 +671,7 @@ We can run our authentication step.
 
 The `AuthManager` class instance will stop the authentication process after running all authentication steps.
 
+#
 ### Authentication Facade
 
 You can define a default authentication manager,
