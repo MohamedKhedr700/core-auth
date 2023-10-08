@@ -290,11 +290,14 @@ you can apply authentication rules on the account itself using `isAuthenticated`
 namespace App\Models;
 
 use Raid\Core\Auth\Exceptions\Authentication\AuthenticationException;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Models\Authentication\Account;
+use Raid\Core\Auth\Traits\Model\Accountable;
 
-class User extends Account implements AccountInterface
+class User extends Account implements AccountInterface, AccountableInterface
 {
+    use Accountable;
     /**
      * {@inheritdoc}
      */
@@ -318,7 +321,7 @@ class User extends Account implements AccountInterface
     public function isAuthenticated(): void
     {
         if ($this->isBanned()) {
-            throw new AuthenticationException(__('Account is banned.'));
+            throw new AuthenticationException(__('User is banned.'));
         }
     }
     
@@ -402,7 +405,7 @@ class OtpAuthManager extends AuthManager implements LoginProviderInterface
     /**
      * {@inheritdoc}
      */
-    public const MANAGER = 'otp';
+    public const MANAGER = '';
 }
 ```
 
@@ -511,7 +514,7 @@ use Raid\Core\Auth\Authentication\Contracts\AuthRuleInterface;
 class VerifiedPhoneAuthRule implements AuthRuleInterface
 {
     /**
-     * Run an authentication ruler.
+     * Run an authentication rule.
      */
     public function rule(AuthManagerInterface $authManager): bool
     {
@@ -519,7 +522,7 @@ class VerifiedPhoneAuthRule implements AuthRuleInterface
             return true;
         }
 
-        $authManager->errors()->add('phone', __('Phone number is not verified.'));
+        $authManager->errors()->add('error', __('Phone number is not verified.'));
 
         return false;
     }
@@ -591,6 +594,46 @@ The `step` method is responsible for running the authentication step.
 
 The `step` method should add `errors` to `AuthManager` if the authentication step failed.
 
+``` php
+<?php
+
+namespace App\Http\Authentication\Steps;
+
+use App\Services\OtpService;
+use Exception;
+use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthStepInterface;
+
+class OtpAuthStep implements AuthStepInterface
+{
+    /**
+     * Otp service.
+     */
+    protected OtpService $otpService;
+
+    /**
+     * Otp service.
+     */
+    public function __construct(OtpService $otpService)
+    {
+        $this->otpService = $otpService;
+    }
+
+    /**
+     * Run an authentication step.
+     */
+    public function step(AuthManagerInterface $authManager): void
+    {
+        try {
+            $this->otpService->send($authManager->account());
+            
+        } catch (Exception $exception) {
+            $authManager->errors()->add('error', $exception->getMessage());
+        }
+    }
+}
+```
+
 We need to define the new auth step in `AuthManager` class.
 
 ``` php
@@ -621,39 +664,6 @@ class OtpAuthManager extends AuthManager implements LoginProviderInterface
 }
 ```
 We can run our authentication step.
-
-``` php
-<?php
-
-namespace App\Http\Authentication\Steps;
-
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
-use Raid\Core\Auth\Authentication\Contracts\AuthStepInterface;
-
-class OtpAuthStep implements AuthStepInterface
-{
-    /**
-     * Otp service.
-     */
-    protected OtpService $otpService;
-
-    /**
-     * Otp service.
-     */
-    public function __construct(OtpService $otpService)
-    {
-        $this->otpService = $otpService;
-    }
-
-    /**
-     * Run an authentication step.
-     */
-    public function step(AuthManagerInterface $authManager): void
-    {
-        $this->otpService->send($authManager->account());
-    }
-}
-```
 
 The `AuthManager` class instance will stop the authentication process after running all authentication steps.
 
