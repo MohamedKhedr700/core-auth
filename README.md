@@ -518,7 +518,7 @@ class VerifiedPhoneAuthRule implements AuthRuleInterface
      */
     public function rule(AuthManagerInterface $authManager): bool
     {
-        if ($authManager->account()->isVerified()) {
+        if ($authManager->account()->isPhoneVerified()) {
             return true;
         }
 
