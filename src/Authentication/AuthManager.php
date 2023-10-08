@@ -9,7 +9,7 @@ use Raid\Core\Auth\Traits\Authentication\WithAccount;
 use Raid\Core\Auth\Traits\Authentication\WithAccountable;
 use Raid\Core\Auth\Traits\Authentication\WithAuthentication;
 use Raid\Core\Auth\Traits\Authentication\WithCredentials;
-use Raid\Core\Auth\Traits\Authentication\WithRuler;
+use Raid\Core\Auth\Traits\Authentication\WithRules;
 use Raid\Core\Auth\Traits\Authentication\WithSteps;
 use Raid\Core\Auth\Traits\Authentication\WithToken;
 use Raid\Core\Auth\Traits\Authentication\WithWorker;
@@ -22,7 +22,7 @@ abstract class AuthManager implements AuthManagerInterface
     use WithAuthentication;
     use WithCredentials;
     use WithErrors;
-    use WithRuler;
+    use WithRules;
     use WithSteps;
     use WithToken;
     use WithWorker;
@@ -71,7 +71,7 @@ abstract class AuthManager implements AuthManagerInterface
             return $this;
         }
 
-        if (! $this->runRulers($this->rulers())) {
+        if (! $this->runRules($this->rules())) {
             return $this;
         }
 

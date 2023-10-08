@@ -7,10 +7,10 @@ interface WithRulerInterface
     /**
      * Get authentication rulers.
      */
-    public function rulers(): array;
+    public function rules(): array;
 
     /**
      * Run all authentication rulers.
      */
-    public function runRulers(array $rulers): bool;
+    public function runRules(array $rules): bool;
 }

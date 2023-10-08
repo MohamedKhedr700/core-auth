@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Authentication\Contracts;
 
-interface AuthRulerInterface
+interface AuthRuleInterface
 {
     /**
      * Run an authentication ruler.

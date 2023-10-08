@@ -456,10 +456,24 @@ The `steps` method is responsible for defining the `AuthManager` authentication 
 
 The `steps` method should return an array of authentication steps.
 
+The `rules` run before the `steps`.
+
 After running the `AuthManager` authentication steps, the authentication process will be stopped,
 and the `AuthManager` will return the `AuthManager` instance.
 
 We can skip using authentication rules and steps by returning an empty array.
+
+#### Auth Rules
+
+you can use this command to create a new auth ruler.
+
+``` bash
+php artisan core:make-auth-ruler VerifiedPhoneRuler
+```
+
+``` php
+
+```
 
 ### Authentication Facade
 

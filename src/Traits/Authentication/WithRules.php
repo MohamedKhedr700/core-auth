@@ -2,12 +2,12 @@
 
 namespace Raid\Core\Auth\Traits\Authentication;
 
-trait WithRuler
+trait WithRules
 {
     /**
      * {@inheritdoc}
      */
-    public function rulers(): array
+    public function rules(): array
     {
         return [];
     }
@@ -15,10 +15,10 @@ trait WithRuler
     /**
      * {@inheritdoc}
      */
-    public function runRulers(array $rulers): bool
+    public function runRules(array $rules): bool
     {
-        foreach ($rulers as $ruler) {
-            if (app($ruler)->rule($this)) {
+        foreach ($rules as $rule) {
+            if (app($rule)->rule($this)) {
                 continue;
             }
 

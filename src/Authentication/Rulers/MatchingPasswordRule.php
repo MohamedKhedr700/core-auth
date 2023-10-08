@@ -4,9 +4,9 @@ namespace Raid\Core\Auth\Authentication\Rulers;
 
 
 use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
-use Raid\Core\Auth\Authentication\Contracts\AuthRulerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthRuleInterface;
 
-class MatchingPasswordRule implements AuthRulerInterface
+class MatchingPasswordRule implements AuthRuleInterface
 {
     /**
      * Run login ruler.

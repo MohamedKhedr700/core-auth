@@ -3,9 +3,9 @@
 namespace Raid\Core\Auth\Authentication;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
-use Raid\Core\Auth\Authentication\Contracts\AuthRulerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthRuleInterface;
 
-abstract class AuthRuler implements AuthRulerInterface
+abstract class AuthRule implements AuthRuleInterface
 {
     /**
      * {@inheritdoc}
