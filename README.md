@@ -119,8 +119,9 @@ class User extends Account implements AccountInterface, AccountableInterface
     protected $fillable = [];
 }
 ```
-#
+
 ### Auth Managers and Workers
+#
 
 Great, now we have to take a look at our authentication managers and workers in `config/authentication.php` file.
 
@@ -148,8 +149,8 @@ it will call the matched auth worker with the given credentials.
 
 We can add a custom auth worker to use it with the `SystemLoginProvider` auth manager or any other new auth manager.
 
-#
 ### Auth Workers
+#
 
 you can use this command to create a new auth worker.
 
@@ -346,8 +347,8 @@ The `errors` method will return an `Raid\Core\Model\Errors\Errors` instance.
 
 Remember, any other exception but `AuthenticationException` will be thrown in the system.
 
-#
 ### Errors
+#
 
 You can work with the `errors` method as a `Illuminate\Support\MessageBag` instance,
 and you can get your errors with different methods.
@@ -386,6 +387,7 @@ The `last` method returns the last error, or the last error for the given key.
 You can work with `errors` method again in the `AuthManager` class.
 
 ### Auth Managers
+#
 
 You can create your own auth manager using this command.
 
@@ -467,8 +469,8 @@ and the `AuthManager` will return the `AuthManager` instance.
 
 We can skip using authentication rules and steps by returning an empty array.
 
-#
 #### Auth Rules
+#
 
 you can use this command to create a new auth rule.
 
@@ -563,8 +565,8 @@ class OtpAuthManager extends AuthManager implements AuthManagerInterface
 
 The `AuthManager` class instance will stop the authentication process if the authentication rule failed.
 
-#
 #### Auth Steps
+#
 
 you can use this command to create a new auth step.
 
@@ -671,8 +673,8 @@ We can run our authentication step.
 
 The `AuthManager` class instance will stop the authentication process after running all authentication steps.
 
-#
 ### Authentication Facade
+#
 
 You can define a default authentication manager,
 and use the `Raid\Core\Auth\Facades\Authentication` facade to process the authentication.
