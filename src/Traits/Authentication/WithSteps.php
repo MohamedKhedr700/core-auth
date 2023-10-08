@@ -5,7 +5,7 @@ namespace Raid\Core\Auth\Traits\Authentication;
 trait WithSteps
 {
     /**
-     * Get all authentication steps.
+     * Get authentication steps.
      */
     public function steps(): array
     {
@@ -13,7 +13,7 @@ trait WithSteps
     }
 
     /**
-     * Run all authentication steps.
+     * Run authentication steps.
      */
     public function runSteps(array $steps): bool
     {

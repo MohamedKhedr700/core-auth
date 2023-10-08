@@ -60,30 +60,29 @@ The `Accountable` class is the class that will be authenticated, and it must imp
 The `AuthManager` class is the class that will handle the authentication process,
 and it must implement `AuthManagerInterface` interface.
 
-The `AuthManager` uses the accountable class to query the account using the given credentials.
+The `AuthManager` uses the `Accountable` class to query the account using the given credentials.
 
 The `Accountable` class must define `findAccount` method to query the account,
 and return an instance of `AccountInterface` interface.
 
-The `Accountable` can be different from the `AccountInterface` class,
+The `Accountable` class can be the same or different from the `AccountInterface` class,
 but it must query the account and return an instance of `AccountInterface` interface.
 
-Let's start with our `Accountable` and `AccountInterface` class ex:`User` model,
+Let's start with our `AccountInterface` class ex:`User` model,
 we can use this command to create an account model.
 
 ``` bash
-php artisan core:make-auth-account User
+php artisan core:make-auth-model User
 ```
 ``` php
 <?php
 
 namespace App\Models;
 
-use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Models\Authentication\Account;
 
-class User extends Account implements AccountableInterface, AccountInterface
+class User extends Account implements AccountInterface
 {
     /**
      * {@inheritdoc}
@@ -92,11 +91,34 @@ class User extends Account implements AccountableInterface, AccountInterface
 }
 ```
 
-The `Account` class must implement `AccountInterface` interface.
+The `Model` class must implement `AccountInterface` interface.
 
-The `Account` class must extend `Account` class.
+The `Model` class must extend `Account` class.
 
-Now the `User` model class is ready to use as an accountable model.
+Now the `User` model class is ready to use as an account model.
+
+Let's configure our `Model` class to work as `Accountable` class also.
+
+``` php
+<?php
+
+namespace App\Models;
+
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Models\Authentication\Account;
+use Raid\Core\Auth\Traits\Model\Accountable;
+
+class User extends Account implements AccountInterface, AccountableInterface
+{
+    use Accountable;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $fillable = [];
+}
+```
 
 ### Auth Managers and Workers
 
@@ -117,15 +139,14 @@ Great, now we have to take a look at our authentication managers and workers in 
 The `manager_workers` array is responsible for defining the auth managers and workers.
 and we can add our custom auth managers and workers.
 
-The `SystemAuthManager` is responsible for handling the system authentication process.
+The `AuthManager` is responsible for handling the system authentication process.
 
 Each auth manager has its own workers, and each auth worker has its own authentication name/worker.
 
-When we call `SystemAuthManager` authenticate method,
+When we call `AuthManager` authenticate method,
 it will call the matched auth worker with the given credentials.
 
-We can add a custom auth worker to use it with the `SystemLoginProvider` login provider or any other new login provider.
-
+We can add a custom auth worker to use it with the `SystemLoginProvider` auth manager or any other new auth manager.
 
 ### Auth Workers
 
@@ -248,14 +269,15 @@ The `SystemAuthManager` authenticate method returns the `AuthManager` class inst
 
 The `AuthManager` class instance uses the credentials array to match with auth worker.
 
-The `AuthManager` class instance used to query the accountable class to find the matched account.
+The `AuthManager` class instance used the matched worker to query the accountable class to find the matched account.
 
 The `AuthManager` class apply its own authentication rules after finding the account.
 
-The `accountable` class instance must work with query builder to find the account.
+The `Accountable` class instance must work with query builder to find the account.
 
 Under the hood,
-the `AuthWorker` class uses the query method `where` on the accountable class passed with the credentials.
+the `AuthWorker` class calles `findAccount` method in the `Accountable` class instance.
+
 
 The returned account must be an instance of `AccountInterface` interface.
 
@@ -390,7 +412,7 @@ The `AuthManager` class must extend `AuthManager` class.
 
 The `Manager` constant is responsible for defining the authentication manager name.
 
-The login provider is the main class that handles the authentication process,
+The auth manager is the main class that handles the authentication process,
 and it defines his own authentication rules and steps.
 
 ``` php
@@ -415,12 +437,29 @@ class OtpAuthManager extends AuthManager implements LoginProviderInterface
     {
         return [];
     }
+    
+    /**
+     * Get authentication steps.
+     */
+    public function steps(): array
+    {
+        return [];
+    }
 }
 ```
 
 The `rules` method is responsible for defining the `AuthManager` authentication rules.
 
 The `rules` method should return an array of authentication rules.
+
+The `steps` method is responsible for defining the `AuthManager` authentication steps.
+
+The `steps` method should return an array of authentication steps.
+
+After running the `AuthManager` authentication steps, the authentication process will be stopped,
+and the `AuthManager` will return the `AuthManager` instance.
+
+We can skip using authentication rules and steps by returning an empty array.
 
 ### Authentication Facade
 

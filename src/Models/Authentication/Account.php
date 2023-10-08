@@ -17,7 +17,7 @@ use Raid\Core\Auth\Traits\Model\WithPassword;
 use Raid\Core\Model\Models\Contracts\ModelInterface;
 use Raid\Core\Model\Models\Model;
 
-abstract class Account extends Model implements AccountInterface, AccountableInterface, Authenticatable, ModelInterface
+abstract class Account extends Model implements AccountInterface, Authenticatable, ModelInterface
 {
     use Accountable;
     use Deviceable;
