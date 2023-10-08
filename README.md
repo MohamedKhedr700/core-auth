@@ -465,7 +465,7 @@ We can skip using authentication rules and steps by returning an empty array.
 
 #### Auth Rules
 
-you can use this command to create a new auth ruler.
+you can use this command to create a new auth rule.
 
 ``` bash
 php artisan core:make-auth-ruler VerifiedPhoneRuler
