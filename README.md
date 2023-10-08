@@ -625,6 +625,7 @@ class OtpAuthStep implements AuthStepInterface
     public function step(AuthManagerInterface $authManager): void
     {
         try {
+        
             $this->otpService->send($authManager->account());
             
         } catch (Exception $exception) {
