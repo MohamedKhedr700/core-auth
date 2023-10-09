@@ -6,7 +6,7 @@ use Raid\Core\Auth\Authentication\Contracts\AuthWorkerInterface;
 use Raid\Core\Auth\Authentication\AuthWorker;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
-use Raid\Core\Auth\Models\Authentication\Enum\Worker;
+use Raid\Core\Auth\Models\Authentication\Enums\Worker;
 
 class DeviceIdAuthWorker extends AuthWorker implements AuthWorkerInterface
 {
