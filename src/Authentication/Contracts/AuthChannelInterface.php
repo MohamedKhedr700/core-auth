@@ -2,10 +2,11 @@
 
 namespace Raid\Core\Auth\Authentication\Contracts;
 
-use Raid\Core\Auth\Authentication\Contracts\Concerns\WithAccountableInterface;
+use Raid\Core\Auth\Authentication\Contracts\Concerns\WithAuthenticatableInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithAccountInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithAuthenticationInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithCredentialsInterface;
+use Raid\Core\Auth\Authentication\Contracts\Concerns\WithErrorInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithRuleInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithStepInterface;
 use Raid\Core\Auth\Authentication\Contracts\Concerns\WithTokenInterface;
@@ -13,7 +14,7 @@ use Raid\Core\Auth\Authentication\Contracts\Concerns\WithWorkerInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
-interface AuthChannelInterface extends WithAccountableInterface, WithAccountInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRuleInterface, WithStepInterface, WithTokenInterface, WithWorkerInterface
+interface AuthChannelInterface extends WithAccountInterface, WithAuthenticatableInterface, WithAuthenticationInterface, WithCredentialsInterface, WithErrorInterface, WithRuleInterface, WithStepInterface, WithTokenInterface, WithWorkerInterface
 {
     /**
      * Get an authentication channel.

@@ -1,0 +1,19 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Raid\Core\Auth\Authentication\Contracts\AuthenticatorInterface;
+use Raid\Core\Auth\Authentication\Authenticator;
+
+class $CLASS_NAME$ extends Authenticator implements AuthenticatorInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const AUTHENTICATOR = '';
+
+    /**
+     * {@inheritdoc}
+     */
+    public const AUTHENTICATABLE = '';
+}
