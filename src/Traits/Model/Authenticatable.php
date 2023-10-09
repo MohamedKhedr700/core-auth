@@ -5,6 +5,7 @@ namespace Raid\Core\Auth\Traits\Model;
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Facades\Authentication;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Utilities\AuthUtility;
 
 trait Authenticatable
 {
@@ -32,6 +33,14 @@ trait Authenticatable
     public static function authenticateAccount(AccountInterface $account): AuthChannelInterface
     {
         return Authentication::authAccount(static::class, $account);
+    }
+
+    /**
+     * Get authenticator.
+     */
+    public static function getAuthenticator(): ?string
+    {
+        return config('authentication.authenticators.' . static::class, AuthUtility::getDefaultAuthChannel());
     }
 
     /**

@@ -6,6 +6,7 @@ use Illuminate\Foundation\AliasLoader;
 use Laravel\Sanctum\PersonalAccessToken;
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Facades\Authentication;
+use Raid\Core\Auth\Utilities\AuthUtility;
 
 trait WithAuthProvider
 {
@@ -58,7 +59,7 @@ trait WithAuthProvider
      */
     private function registerAuthenticationFacade(): void
     {
-        $authChannel = config('authentication.default_channel');
+        $authChannel = AuthUtility::getDefaultAuthChannel();
 
         $this->app->singleton(Authentication::facade(), $authChannel);
 

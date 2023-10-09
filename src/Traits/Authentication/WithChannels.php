@@ -3,6 +3,7 @@
 namespace Raid\Core\Auth\Traits\Authentication;
 
 use Raid\Core\Auth\Exceptions\Authentication\InvalidAuthenticationChannelException;
+use Raid\Core\Auth\Utilities\AuthUtility;
 
 trait WithChannels
 {
@@ -21,7 +22,7 @@ trait WithChannels
      */
     public function findChannel(array $channels, ?string $channel): string
     {
-        $channelClass = $channel ? $this->getChannel($channels, $channel) : $this->getDefaultChannel();
+        $channelClass = $channel ? $this->getChannel($channels, $channel) : AuthUtility::getDefaultAuthChannel();
 
         if (! $channelClass) {
             $class = static::class;
@@ -46,13 +47,5 @@ trait WithChannels
         }
 
         return null;
-    }
-
-    /**
-     * Get default channel.
-     */
-    public function getDefaultChannel(): ?string
-    {
-        return config('authentication.default_channel');
     }
 }
