@@ -3,6 +3,7 @@
 namespace Raid\Core\Auth\Authentication;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthenticatableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Traits\Authentication\WithAccount;
@@ -43,29 +44,29 @@ abstract class AuthChannel implements AuthChannelInterface
     /**
      * {@inheritdoc}
      */
-    public static function auth(string $accountable, array $credentials): AuthChannelInterface
+    public static function auth(string $authenticatable, array $credentials): AuthChannelInterface
     {
-        return (new static())->authenticate(new $accountable, $credentials);
+        return (new static())->authenticate(new $authenticatable, $credentials);
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function authAccount(string $accountable, AccountInterface $account): AuthChannelInterface
+    public static function authAccount(string $authenticatable, AccountInterface $account): AuthChannelInterface
     {
-        return (new static())->authenticateAccount(new $accountable, $account);
+        return (new static())->authenticateAccount(new $authenticatable, $account);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function authenticate(AccountableInterface $accountable, array $credentials): AuthChannelInterface
+    public function authenticate(AuthenticatableInterface $authenticatable, array $credentials): AuthChannelInterface
     {
-        $this->setAccountable($accountable);
+        $this->setAuthenticatable($authenticatable);
 
         $this->setCredentials($credentials);
 
-        $account = $this->findWorkerAccount($this->workers(), $accountable, $credentials);
+        $account = $this->findWorkerAccount($this->workers(), $authenticatable, $credentials);
 
         if ($this->errors()->any()) {
             return $this;
@@ -91,9 +92,9 @@ abstract class AuthChannel implements AuthChannelInterface
     /**
      * {@inheritdoc}
      */
-    public function authenticateAccount(AccountableInterface $accountable, AccountInterface $account): AuthChannelInterface
+    public function authenticateAccount(AuthenticatableInterface $authenticatable, AccountInterface $account): AuthChannelInterface
     {
-        $this->setAccountable($accountable);
+        $this->setAuthenticatable($authenticatable);
 
         $this->setAccount($account);
 

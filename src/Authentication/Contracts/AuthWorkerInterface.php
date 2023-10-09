@@ -2,7 +2,6 @@
 
 namespace Raid\Core\Auth\Authentication\Contracts;
 
-use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
 interface AuthWorkerInterface
@@ -20,7 +19,7 @@ interface AuthWorkerInterface
     /**
      * Get the query column name.
      */
-    public function getQueryColumn(AccountableInterface $accountable, array $credentials): string;
+    public function getQueryColumn(AuthenticatableInterface $authenticatable, array $credentials): string;
 
     /**
      * Get the worker credential value.
@@ -30,5 +29,5 @@ interface AuthWorkerInterface
     /**
      * Find a worker account.
      */
-    public function find(AccountableInterface $accountable, array $credentials): ?AccountInterface;
+    public function find(AuthenticatableInterface $authenticatable, array $credentials): ?AccountInterface;
 }

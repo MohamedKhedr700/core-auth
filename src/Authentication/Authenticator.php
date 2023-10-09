@@ -48,7 +48,7 @@ abstract class Authenticator implements AuthenticatorInterface
      */
     public function attempt(array $credentials, string $channel = null): AuthChannelInterface
     {
-        $authChannel = $this->findChannel($channel);
+        $authChannel = $this->findChannel($this->channels(), $channel);
 
         return $authChannel::auth(static::authenticatable(), $credentials);
     }
@@ -58,7 +58,7 @@ abstract class Authenticator implements AuthenticatorInterface
      */
     public function verify(array $credentials, string $channel = null): AuthChannelInterface
     {
-        $authChannel = $this->findChannel($channel);
+        $authChannel = $this->findChannel($this->channels(), $channel);
 
         return $authChannel::verify(static::authenticatable(), $credentials);
     }

@@ -16,27 +16,27 @@ use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 interface AuthChannelInterface extends WithAccountableInterface, WithAccountInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRuleInterface, WithStepInterface, WithTokenInterface, WithWorkerInterface
 {
     /**
-     * Get a authentication channel.
+     * Get an authentication channel.
      */
     public static function channel(): string;
 
     /**
-     * Attempt to authenticate an accountable in statically.
+     * Attempt to authenticate an authenticatable in statically.
      */
-    public static function auth(string $accountable, array $credentials): AuthChannelInterface;
+    public static function auth(string $authenticatable, array $credentials): AuthChannelInterface;
 
     /**
-     * Attempt to authenticate an account in statically.
+     * Attempt to authenticate an authenticatable in statically.
      */
-    public static function authAccount(string $accountable, AccountInterface $account): AuthChannelInterface;
+    public static function authAccount(string $authenticatable, AccountInterface $account): AuthChannelInterface;
 
     /**
-     * Authenticate an accountable.
+     * Authenticate an authenticatable with credentials.
      */
-    public function authenticate(AccountableInterface $accountable, array $credentials): AuthChannelInterface;
+    public function authenticate(AuthenticatableInterface $authenticatable, array $credentials): AuthChannelInterface;
 
     /**
      * Authenticate an account.
      */
-    public function authenticateAccount(AccountableInterface $accountable, AccountInterface $account): AuthChannelInterface;
+    public function authenticateAccount(AuthenticatableInterface $authenticatable, AccountInterface $account): AuthChannelInterface;
 }
