@@ -38,9 +38,9 @@ trait WithWorkers
     }
 
     /**
-     * Find a worker account.
+     * Get a worker account.
      */
-    public function findWorkerAccount(array $workers, AuthenticatableInterface $authenticatable, array $credentials): ?AccountInterface
+    public function getWorkerAccount(array $workers, AuthenticatableInterface $authenticatable, array $credentials): ?AccountInterface
     {
         $authWorker = $this->getWorker($workers, $credentials);
 

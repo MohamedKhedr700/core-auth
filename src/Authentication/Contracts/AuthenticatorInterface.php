@@ -30,17 +30,12 @@ interface AuthenticatorInterface
     public function verify(array $credentials, string $channel = null): AuthChannelInterface;
 
     /**
-     * Find a channel.
-     */
-    public function findChannel(array $channels, string $channel): string;
-
-    /**
      * Get channel.
      */
-    public function getChannel(array $channels, string $channel): ?string;
+    public function getChannel(array $channels, ?string $channel): ?string;
 
     /**
-     * Get default channel.
+     * Get an authentication channel.
      */
-    public function getDefaultChannel(): ?string;
+    public function getAuthChannel(array $channels, string $channel): ?string;
 }

@@ -65,7 +65,7 @@ abstract class AuthChannel implements AuthChannelInterface
 
         $this->setCredentials($credentials);
 
-        $account = $this->findWorkerAccount($this->workers(), $authenticatable, $credentials);
+        $account = $this->getWorkerAccount($this->workers(), $authenticatable, $credentials);
 
         if ($this->errors()->any()) {
             return $this;

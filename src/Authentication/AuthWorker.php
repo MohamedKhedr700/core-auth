@@ -59,6 +59,6 @@ abstract class AuthWorker implements AuthWorkerInterface
 
         $value = $this->getWorkerValue($credentials);
 
-        return $authenticatable->findAccount($column, $value);
+        return $authenticatable->getAccount($column, $value);
     }
 }

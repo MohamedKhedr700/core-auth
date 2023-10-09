@@ -45,9 +45,9 @@ trait Authenticatable
     }
 
     /**
-     * Find an account by key and value.
+     * Get an account by key and value.
      */
-    public function findAccount(string $key, mixed $value): ?AccountInterface
+    public function getAccount(string $key, mixed $value): ?AccountInterface
     {
         return $this->where($key, $value)->first();
     }
