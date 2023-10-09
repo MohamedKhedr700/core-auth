@@ -12,7 +12,7 @@ use Raid\Core\Auth\Traits\Authentication\WithCredentials;
 use Raid\Core\Auth\Traits\Authentication\WithRules;
 use Raid\Core\Auth\Traits\Authentication\WithSteps;
 use Raid\Core\Auth\Traits\Authentication\WithToken;
-use Raid\Core\Auth\Traits\Authentication\WithWorker;
+use Raid\Core\Auth\Traits\Authentication\WithWorkers;
 use Raid\Core\Model\Traits\Error\WithErrors;
 
 abstract class AuthChannel implements AuthChannelInterface
@@ -25,7 +25,7 @@ abstract class AuthChannel implements AuthChannelInterface
     use WithRules;
     use WithSteps;
     use WithToken;
-    use WithWorker;
+    use WithWorkers;
 
     /**
      * Authentication channel.
