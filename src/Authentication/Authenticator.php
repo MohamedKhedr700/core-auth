@@ -83,8 +83,6 @@ abstract class Authenticator implements AuthenticatorInterface
             return $channel;
         }
 
-        $class = static::class;
-
-        throw new InvalidAuthenticationChannelException("Authentication channel [{$channel}] is not supported by [{$class}].");
+        return config('authentication.default_channel');
     }
 }
