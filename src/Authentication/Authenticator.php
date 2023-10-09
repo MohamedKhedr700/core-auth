@@ -6,9 +6,12 @@ use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatableInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatorInterface;
 use Raid\Core\Auth\Exceptions\Authentication\InvalidAuthenticationChannelException;
+use Raid\Core\Auth\Traits\Authentication\WithChannels;
 
 abstract class Authenticator implements AuthenticatorInterface
 {
+    use WithChannels;
+
     /**
      * Authenticator name.
      */
@@ -43,14 +46,6 @@ abstract class Authenticator implements AuthenticatorInterface
     /**
      * {@inheritdoc}
      */
-    public function channels(): array
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function attempt(array $credentials, string $channel = null): AuthChannelInterface
     {
         $authChannel = $this->findChannel($channel);
@@ -66,23 +61,5 @@ abstract class Authenticator implements AuthenticatorInterface
         $authChannel = $this->findChannel($channel);
 
         return $authChannel::verify(static::authenticatable(), $credentials);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws InvalidAuthenticationChannelException
-     */
-    public function findChannel(string $channel): string
-    {
-        foreach ($this->channels() as $channelClass) {
-            if ($channelClass::channel() !== $channel) {
-                continue;
-            }
-
-            return $channel;
-        }
-
-        return config('authentication.default_channel');
     }
 }
