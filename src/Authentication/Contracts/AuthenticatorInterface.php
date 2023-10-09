@@ -2,6 +2,8 @@
 
 namespace Raid\Core\Auth\Authentication\Contracts;
 
+use Raid\Core\Auth\Exceptions\Authentication\InvalidAuthenticationChannelException;
+
 interface AuthenticatorInterface
 {
     /**
@@ -10,7 +12,7 @@ interface AuthenticatorInterface
     public static function authenticator(): string;
 
     /**
-     * Get an authenticatable model.
+     * Get an authenticatable class.
      */
     public static function authenticatable(): string;
 
@@ -22,10 +24,15 @@ interface AuthenticatorInterface
     /**
      * Attempt to authenticate.
      */
-    public function attempt(array $credentials, string $channel = null): AuthenticatorInterface;
+    public function attempt(array $credentials, string $channel = null): AuthChannelInterface;
 
     /**
      * Verify credentials.
      */
-    public function verify(array $credentials, string $channel = null): AuthenticatorInterface;
+    public function verify(array $credentials, string $channel = null): AuthChannelInterface;
+
+    /**
+     * Find a channel.
+     */
+    public function findChannel(string $channel): string;
 }
