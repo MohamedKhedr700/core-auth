@@ -22,28 +22,28 @@ class AuthController extends Controller
     /**
      * Invoke the controller method.
      */
-    public function __invoke(Request $request, SystemAuthManager $authManager): JsonResponse
+    public function __invoke(Request $request, SystemAuthChannel $authChannel): JsonResponse
     {
         $credentials = $request->only([
             'email', 'phone', 'username', 'password',
         ]);
 
-        $authManager = $authManager->authenticate(new User(), $credentials);
+        $authChannel = $authChannel->authenticate(new User(), $credentials);
 
         // or using static call
-        $authManager = SystemAuthManager::auth(User::class, $credentials);
+        $authChannel = SystemAuthChannel::auth(User::class, $credentials);
 
-        // or using accountable static call
-        $authManager = User::authenticate($credentials);
+        // or using authenticatable static call
+        $authChannel = User::authenticate($credentials);
 
         // or using facade
-        $authManager = Authentication::authenticate(new User(), $credentials);
+        $authChannel = Authentication::authenticate(new User(), $credentials);
 
         return response()->json([
-            'manager' => $authManager->manager(),
-            'token' => $authManager->stringToken(),
-            'errors' => $authManager->errors()->toArray(),
-            'resource' => $authManager->account(),
+            'channel' => $authChannel->channel(),
+            'token' => $authChannel->stringToken(),
+            'errors' => $authChannel->errors()->toArray(),
+            'resource' => $authChannel->account(),
         ]);
     }
 }
@@ -53,19 +53,20 @@ class AuthController extends Controller
 
 The authentication process is divided into two parts.
 
-The first part is the accountable class, and the second part is the auth manager.
+The first part is the authenticatable class, and the second part is the auth manager.
 
-The `Accountable` class is the class that will be authenticated, and it must implement `AccountableInterface` interface.
+The `Authenticatable` class is the class that will be authenticated,
+and it must implement `AuthenticatableInterface` interface.
 
-The `AuthManager` class is the class that will handle the authentication process,
-and it must implement `AuthManagerInterface` interface.
+The `AuthChannel` class is the class that will handle the authentication process,
+and it must implement `AuthChannelInterface` interface.
 
-The `AuthManager` uses the `Accountable` class to query the account using the given credentials.
+The `AuthChannel` uses the `Authenticatable` class to query the account using the given credentials.
 
-The `Accountable` class must define `findAccount` method to query the account,
+The `Authenticatable` class must define `getAccount` method to query the account,
 and return an instance of `AccountInterface` interface.
 
-The `Accountable` class can be the same or different from the `AccountInterface` class,
+The `Authenticatable` class can be the same or different from the `AccountInterface` class,
 but it must query the account and return an instance of `AccountInterface` interface.
 
 Let's start with our `AccountInterface` class ex:`User` model,
@@ -97,21 +98,21 @@ The `Model` class must extend `Account` class.
 
 Now the `User` model class is ready to use as an account model.
 
-Let's configure our `Model` class to work as `Accountable` class also.
+Let's configure our `Model` class to work as `Authenticatable` class also.
 
 ``` php
 <?php
 
 namespace App\Models;
 
-use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AuthenticatableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Models\Authentication\Account;
-use Raid\Core\Auth\Traits\Model\Accountable;
+use Raid\Core\Auth\Traits\Model\Authenticatable;
 
-class User extends Account implements AccountInterface, AccountableInterface
+class User extends Account implements AccountInterface, AuthenticatableInterface
 {
-    use Accountable;
+    use Authenticatable;
 
     /**
      * {@inheritdoc}
@@ -128,7 +129,7 @@ Great, now we have to take a look at our authentication managers and workers in 
 ``` php
 'manager_workers' => [
     // here we define our auth managers.
-    SystemAuthManager::MANAGER => [
+    SystemAuthChannel::MANAGER => [
         // here we define our auth workers.
         EmailAuthWorker::class,
         PhoneAuthWorker::class,
@@ -140,14 +141,14 @@ Great, now we have to take a look at our authentication managers and workers in 
 The `manager_workers` array is responsible for defining the auth managers and workers.
 and we can add our custom auth managers and workers.
 
-The `AuthManager` is responsible for handling the system authentication process.
+The `AuthChannel` is responsible for handling the system authentication process.
 
 Each auth manager has its own workers, and each auth worker has its own authentication name/worker.
 
-When we call `AuthManager` authenticate method,
+When we call `AuthChannel` authenticate method,
 it will call the matched auth worker with the given credentials.
 
-We can add a custom auth worker to use it with the `SystemLoginProvider` auth manager or any other new auth manager.
+We can add a custom auth worker to use it with the `SystemAuthChannel` channel or any other auth channel.
 
 ### Auth Workers
 #
@@ -185,7 +186,7 @@ The `WORKER` constant is responsible for defining the auth worker name.
 
 The `WORKER` constant is used to match the auth worker with the given credentials.
 
-The `WORKER` constant is used to define the accountable query column,
+The `WORKER` constant is used to define the authenticatable query column,
 to override using same key for credentials and query, define the `QUERY_COLUMN` constant.
 
 ``` php
@@ -211,14 +212,14 @@ class UsernameAuthWorker extends AuthWorker implements AuthWorkerInterface
 
 ```
 
-The `QUERY_COLUMN` constant is used to define the accountable query column.
+The `QUERY_COLUMN` constant is used to define the authenticatable query column.
 
 We need to define the new auth worker in `config/authentication.php` file.
 
 ``` php
 'manager_workers' => [
     // here we define our auth managers.
-    SystemAuthManager::MANAGER => [
+    SystemAuthChannel::MANAGER => [
         // here we define our auth workers.
         EmailAuthWorker::class,
         PhoneAuthWorker::class,
@@ -236,53 +237,53 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Raid\Core\Auth\Authentication\Managers\SystemAuthManager;
+use Raid\Core\Auth\Authentication\Channels\SystemAuthChannel;
 
 class AuthController extends Controller
 {
     /**
      * Invoke the controller method.
      */
-    public function __invoke(Request $request, SystemAuthManager $authManager): JsonResponse
+    public function __invoke(Request $request, SystemAuthChannel $authChannel): JsonResponse
     {
         $credentials = $request->only([
             'username', 'password',
         ]);
 
-        $authManager = $authManager->authenticate(new User(), $credentials);
+        $authChannel = $authChannel->authenticate(new User(), $credentials);
 
         return response()->json([
-            'manager' => $authManager->manager(),
-            'token' => $authManager->stringToken(),
-            'errors' => $authManager->errors()->toArray(),
-            'resource' => $authManager->account(),
+            'channel' => $authChannel->channel(),
+            'token' => $authChannel->stringToken(),
+            'errors' => $authChannel->errors()->toArray(),
+            'resource' => $authChannel->account(),
         ]);
     }
 }
 ```
 
-The `SystemAuthManager` authenticate method accepts two parameters.
+The `SystemAuthChannel` authenticate method accepts two parameters.
 
-The first parameter is the accountable class instance.
+The first parameter is the authenticatable class instance.
 
 The second parameter is the credentials array.
 
-The `SystemAuthManager` authenticate method returns the `AuthManager` class instance.
+The `SystemAuthChannel` authenticate method returns the `AuthChannel` class instance.
 
-The `AuthManager` class instance uses the credentials array to match with auth worker.
+The `AuthChannel` class instance uses the credentials array to match with auth worker.
 
-The `AuthManager` class instance used the matched worker to query the accountable class to find the matched account.
+The `AuthChannel` class instance used the matched worker to query the authenticatable class to find the matched account.
 
-The `AuthManager` class apply its own authentication rules after finding the account.
+The `AuthChannel` class apply its own authentication rules after finding the account.
 
-The `Accountable` class instance must work with query builder to find the account.
+The `Authenticatable` class instance must work with query builder to find the account.
 
 Under the hood,
-the `AuthWorker` class calls `findAccount` method in the `Accountable` class instance.
+the `AuthWorker` class calls `getAccount` method in the `Authenticatable` class instance.
 
 The returned account must be an instance of `AccountInterface` interface.
 
-After finding the account, and apply the `AuthManager` rules,
+After finding the account, and apply the `AuthChannel` rules,
 you can apply authentication rules on the account itself using `isAuthenticated` method.
 
 ``` php
@@ -291,29 +292,14 @@ you can apply authentication rules on the account itself using `isAuthenticated`
 namespace App\Models;
 
 use Raid\Core\Auth\Exceptions\Authentication\AuthenticationException;
-use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AuthenticatableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Models\Authentication\Account;
-use Raid\Core\Auth\Traits\Model\Accountable;
+use Raid\Core\Auth\Traits\Model\Authenticatable;
 
-class User extends Account implements AccountInterface, AccountableInterface
+class User extends Account implements AccountInterface, AuthenticatableInterface
 {
-    use Accountable;
-    /**
-     * {@inheritdoc}
-     */
-    protected $fillable = [
-        'user_name',
-        'email',
-        'password',
-    ];
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected $hidden = [
-        'password',
-    ];
+    use Authenticatable;
     
     /**
      * Check if an account is active to authenticated.
@@ -341,7 +327,7 @@ The `isAuthenticated` method is responsible for checking if the account is authe
 The `isAuthenticated` method should throw an exception if the account is not authenticated.
 
 The `AuthenticationException` will not be thrown in the system,
-but the errors can be called with the `errors` method in the `AuthManager` instance.
+but the errors can be called with the `errors` method in the `AuthChannel` instance.
 
 The `errors` method will return an `Raid\Core\Model\Errors\Errors` instance.
 
@@ -354,20 +340,20 @@ You can work with the `errors` method as a `Illuminate\Support\MessageBag` insta
 and you can get your errors with different methods.
 
 ``` php
-$loginProvider = $authManager->login(new User(), $credentials);
+$authChannel = $authChannel->authenticate(new User(), $credentials);
 
-$errorsAsArray = $authManager->errors()->toArray();
-$errorsAsJson = $authManager->errors()->toJson();
+$errorsAsArray = $authChannel->errors()->toArray();
+$errorsAsJson = $authChannel->errors()->toJson();
 
-$allErrors = $authManager->errors()->all();
+$allErrors = $authChannel->errors()->all();
 
-$errorsByKey = $authManager->errors()->get('error');
+$errorsByKey = $authChannel->errors()->get('error');
 
-$firstError = $authManager->errors()->first();
-$firstErrorByKey = $authManager->errors()->first('error');
+$firstError = $authChannel->errors()->first();
+$firstErrorByKey = $authChannel->errors()->first('error');
 
-$lastError = $authManager->errors()->last();
-$lastErrorByKey = $authManager->errors()->last('error');
+$lastError = $authChannel->errors()->last();
+$lastErrorByKey = $authChannel->errors()->last('error');
 ```
 
 The `errors` method returns an `Raid\Core\Model\Errors\Errors` class instance.
@@ -384,26 +370,26 @@ The `first` method returns the first error, or the first error for the given key
 
 The `last` method returns the last error, or the last error for the given key.
 
-You can work with `errors` method again in the `AuthManager` class.
+You can work with `errors` method again in the `AuthChannel` class.
 
-### Auth Managers
+### Auth Channels
 #
 
 You can create your own auth manager using this command.
 
 ``` bash
-php artisan core:make-auth-manager OtpAuthManager
+php artisan core:make-auth-channel OtpAuthChannel
 ```
 
 ``` php
 <?php
 
-namespace App\Http\Authentication\Providers;
+namespace App\Http\Authentication\Channels;
 
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
-use Raid\Core\Auth\Authentication\AuthManager;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
+use Raid\Core\Auth\Authentication\AuthChannel;
 
-class OtpAuthManager extends AuthManager implements LoginProviderInterface
+class OtpAuthChannel extends AuthChannel implements AuthChannelInterface
 {
     /**
      * {@inheritdoc}
@@ -412,9 +398,9 @@ class OtpAuthManager extends AuthManager implements LoginProviderInterface
 }
 ```
 
-The `AuthManager` class must implement `AuthManagerInterface` interface.
+The `AuthChannel` class must implement `AuthChannelInterface` interface.
 
-The `AuthManager` class must extend `AuthManager` class.
+The `AuthChannel` class must extend `AuthChannel` class.
 
 The `Manager` constant is responsible for defining the authentication manager name.
 
@@ -424,12 +410,12 @@ and it defines his own authentication `rules` and `steps`.
 ``` php
 <?php
 
-namespace App\Http\Authentication\Providers;
+namespace App\Http\Authentication\Channels;
 
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
-use Raid\Core\Auth\Authentication\AuthManager;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
+use Raid\Core\Auth\Authentication\AuthChannel;
 
-class OtpAuthManager extends AuthManager implements AuthManagerInterface
+class OtpAuthChannel extends AuthChannel implements AuthChannelInterface
 {
     /**
      * {@inheritdoc}
@@ -454,18 +440,18 @@ class OtpAuthManager extends AuthManager implements AuthManagerInterface
 }
 ```
 
-The `rules` method is responsible for defining the `AuthManager` authentication rules.
+The `rules` method is responsible for defining the `AuthChannel` authentication rules.
 
 The `rules` method should return an array of authentication rules.
 
-The `steps` method is responsible for defining the `AuthManager` authentication steps.
+The `steps` method is responsible for defining the `AuthChannel` authentication steps.
 
 The `steps` method should return an array of authentication steps.
 
 The `rules` run before the `steps`.
 
-After running the `AuthManager` authentication steps, the authentication process will be stopped,
-and the `AuthManager` will return the `AuthManager` instance.
+After running the `AuthChannel` authentication steps, the authentication process will be stopped,
+and the `AuthChannel` will return the `AuthChannel` instance.
 
 We can skip using authentication rules and steps by returning an empty array.
 
@@ -483,7 +469,7 @@ php artisan core:make-auth-rule VerifiedPhoneAuthRule
 
 namespace App\Http\Authentication\Rules;
 
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthRuleInterface;
 
 class VerifiedPhoneAuthRule implements AuthRuleInterface
@@ -491,7 +477,7 @@ class VerifiedPhoneAuthRule implements AuthRuleInterface
     /**
      * Run an authentication ruler.
      */
-    public function rule(AuthManagerInterface $authManager): bool
+    public function rule(AuthChannelInterface $authChannel): bool
     {
     }
 }
@@ -505,14 +491,14 @@ The `rule` method should return a boolean value.
 
 The `rule` method should return `true` if the authentication rule passed,
 
-The `rule` method should add `errors` to `AuthManager` and return `false` if the authentication rule failed.
+The `rule` method should add `errors` to `AuthChannel` and return `false` if the authentication rule failed.
 
 ``` php
 <?php
 
 namespace App\Http\Authentication\Rules;
 
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthRuleInterface;
 
 class VerifiedPhoneAuthRule implements AuthRuleInterface
@@ -520,20 +506,20 @@ class VerifiedPhoneAuthRule implements AuthRuleInterface
     /**
      * Run an authentication rule.
      */
-    public function rule(AuthManagerInterface $authManager): bool
+    public function rule(AuthChannelInterface $authChannel): bool
     {
-        if ($authManager->account()->verifiedPhone()) {
+        if ($authChannel->account()->verifiedPhone()) {
             return true;
         }
 
-        $authManager->errors()->add('error', __('Phone number is not verified.'));
+        $authChannel->errors()->add('error', __('Phone number is not verified.'));
 
         return false;
     }
 }
 ```
 
-We need to define the new auth rule in `AuthManager` class.
+We need to define the new auth rule in `AuthChannel` class.
 
 ``` php
 <?php
@@ -541,10 +527,10 @@ We need to define the new auth rule in `AuthManager` class.
 namespace App\Http\Authentication\Providers;
 
 use App\Http\Authentication\Rules\VerifiedPhoneAuthRule;
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
-use Raid\Core\Auth\Authentication\AuthManager;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
+use Raid\Core\Auth\Authentication\AuthChannel;
 
-class OtpAuthManager extends AuthManager implements AuthManagerInterface
+class OtpAuthChannel extends AuthChannel implements AuthChannelInterface
 {
     /**
      * {@inheritdoc}
@@ -563,7 +549,7 @@ class OtpAuthManager extends AuthManager implements AuthManagerInterface
 }
 ```
 
-The `AuthManager` class instance will stop the authentication process if the authentication rule failed.
+The `AuthChannel` class instance will stop the authentication process if the authentication rule failed.
 
 #### Auth Steps
 #
@@ -579,7 +565,7 @@ php artisan core:make-auth-step OtpAuthStep
 
 namespace App\Http\Authentication\Steps;
 
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthStepInterface;
 
 class OtpAuthStep implements AuthStepInterface
@@ -587,7 +573,7 @@ class OtpAuthStep implements AuthStepInterface
     /**
      * Run an authentication step.
      */
-    public function step(AuthManagerInterface $authManager): void
+    public function step(AuthChannelInterface $authChannel): void
     {
     }
 }
@@ -597,7 +583,7 @@ The `AuthStep` class must implement `AuthStepInterface` interface.
 
 The `step` method is responsible for running the authentication step.
 
-The `step` method should add `errors` to `AuthManager` if the authentication step failed.
+The `step` method should add `errors` to `AuthChannel` if the authentication step failed.
 
 ``` php
 <?php
@@ -606,7 +592,7 @@ namespace App\Http\Authentication\Steps;
 
 use App\Services\OtpService;
 use Exception;
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthStepInterface;
 
 class OtpAuthStep implements AuthStepInterface
@@ -627,20 +613,20 @@ class OtpAuthStep implements AuthStepInterface
     /**
      * Run an authentication step.
      */
-    public function step(AuthManagerInterface $authManager): void
+    public function step(AuthChannelInterface $authChannel): void
     {
         try {
         
-            $this->otpService->send($authManager->account());
+            $this->otpService->send($authChannel->account());
             
         } catch (Exception $exception) {
-            $authManager->errors()->add('error', $exception->getMessage());
+            $authChannel->errors()->add('error', $exception->getMessage());
         }
     }
 }
 ```
 
-We need to define the new auth step in `AuthManager` class.
+We need to define the new auth step in `AuthChannel` class.
 
 ``` php
 <?php
@@ -648,10 +634,10 @@ We need to define the new auth step in `AuthManager` class.
 namespace App\Http\Authentication\Providers;
 
 use App\Http\Authentication\Steps\OtpAuthStep;
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
-use Raid\Core\Auth\Authentication\AuthManager;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
+use Raid\Core\Auth\Authentication\AuthChannel;
 
-class OtpAuthManager extends AuthManager implements LoginProviderInterface
+class OtpAuthChannel extends AuthChannel implements LoginProviderInterface
 {
     /**
      * {@inheritdoc}
@@ -671,18 +657,18 @@ class OtpAuthManager extends AuthManager implements LoginProviderInterface
 ```
 We can run our authentication step.
 
-The `AuthManager` class instance will stop the authentication process after running all authentication steps.
+The `AuthChannel` class instance will stop the authentication process after running all authentication steps.
 
 ### Authentication Facade
 #
 
-You can define a default authentication manager,
+You can define a default authentication channel,
 and use the `Raid\Core\Auth\Facades\Authentication` facade to process the authentication.
 
-Define the default auth manager in `config/authentication.php` file.
+Define the default authentication channel in `config/authentication.php` file.
 
 ``` php 
-'default_auth_manager' => \App\Http\Authentication\Managers\OtpAuthManager::class,
+'default_xhannel' => \App\Http\Authentication\Managers\OtpAuthChannel::class,
 ```
 
 ``` php
@@ -691,7 +677,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Raid\Core\Auth\Authentication\Managers\SystemAuthManager;
+use Raid\Core\Auth\Authentication\Managers\SystemAuthChannel;
 
 class AuthController extends Controller
 {
@@ -704,13 +690,13 @@ class AuthController extends Controller
             'username', 'password',
         ]);
 
-        $authManager = Authentication::authenticate(new User(), $credentials);
+        $authChannel = Authentication::authenticate(new User(), $credentials);
 
         return response()->json([
-            'manager' => $authManager->manager(),
-            'token' => $authManager->stringToken(),
-            'errors' => $authManager->errors()->toArray(),
-            'resource' => $authManager->account(),
+            'channel' => $authChannel->channel(),
+            'token' => $authChannel->stringToken(),
+            'errors' => $authChannel->errors()->toArray(),
+            'resource' => $authChannel->account(),
         ]);
     }
 }
@@ -718,7 +704,7 @@ class AuthController extends Controller
 
 The `Authentication` facade is responsible for handling the authentication process.
 
-The `Authentication` facade uses the `default_auth_manager` from the `config/authentication.php` file.
+The `Authentication` facade uses the `default_xhannel` from the `config/authentication.php` file.
 
 <br>
 
