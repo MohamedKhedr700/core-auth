@@ -4,7 +4,6 @@ namespace Raid\Core\Auth\Authentication;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatableInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthWorkerInterface;
-use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
 abstract class AuthWorker implements AuthWorkerInterface

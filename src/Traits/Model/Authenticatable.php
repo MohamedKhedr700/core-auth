@@ -3,44 +3,45 @@
 namespace Raid\Core\Auth\Traits\Model;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
-use Raid\Core\Auth\Facades\Authentication;
+use Raid\Core\Auth\Exceptions\Authentication\InvalidAuthenticatorException;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
-use Raid\Core\Auth\Utilities\AuthUtility;
 
 trait Authenticatable
 {
     /**
-     * Authenticate with credentials or instance of an account.
+     * Attempt to authenticate with credentials.
      */
-    public static function auth(array|AccountInterface $credentials): AuthChannelInterface
+    public static function attempt(array $credentials, string $channel = null): AuthChannelInterface
     {
-        $method = $credentials instanceof AccountInterface ? 'authenticateAccount' : 'authenticate';
+        $authenticator = static::getAuthenticator();
 
-        return static::{$method}($credentials);
+        return $authenticator::attempt($credentials, $channel);
     }
 
     /**
-     * Authenticate with credentials.
+     * Login with an account model.
      */
-    public static function authenticate(array $credentials): AuthChannelInterface
+    public static function login(AccountInterface $account, string $channel = null): AuthChannelInterface
     {
-        return Authentication::auth(static::class, $credentials);
-    }
+        $authenticator = static::getAuthenticator();
 
-    /**
-     * Authenticate with an account model.
-     */
-    public static function authenticateAccount(AccountInterface $account): AuthChannelInterface
-    {
-        return Authentication::authAccount(static::class, $account);
+        return $authenticator::login($account, $channel);
     }
 
     /**
      * Get authenticator.
+     *
+     * @throws InvalidAuthenticatorException
      */
-    public static function getAuthenticator(): ?string
+    public static function getAuthenticator(): string
     {
-        return config('authentication.authenticators.' . static::class, AuthUtility::getDefaultAuthChannel());
+        $authenticator = config('authentication.authenticators.'.static::class);
+
+        if (! $authenticator) {
+            throw new InvalidAuthenticatorException('No authenticator is defined for '.static::class);
+        }
+
+        return $authenticator;
     }
 
     /**

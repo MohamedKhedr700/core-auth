@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Traits\Authentication;
 
-use Raid\Core\Auth\Exceptions\Authentication\InvalidAuthenticationChannelException;
+use Raid\Core\Auth\Exceptions\Authentication\InvalidChannelException;
 use Raid\Core\Auth\Utilities\AuthUtility;
 
 trait WithChannels
@@ -18,7 +18,7 @@ trait WithChannels
     /**
      * {@inheritdoc}
      *
-     * @throws InvalidAuthenticationChannelException
+     * @throws InvalidChannelException
      */
     public function findChannel(array $channels, ?string $channel): string
     {
@@ -27,7 +27,7 @@ trait WithChannels
         if (! $channelClass) {
             $class = static::class;
 
-            throw new InvalidAuthenticationChannelException("Authentication channel [{$channel}] is not supported by [{$class}].");
+            throw new InvalidChannelException("Authentication channel [{$channel}] is not supported by [{$class}].");
         }
 
         return $channelClass;
