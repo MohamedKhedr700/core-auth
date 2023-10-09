@@ -13,30 +13,30 @@ use Raid\Core\Auth\Authentication\Contracts\Concerns\WithWorkerInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
-interface AuthManagerInterface extends WithAccountableInterface, WithAccountInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRuleInterface, WithStepInterface, WithTokenInterface, WithWorkerInterface
+interface AuthChannelInterface extends WithAccountableInterface, WithAccountInterface, WithAuthenticationInterface, WithCredentialsInterface, WithRuleInterface, WithStepInterface, WithTokenInterface, WithWorkerInterface
 {
     /**
-     * Get a login manager.
+     * Get a authentication channel.
      */
-    public static function manager(): string;
+    public static function channel(): string;
 
     /**
      * Attempt to authenticate an accountable in statically.
      */
-    public static function auth(string $accountable, array $credentials): AuthManagerInterface;
+    public static function auth(string $accountable, array $credentials): AuthChannelInterface;
 
     /**
      * Attempt to authenticate an account in statically.
      */
-    public static function authAccount(string $accountable, AccountInterface $account): AuthManagerInterface;
+    public static function authAccount(string $accountable, AccountInterface $account): AuthChannelInterface;
 
     /**
      * Authenticate an accountable.
      */
-    public function authenticate(AccountableInterface $accountable, array $credentials): AuthManagerInterface;
+    public function authenticate(AccountableInterface $accountable, array $credentials): AuthChannelInterface;
 
     /**
      * Authenticate an account.
      */
-    public function authenticateAccount(AccountableInterface $accountable, AccountInterface $account): AuthManagerInterface;
+    public function authenticateAccount(AccountableInterface $accountable, AccountInterface $account): AuthChannelInterface;
 }

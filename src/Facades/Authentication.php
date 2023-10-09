@@ -2,10 +2,10 @@
 
 namespace Raid\Core\Auth\Facades;
 
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 
 /**
- * @mixin AuthManagerInterface
+ * @mixin AuthChannelInterface
  */
 class Authentication extends Facade
 {

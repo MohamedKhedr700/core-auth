@@ -7,5 +7,5 @@ interface AuthRuleInterface
     /**
      * Run an authentication rule.
      */
-    public function rule(AuthManagerInterface $authManager): bool;
+    public function rule(AuthChannelInterface $authManager): bool;
 }

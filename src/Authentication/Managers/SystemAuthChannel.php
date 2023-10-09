@@ -2,17 +2,17 @@
 
 namespace Raid\Core\Auth\Authentication\Managers;
 
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
-use Raid\Core\Auth\Authentication\AuthManager;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
+use Raid\Core\Auth\Authentication\AuthChannel;
 use Raid\Core\Auth\Authentication\Rulers\MatchingPasswordRule;
-use Raid\Core\Auth\Models\Authentication\Enum\Manager;
+use Raid\Core\Auth\Models\Authentication\Enum\Channel;
 
-class SystemAuthManager extends AuthManager implements AuthManagerInterface
+class SystemAuthChannel extends AuthChannel implements AuthChannelInterface
 {
     /**
      * {@inheritdoc}
      */
-    public const MANAGER = Manager::SYSTEM;
+    public const CHANNEL = Channel::SYSTEM;
 
     /**
      * {@inheritdoc}

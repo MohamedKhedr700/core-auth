@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Authentication;
 
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Traits\Authentication\WithAccount;
@@ -15,7 +15,7 @@ use Raid\Core\Auth\Traits\Authentication\WithToken;
 use Raid\Core\Auth\Traits\Authentication\WithWorker;
 use Raid\Core\Model\Traits\Error\WithErrors;
 
-abstract class AuthManager implements AuthManagerInterface
+abstract class AuthChannel implements AuthChannelInterface
 {
     use WithAccount;
     use WithAccountable;
@@ -28,22 +28,22 @@ abstract class AuthManager implements AuthManagerInterface
     use WithWorker;
 
     /**
-     * Login manager.
+     * Authentication channel.
      */
-    public const MANAGER = '';
+    public const CHANNEL = '';
 
     /**
      * {@inheritdoc}
      */
-    public static function manager(): string
+    public static function channel(): string
     {
-        return static::MANAGER;
+        return static::CHANNEL;
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function auth(string $accountable, array $credentials): AuthManagerInterface
+    public static function auth(string $accountable, array $credentials): AuthChannelInterface
     {
         return (new static())->authenticate(new $accountable, $credentials);
     }
@@ -51,7 +51,7 @@ abstract class AuthManager implements AuthManagerInterface
     /**
      * {@inheritdoc}
      */
-    public static function authAccount(string $accountable, AccountInterface $account): AuthManagerInterface
+    public static function authAccount(string $accountable, AccountInterface $account): AuthChannelInterface
     {
         return (new static())->authenticateAccount(new $accountable, $account);
     }
@@ -59,7 +59,7 @@ abstract class AuthManager implements AuthManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function authenticate(AccountableInterface $accountable, array $credentials): AuthManagerInterface
+    public function authenticate(AccountableInterface $accountable, array $credentials): AuthChannelInterface
     {
         $this->setAccountable($accountable);
 
@@ -91,7 +91,7 @@ abstract class AuthManager implements AuthManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function authenticateAccount(AccountableInterface $accountable, AccountInterface $account): AuthManagerInterface
+    public function authenticateAccount(AccountableInterface $accountable, AccountInterface $account): AuthChannelInterface
     {
         $this->setAccountable($accountable);
 

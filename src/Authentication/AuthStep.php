@@ -2,7 +2,7 @@
 
 namespace Raid\Core\Auth\Authentication;
 
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthStepInterface;
 
 abstract class AuthStep implements AuthStepInterface
@@ -10,7 +10,7 @@ abstract class AuthStep implements AuthStepInterface
     /**
      * {@inheritdoc}
      */
-    public function step(AuthManagerInterface $authManager): void
+    public function step(AuthChannelInterface $authManager): void
     {
     }
 }

@@ -4,7 +4,7 @@ namespace Raid\Core\Auth\Models\Authentication\Enum;
 
 use Raid\Core\Enum\Enums\Enum;
 
-class Manager extends Enum
+class Channel extends Enum
 {
     public const DEVICE = 'device';
 

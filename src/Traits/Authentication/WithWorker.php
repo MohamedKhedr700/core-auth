@@ -18,7 +18,7 @@ trait WithWorker
      */
     public function workers(): array
     {
-        return config('authentication.manager_workers.'.static::manager(), []);
+        return config('authentication.channel_workers.'.static::channel(), []);
     }
 
     /**

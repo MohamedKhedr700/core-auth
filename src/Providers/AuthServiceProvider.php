@@ -5,7 +5,7 @@ namespace Raid\Core\Auth\Providers;
 use Illuminate\Support\ServiceProvider;
 use Raid\Core\Auth\Commands\CreateAuthAccountableCommand;
 use Raid\Core\Auth\Commands\CreateAuthAccountCommand;
-use Raid\Core\Auth\Commands\CreateAuthManagerCommand;
+use Raid\Core\Auth\Commands\CreateAuthChannelCommand;
 use Raid\Core\Auth\Commands\CreateAuthModelCommand;
 use Raid\Core\Auth\Commands\CreateAuthRuleCommand;
 use Raid\Core\Auth\Commands\CreateAuthStepCommand;
@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
     protected array $commands = [
         CreateAuthAccountableCommand::class,
         CreateAuthAccountCommand::class,
-        CreateAuthManagerCommand::class,
+        CreateAuthChannelCommand::class,
         CreateAuthModelCommand::class,
         CreateAuthRuleCommand::class,
         CreateAuthStepCommand::class,
@@ -47,6 +47,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerAuth();
-        $this->registerPersonalAccessTokenModel();
     }
 }

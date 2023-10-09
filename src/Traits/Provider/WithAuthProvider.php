@@ -4,7 +4,7 @@ namespace Raid\Core\Auth\Traits\Provider;
 
 use Illuminate\Foundation\AliasLoader;
 use Laravel\Sanctum\PersonalAccessToken;
-use Raid\Core\Auth\Authentication\Contracts\AuthManagerInterface;
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Facades\Authentication;
 
 trait WithAuthProvider
@@ -49,19 +49,20 @@ trait WithAuthProvider
      */
     private function registerAuth(): void
     {
-        $this->registerLoginFacade();
+        $this->registerAuthenticationFacade();
+        $this->registerPersonalAccessTokenModel();
     }
 
     /**
      * Register login facade.
      */
-    private function registerLoginFacade(): void
+    private function registerAuthenticationFacade(): void
     {
-        $authManager = config('authentication.default_auth_manager');
+        $authChannel = config('authentication.default_channel');
 
-        $this->app->singleton(Authentication::facade(), $authManager);
+        $this->app->singleton(Authentication::facade(), $authChannel);
 
-        $this->app->singleton(AuthManagerInterface::class, $authManager);
+        $this->app->singleton(AuthChannelInterface::class, $authChannel);
     }
 
     /**

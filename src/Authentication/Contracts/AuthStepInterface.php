@@ -7,5 +7,5 @@ interface AuthStepInterface
     /**
      * Run an authentication step.
      */
-    public function step(AuthManagerInterface $authManager): void;
+    public function step(AuthChannelInterface $authManager): void;
 }

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default_auth_manager' => \Raid\Core\Auth\Authentication\Managers\SystemAuthManager::class,
+    'default_channel' => \Raid\Core\Auth\Authentication\Managers\SystemAuthChannel::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -41,18 +41,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Provider Managers
+    | Channel Managers
     |--------------------------------------------------------------------------
     |
-    | Here you can define the authentication manager workers that will be used in the application.
+    | Here you can define the authentication channel workers that will be used in the application.
     |
     */
 
-    'manager_workers' => [
-        \Raid\Core\Auth\Authentication\Managers\DeviceAuthManager::MANAGER => [
+    'channel_workers' => [
+        \Raid\Core\Auth\Authentication\Managers\DeviceAuthChannel::CHANNEL => [
             \Raid\Core\Auth\Authentication\Workers\DeviceIdAuthWorker::class,
         ],
-        \Raid\Core\Auth\Authentication\Managers\SystemAuthManager::MANAGER => [
+        \Raid\Core\Auth\Authentication\Managers\SystemAuthChannel::CHANNEL => [
             \Raid\Core\Auth\Authentication\Workers\EmailAuthWorker::class,
             \Raid\Core\Auth\Authentication\Workers\PhoneAuthWorker::class,
             \Raid\Core\Auth\Authentication\Workers\UsernameAuthWorker::class,

@@ -1,0 +1,14 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
+use Raid\Core\Auth\Authentication\AuthChannel;
+
+class $CLASS_NAME$ extends AuthChannel implements AuthChannelInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const CHANNEL = '';
+}

@@ -1,6 +1,6 @@
 # Core Auth Package
 
-This package is responsible for handling all authentication models and managers in the system.
+This package is responsible for handling all authentication models and channels in the system.
 
 ## Installation
 
