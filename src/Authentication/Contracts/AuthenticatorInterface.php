@@ -34,12 +34,12 @@ interface AuthenticatorInterface
     /**
      * Find a channel.
      */
-    public function findChannel(string $channel): string;
+    public function findChannel(array $channels, string $channel): string;
 
     /**
      * Get channel.
      */
-    public function getChannel(string $channel): ?string;
+    public function getChannel(array $channels, string $channel): ?string;
 
     /**
      * Get default channel.

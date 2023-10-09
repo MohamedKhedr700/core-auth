@@ -33,7 +33,7 @@ trait WithChannels
     }
 
     /**
-     * Get channel.
+     * {@inheritdoc}
      */
     public function getChannel(array $channels, string $channel): ?string
     {
