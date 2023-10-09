@@ -1,6 +1,6 @@
 <?php
 
-namespace Raid\Core\Auth\Authentication\Managers;
+namespace Raid\Core\Auth\Authentication\Channels;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\AuthChannel;
@@ -17,7 +17,7 @@ class SystemAuthChannel extends AuthChannel implements AuthChannelInterface
     /**
      * {@inheritdoc}
      */
-    public function rulers(): array
+    public function rules(): array
     {
         return [
             MatchingPasswordRule::class,

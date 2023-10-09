@@ -49,10 +49,10 @@ return [
     */
 
     'channel_workers' => [
-        \Raid\Core\Auth\Authentication\Managers\DeviceAuthChannel::CHANNEL => [
+        \Raid\Core\Auth\Authentication\Channels\DeviceAuthChannel::CHANNEL => [
             \Raid\Core\Auth\Authentication\Workers\DeviceIdAuthWorker::class,
         ],
-        \Raid\Core\Auth\Authentication\Managers\SystemAuthChannel::CHANNEL => [
+        \Raid\Core\Auth\Authentication\Channels\SystemAuthChannel::CHANNEL => [
             \Raid\Core\Auth\Authentication\Workers\EmailAuthWorker::class,
             \Raid\Core\Auth\Authentication\Workers\PhoneAuthWorker::class,
             \Raid\Core\Auth\Authentication\Workers\UsernameAuthWorker::class,
