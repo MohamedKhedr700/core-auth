@@ -17,25 +17,25 @@ interface AuthenticatorInterface
     /**
      * Get authenticator channels.
      */
-    public function channels(): array;
+    public static function channels(): array;
 
     /**
-     * Attempt to authenticate.
+     * Attempt to authenticate with credentials and channel.
      */
-    public function attempt(array $credentials, string $channel = null): AuthChannelInterface;
+    public static function attempt(array $credentials, string $channel = null): AuthChannelInterface;
 
     /**
-     * Verify credentials.
+     * Verify credentials with a channel.
      */
-    public function verify(array $credentials, string $channel = null): AuthChannelInterface;
+    public static function verify(array $credentials, string $channel = null): AuthChannelInterface;
 
     /**
      * Get channel.
      */
-    public function getChannel(array $channels, ?string $channel): ?string;
+    public static function getChannel(array $channels, ?string $channel): ?string;
 
     /**
      * Get an authentication channel.
      */
-    public function getAuthChannel(array $channels, string $channel): ?string;
+    public static function getAuthChannel(array $channels, string $channel): ?string;
 }

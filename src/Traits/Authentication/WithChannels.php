@@ -9,20 +9,12 @@ trait WithChannels
 {
     /**
      * {@inheritdoc}
-     */
-    public function channels(): array
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
      *
      * @throws InvalidChannelException
      */
-    public function getChannel(array $channels, ?string $channel): string
+    public static function getChannel(array $channels, ?string $channel): string
     {
-        $channelClass = $channel ? $this->getAuthChannel($channels, $channel) : AuthUtility::getDefaultAuthChannel();
+        $channelClass = $channel ? static::getAuthChannel($channels, $channel) : AuthUtility::getDefaultAuthChannel();
 
         if (! $channelClass) {
             $class = static::class;
@@ -36,7 +28,7 @@ trait WithChannels
     /**
      * {@inheritdoc}
      */
-    public function getAuthChannel(array $channels, string $channel): ?string
+    public static function getAuthChannel(array $channels, string $channel): ?string
     {
         foreach ($channels as $channelClass) {
             if ($channelClass::channel() !== $channel) {
