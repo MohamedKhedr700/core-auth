@@ -21,7 +21,7 @@ trait WithChannels
      */
     public function findChannel(array $channels, ?string $channel): string
     {
-        $channelClass =  $channel ? $this->getChannel($channels, $channel) : $this->getDefaultChannel();
+        $channelClass = $channel ? $this->getChannel($channels, $channel) : $this->getDefaultChannel();
 
         if (! $channelClass) {
             $class = static::class;

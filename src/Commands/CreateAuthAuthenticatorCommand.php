@@ -29,7 +29,7 @@ class CreateAuthAuthenticatorCommand extends CreateCommand
      */
     public function getStubPath(): string
     {
-        return __DIR__ . '/../../resources/stubs/authenticator-channel.stub';
+        return __DIR__.'/../../resources/stubs/auth-authenticator.stub';
     }
 
     /**

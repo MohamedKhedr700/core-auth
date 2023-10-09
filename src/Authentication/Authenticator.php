@@ -5,7 +5,6 @@ namespace Raid\Core\Auth\Authentication;
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatableInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatorInterface;
-use Raid\Core\Auth\Exceptions\Authentication\InvalidAuthenticationChannelException;
 use Raid\Core\Auth\Traits\Authentication\WithChannels;
 
 abstract class Authenticator implements AuthenticatorInterface

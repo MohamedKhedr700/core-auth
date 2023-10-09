@@ -2,7 +2,6 @@
 
 namespace Raid\Core\Auth\Authentication\Rulers;
 
-
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthRuleInterface;
 
@@ -13,7 +12,7 @@ class MatchingPasswordRule implements AuthRuleInterface
      */
     public function rule(AuthChannelInterface $authChannel): bool
     {
-        if ($authChannel->account()->isMatchingPassword($authChannel->credentials('password',''))) {
+        if ($authChannel->account()->isMatchingPassword($authChannel->credentials('password', ''))) {
             return true;
         }
 

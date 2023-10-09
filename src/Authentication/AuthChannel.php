@@ -4,7 +4,6 @@ namespace Raid\Core\Auth\Authentication;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatableInterface;
-use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Traits\Authentication\WithAccount;
 use Raid\Core\Auth\Traits\Authentication\WithAuthenticatable;

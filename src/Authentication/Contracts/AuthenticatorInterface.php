@@ -2,8 +2,6 @@
 
 namespace Raid\Core\Auth\Authentication\Contracts;
 
-use Raid\Core\Auth\Exceptions\Authentication\InvalidAuthenticationChannelException;
-
 interface AuthenticatorInterface
 {
     /**
