@@ -659,6 +659,135 @@ We can run our authentication step.
 
 The `AuthChannel` class instance will stop the authentication process after running all authentication steps.
 
+### Authenticators
+#
+
+You can create your own authenticator using this command.
+
+``` bash
+php artisan core:make-auth-authenticator UserAuthenticator
+```
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Authenticator;
+
+use Raid\Core\Auth\Authentication\Contracts\AuthenticatorInterface;
+use Raid\Core\Auth\Authentication\Authenticator;
+
+class UserAuthenticator extends Authenticator implements AuthenticatorInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const AUTHENTICATOR = '';
+
+    /**
+     * {@inheritdoc}
+     */
+    public const AUTHENTICATABLE = '';
+
+    /**
+     * {@inheritdoc}
+     */
+    public const CHANNELS = [];
+```
+
+The `Authenticator` class must implement `AuthenticatorInterface` interface.
+
+The `Authenticator` class must extend `Authenticator` class.
+
+The `AUTHENTICATOR` constant is responsible for defining the authenticator name.
+
+The `AUTHENTICATABLE` constant is responsible for defining the authenticatable class name.
+
+The `CHANNELS` constant is responsible for defining the authenticator channels.
+
+The `CHANNELS` constant should return an array of authenticator channels.
+
+``` php
+<?php
+
+namespace App\Http\Authentication\Authenticator;
+
+use App\Http\Authentication\Channels\OtpAuthChannel;
+use App\Models\User;
+use Raid\Core\Auth\Authentication\Channels\SystemAuthChannel;
+use Raid\Core\Auth\Authentication\Contracts\AuthenticatorInterface;
+use Raid\Core\Auth\Authentication\Authenticator;
+
+class UserAuthenticator extends Authenticator implements AuthenticatorInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public const AUTHENTICATOR = 'user';
+
+    /**
+     * {@inheritdoc}
+     */
+    public const AUTHENTICATABLE = User::class;
+
+    /**
+     * {@inheritdoc}
+     */
+    public const CHANNELS = [
+        OtpAuthChannel::class,
+        SystemAuthChannel::class,
+    ];
+}
+```
+
+The `Authenticator` class instance is responsible for handling the authentication with different channels.
+
+We need to define the new authenticator in `config/authentication.php` file.
+
+``` php
+'authenticators' => [
+    User::class => UserAuthenticator::class,
+],
+```
+
+Now let's try our new authenticator.
+
+``` php
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+class AuthController extends Controller
+{
+    /**
+     * Invoke the controller method.
+     */
+    public function __invoke(Request $request): JsonResponse
+    {
+        $credentials = $request->only([
+            'username', 'password',
+        ]);
+
+        $authManager = UserAuthenticator::attempt($credentials, 'otp');
+        
+        // or use authenticatable static call
+        $authManager = User::attempt($credentials, 'otp');
+
+        return response()->json([
+            'channel' => $authChannel->channel(),
+            'token' => $authChannel->stringToken(),
+            'errors' => $authChannel->errors()->toArray(),
+            'resource' => $authChannel->account(),
+        ]);
+    }
+}
+```
+
+The `Authenticator` class instance is responsible for finding the matched authenticatable channel.
+
+You can skip passing the channel name to use the default channel.
+
 ### Authentication Facade
 #
 
@@ -668,7 +797,7 @@ and use the `Raid\Core\Auth\Facades\Authentication` facade to process the authen
 Define the default authentication channel in `config/authentication.php` file.
 
 ``` php 
-'default_xhannel' => \App\Http\Authentication\Managers\OtpAuthChannel::class,
+'default_channel' => \App\Http\Authentication\Managers\OtpAuthChannel::class,
 ```
 
 ``` php
