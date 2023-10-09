@@ -16,4 +16,9 @@ class $CLASS_NAME$ extends Authenticator implements AuthenticatorInterface
      * {@inheritdoc}
      */
     public const AUTHENTICATABLE = '';
+
+    /**
+     * {@inheritdoc}
+     */
+    public const CHANNELS = [];
 }
