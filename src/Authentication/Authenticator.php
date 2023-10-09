@@ -6,6 +6,7 @@ use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatableInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatorInterface;
 use Raid\Core\Auth\Exceptions\Authentication\InvalidChannelException;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Traits\Authentication\WithChannels;
 
 abstract class Authenticator implements AuthenticatorInterface
@@ -61,6 +62,18 @@ abstract class Authenticator implements AuthenticatorInterface
         $authChannel = static::getChannel(static::channels(), $channel);
 
         return $authChannel::auth(static::authenticatable(), $credentials);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws InvalidChannelException
+     */
+    public static function login(AccountInterface $account, string $channel = null): AuthChannelInterface
+    {
+        $authChannel = static::getChannel(static::channels(), $channel);
+
+        return $authChannel::authAccount($account);
     }
 
     /**
