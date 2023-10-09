@@ -3,7 +3,6 @@
 namespace Raid\Core\Auth\Traits\Model;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
-use Raid\Core\Auth\Exceptions\Authentication\AuthenticationException;
 use Raid\Core\Auth\Facades\Authentication;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 
@@ -33,17 +32,6 @@ trait Authenticatable
     public static function authenticateAccount(AccountInterface $account): AuthChannelInterface
     {
         return Authentication::authAccount(static::class, $account);
-    }
-
-    /**
-     * Check if an account is active to authenticate.
-     * Throw Authentication exception if failed to authenticate.
-     */
-    public function isAuthenticated(): void
-    {
-        //        if ($this->attribute('banned', false)) {
-        //            throw new AuthenticationException(__('Account is banned.'));
-        //        }
     }
 
     /**

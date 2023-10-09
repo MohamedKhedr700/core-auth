@@ -4,7 +4,7 @@ namespace Raid\Core\Auth\Traits\Authentication;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatableInterface;
 
-trait WithAccountable
+trait WithAuthenticatable
 {
     /**
      * Authenticatable instance.

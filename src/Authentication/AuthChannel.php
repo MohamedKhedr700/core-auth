@@ -7,7 +7,7 @@ use Raid\Core\Auth\Authentication\Contracts\AuthenticatableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
 use Raid\Core\Auth\Traits\Authentication\WithAccount;
-use Raid\Core\Auth\Traits\Authentication\WithAccountable;
+use Raid\Core\Auth\Traits\Authentication\WithAuthenticatable;
 use Raid\Core\Auth\Traits\Authentication\WithAuthentication;
 use Raid\Core\Auth\Traits\Authentication\WithCredentials;
 use Raid\Core\Auth\Traits\Authentication\WithRules;
@@ -19,7 +19,7 @@ use Raid\Core\Model\Traits\Error\WithErrors;
 abstract class AuthChannel implements AuthChannelInterface
 {
     use WithAccount;
-    use WithAccountable;
+    use WithAuthenticatable;
     use WithAuthentication;
     use WithCredentials;
     use WithErrors;
