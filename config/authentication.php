@@ -4,16 +4,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Default Authentication Manager
+    | Default Authentication Channel
     |--------------------------------------------------------------------------
     |
-    | This option controls the default authentication manager that will be used.
-    | The provider is used to determine which login manager should be used
+    | This option controls the default authentication channel that will be used.
+    | The value is used to determine which authentication channel should be used
     | while authenticating accounts using the authentication facade.
     |
     */
 
-    'default_channel' => \Raid\Core\Auth\Authentication\Managers\SystemAuthChannel::class,
+    'default_channel' => \Raid\Core\Auth\Authentication\Channels\SystemAuthChannel::class,
 
     /*
     |--------------------------------------------------------------------------
