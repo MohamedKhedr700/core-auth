@@ -33,9 +33,6 @@ class AuthController extends Controller
         // or using static call
         $authChannel = SystemAuthChannel::auth(User::class, $credentials);
 
-        // or using authenticatable static call
-        $authChannel = User::authenticate($credentials);
-
         // or using facade
         $authChannel = Authentication::authenticate(new User(), $credentials);
 
@@ -53,7 +50,7 @@ class AuthController extends Controller
 
 The authentication process is divided into two parts.
 
-The first part is the authenticatable class, and the second part is the auth manager.
+The first part is the authenticatable class, and the second part is the auth channel.
 
 The `Authenticatable` class is the class that will be authenticated,
 and it must implement `AuthenticatableInterface` interface.
@@ -67,7 +64,7 @@ The `Authenticatable` class must define `getAccount` method to query the account
 and return an instance of `AccountInterface` interface.
 
 The `Authenticatable` class can be the same or different from the `AccountInterface` class,
-but it must query the account and return an instance of `AccountInterface` interface.
+but it must query the account and return an instance of `AccountInterface` interface if found.
 
 Let's start with our `AccountInterface` class ex:`User` model,
 we can use this command to create an account model.
@@ -121,14 +118,14 @@ class User extends Account implements AccountInterface, AuthenticatableInterface
 }
 ```
 
-### Auth Managers and Workers
+### Auth Channels and Workers
 #
 
-Great, now we have to take a look at our authentication managers and workers in `config/authentication.php` file.
+Great, now we have to take a look at our authentication channels and workers in `config/authentication.php` file.
 
 ``` php
-'manager_workers' => [
-    // here we define our auth managers.
+'channel_workers' => [
+    // here we define our auth channels.
     SystemAuthChannel::MANAGER => [
         // here we define our auth workers.
         EmailAuthWorker::class,
@@ -138,12 +135,12 @@ Great, now we have to take a look at our authentication managers and workers in 
 ],
 ```
 
-The `manager_workers` array is responsible for defining the auth managers and workers.
-and we can add our custom auth managers and workers.
+The `channel_workers` array is responsible for defining the auth channels and their workers.
+and we can add our custom channels and workers.
 
-The `AuthChannel` is responsible for handling the system authentication process.
+The `AuthChannel` is responsible for handling the authentication process.
 
-Each auth manager has its own workers, and each auth worker has its own authentication name/worker.
+Each auth channel has its own workers, and each auth worker has its own authentication name/worker.
 
 When we call `AuthChannel` authenticate method,
 it will call the matched auth worker with the given credentials.
@@ -214,7 +211,8 @@ class UsernameAuthWorker extends AuthWorker implements AuthWorkerInterface
 
 The `QUERY_COLUMN` constant is used to define the authenticatable query column.
 
-We need to define the new auth worker in `config/authentication.php` file.
+We need to define the new auth worker in `config/authentication.php` file,
+to skip using config file, we can use the `workers` method in the `AuthChannel` class to define its workers.
 
 ``` php
 'manager_workers' => [
@@ -375,7 +373,7 @@ You can work with `errors` method again in the `AuthChannel` class.
 ### Auth Channels
 #
 
-You can create your own auth manager using this command.
+You can create your own auth channel using this command.
 
 ``` bash
 php artisan core:make-auth-channel OtpAuthChannel
@@ -394,7 +392,7 @@ class OtpAuthChannel extends AuthChannel implements AuthChannelInterface
     /**
      * {@inheritdoc}
      */
-    public const MANAGER = '';
+    public const CHANNEL = '';
 }
 ```
 
@@ -402,10 +400,10 @@ The `AuthChannel` class must implement `AuthChannelInterface` interface.
 
 The `AuthChannel` class must extend `AuthChannel` class.
 
-The `Manager` constant is responsible for defining the authentication manager name.
+The `CHANNEL` constant is responsible for defining the authentication channel name.
 
-The auth manager is the main class that handles the authentication process,
-and it defines his own authentication `rules` and `steps`.
+The auth channel is the main class that handles the authentication process,
+and it defines his own authentication `workers`, `rules` and `steps`.
 
 ``` php
 <?php
@@ -420,8 +418,16 @@ class OtpAuthChannel extends AuthChannel implements AuthChannelInterface
     /**
      * {@inheritdoc}
      */
-    public const MANAGER = 'otp';
+    public const CHANNEL = 'otp';
 
+    /**
+     * Get authentication workers.
+     */
+    public function workers(): array
+    {
+        return [];
+    }
+    
     /**
      * Get authentication rules.
      */
@@ -439,6 +445,10 @@ class OtpAuthChannel extends AuthChannel implements AuthChannelInterface
     }
 }
 ```
+
+The `workers` method is responsible for defining the `AuthChannel` authentication workers.
+
+The `workers` method should return an array of authentication workers.
 
 The `rules` method is responsible for defining the `AuthChannel` authentication rules.
 
@@ -524,7 +534,7 @@ We need to define the new auth rule in `AuthChannel` class.
 ``` php
 <?php
 
-namespace App\Http\Authentication\Providers;
+namespace App\Http\Authentication\Channels;
 
 use App\Http\Authentication\Rules\VerifiedPhoneAuthRule;
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
@@ -535,7 +545,7 @@ class OtpAuthChannel extends AuthChannel implements AuthChannelInterface
     /**
      * {@inheritdoc}
      */
-    public const MANAGER = 'otp';
+    public const CHANNEL = 'otp';
 
     /**
      * Get authentication rules.
@@ -631,7 +641,7 @@ We need to define the new auth step in `AuthChannel` class.
 ``` php
 <?php
 
-namespace App\Http\Authentication\Providers;
+namespace App\Http\Authentication\Channels;
 
 use App\Http\Authentication\Steps\OtpAuthStep;
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
@@ -642,7 +652,7 @@ class OtpAuthChannel extends AuthChannel implements LoginProviderInterface
     /**
      * {@inheritdoc}
      */
-    public const MANAGER = 'otp';
+    public const CHANNEL = 'otp';
 
     /**
      * Get authentication steps.
@@ -754,6 +764,7 @@ Now let's try our new authenticator.
 ``` php
 namespace App\Http\Controllers;
 
+use App\Http\Authentication\Authenticator\UserAuthenticator;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -797,7 +808,7 @@ and use the `Raid\Core\Auth\Facades\Authentication` facade to process the authen
 Define the default authentication channel in `config/authentication.php` file.
 
 ``` php 
-'default_channel' => \App\Http\Authentication\Managers\OtpAuthChannel::class,
+'default_channel' => \App\Http\Authentication\Channels\OtpAuthChannel::class,
 ```
 
 ``` php
@@ -806,7 +817,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Raid\Core\Auth\Authentication\Managers\SystemAuthChannel;
+use Raid\Core\Auth\Facades\Authentication;
 
 class AuthController extends Controller
 {
@@ -833,7 +844,7 @@ class AuthController extends Controller
 
 The `Authentication` facade is responsible for handling the authentication process.
 
-The `Authentication` facade uses the `default_xhannel` from the `config/authentication.php` file.
+The `Authentication` facade uses the `default_channel` from the `config/authentication.php` file.
 
 <br>
 
