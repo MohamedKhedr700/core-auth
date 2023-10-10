@@ -126,7 +126,7 @@ Great, now we have to take a look at our authentication channels and workers in 
 ``` php
 'channel_workers' => [
     // here we define our auth channels.
-    SystemAuthChannel::MANAGER => [
+    SystemAuthChannel::CHANNEL => [
         // here we define our auth workers.
         EmailAuthWorker::class,
         PhoneAuthWorker::class,
@@ -217,7 +217,7 @@ to skip using config file, we can use the `workers` method in the `AuthChannel` 
 ``` php
 'manager_workers' => [
     // here we define our auth managers.
-    SystemAuthChannel::MANAGER => [
+    SystemAuthChannel::CHANNEL => [
         // here we define our auth workers.
         EmailAuthWorker::class,
         PhoneAuthWorker::class,
@@ -814,10 +814,10 @@ Define the default authentication channel in `config/authentication.php` file.
 ``` php
 namespace App\Http\Controllers;
 
+use Raid\Core\Auth\Facades\Authentication;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Raid\Core\Auth\Facades\Authentication;
 
 class AuthController extends Controller
 {
