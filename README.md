@@ -681,7 +681,7 @@ php artisan core:make-auth-authenticator UserAuthenticator
 ``` php
 <?php
 
-namespace App\Http\Authentication\Authenticator;
+namespace App\Http\Authentication\Authenticators;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatorInterface;
 use Raid\Core\Auth\Authentication\Authenticator;
@@ -719,7 +719,7 @@ The `CHANNELS` constant should return an array of authenticator channels.
 ``` php
 <?php
 
-namespace App\Http\Authentication\Authenticator;
+namespace App\Http\Authentication\Authenticators;
 
 use App\Http\Authentication\Channels\OtpAuthChannel;
 use App\Models\User;
@@ -751,7 +751,9 @@ class UserAuthenticator extends Authenticator implements AuthenticatorInterface
 
 The `Authenticator` class instance is responsible for handling the authentication with different channels.
 
-We need to define the new authenticator in `config/authentication.php` file.
+We can define our authenticator with two ways:
+
+First in `config/authentication.php` file.
 
 ``` php
 'authenticators' => [
@@ -759,12 +761,40 @@ We need to define the new authenticator in `config/authentication.php` file.
 ],
 ```
 
+or define `getAuthenticator` method in the `Authenticatable` class.
+
+``` php
+<?php
+
+namespace App\Models;
+
+use Raid\Core\Auth\Models\Authentication\Contracts\AuthenticatableInterface;
+use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
+use Raid\Core\Auth\Models\Authentication\Account;
+use Raid\Core\Auth\Traits\Model\Authenticatable;
+use App\Http\Authentication\Authenticators\UserAuthenticator;
+
+class User extends Account implements AccountInterface, AuthenticatableInterface
+{
+    use Authenticatable;
+
+    /**
+     * Get authenticator class name.
+     */
+    public function getAuthenticator(): string
+    {
+        return UserAuthenticator::class;
+    }
+}
+
+```
+
 Now let's try our new authenticator.
 
 ``` php
 namespace App\Http\Controllers;
 
-use App\Http\Authentication\Authenticator\UserAuthenticator;
+use App\Http\Authentication\Authenticators\UserAuthenticator;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

@@ -38,7 +38,7 @@ class CreateAuthAuthenticatorCommand extends CreateCommand
     public function getStubVariables(): array
     {
         return [
-            'NAMESPACE' => 'App\\Http\\Authentication\\Authenticator',
+            'NAMESPACE' => 'App\\Http\\Authentication\\Authenticators',
             'CLASS_NAME' => $this->getClassName(),
         ];
     }
@@ -48,6 +48,6 @@ class CreateAuthAuthenticatorCommand extends CreateCommand
      */
     public function getSourceFilePath(): string
     {
-        return app_path('Http/Authentication/Authenticator/'.$this->getClassName()).'.php';
+        return app_path('Http/Authentication/Authenticators/'.$this->getClassName()).'.php';
     }
 }
