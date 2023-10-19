@@ -35,3 +35,10 @@ if (! function_exists('get_account_avatar')) {
         return 'https://ui-avatars.com/api/?name='.str_replace(' ', '-', $name);
     }
 }
+
+if (! function_exists('auth_check')) {
+    function auth_check(string $guard): bool
+    {
+        return Auth::guard($guard)->check();
+    }
+}
