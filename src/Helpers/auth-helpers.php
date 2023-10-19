@@ -31,9 +31,9 @@ if (! function_exists('auth_check')) {
     /**
      * Check if the given guard is authenticated.
      */
-    function auth_check(string $guard): bool
+    function auth_check(string $guard = null): bool
     {
-        return Auth::guard($guard)->check();
+        return $guard ? Auth::guard($guard)->check() : Auth::check();
     }
 }
 
