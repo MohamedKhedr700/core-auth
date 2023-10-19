@@ -59,6 +59,13 @@ abstract class Account extends Model implements AccountInterface, Authenticatabl
     ];
 
     /**
+     * Account cast attributes.
+     */
+    protected array $accountCast = [
+        'last_login_at' => 'datetime',
+    ];
+
+    /**
      * {@inheritdoc}
      */
     public static function boot(): void
@@ -84,5 +91,15 @@ abstract class Account extends Model implements AccountInterface, Authenticatabl
     public function getFillable(): array
     {
         return array_merge(parent::getFillable(), $this->accountFillable);
+    }
+
+    /**
+     * Get the cast array.
+     */
+    public function getCasts(): array
+    {
+       $casts = parent::getCasts();
+
+       return array_merge($casts, $this->accountCast);
     }
 }
