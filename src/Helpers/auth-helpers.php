@@ -26,6 +26,17 @@ if (! function_exists('authenticate_account')) {
     }
 }
 
+
+if (! function_exists('auth_check')) {
+    /**
+     * Check if the given guard is authenticated.
+     */
+    function auth_check(string $guard): bool
+    {
+        return Auth::guard($guard)->check();
+    }
+}
+
 if (! function_exists('get_account_avatar')) {
     /**
      * Get account avatar based on his name from https://ui-avatars.com/.
@@ -33,12 +44,5 @@ if (! function_exists('get_account_avatar')) {
     function get_account_avatar(string $name): string
     {
         return 'https://ui-avatars.com/api/?name='.str_replace(' ', '-', $name);
-    }
-}
-
-if (! function_exists('auth_check')) {
-    function auth_check(string $guard): bool
-    {
-        return Auth::guard($guard)->check();
     }
 }
