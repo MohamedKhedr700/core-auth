@@ -45,7 +45,7 @@ abstract class AuthChannel implements AuthChannelInterface
      */
     public static function auth(string $authenticatable, array $credentials): AuthChannelInterface
     {
-        return (new static())->authenticate(new $authenticatable, $credentials);
+        return (new static())->authenticate(app($authenticatable), $credentials);
     }
 
     /**
@@ -53,7 +53,7 @@ abstract class AuthChannel implements AuthChannelInterface
      */
     public static function authAccount(string $authenticatable, AccountInterface $account): AuthChannelInterface
     {
-        return (new static())->authenticateAccount(new $authenticatable, $account);
+        return (new static())->authenticateAccount(app($authenticatable), $account);
     }
 
     /**
