@@ -43,7 +43,7 @@ trait Authenticatable
     /**
      * Get authenticator.
      */
-    public static function getAuthenticator(): string
+    public static function getAuthenticator(): ?string
     {
         return config('authentication.authenticators.'.static::class);
     }
