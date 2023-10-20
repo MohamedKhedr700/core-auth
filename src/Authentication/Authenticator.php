@@ -24,11 +24,6 @@ abstract class Authenticator implements AuthenticatorInterface
     public const AUTHENTICATABLE = '';
 
     /**
-     * Authentication channels.
-     */
-    public const CHANNELS = [];
-
-    /**
      * {@inheritdoc}
      */
     public static function authenticator(): string
@@ -42,14 +37,6 @@ abstract class Authenticator implements AuthenticatorInterface
     public static function authenticatable(): string
     {
         return static::AUTHENTICATABLE;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function channels(): array
-    {
-        return static::CHANNELS;
     }
 
     /**

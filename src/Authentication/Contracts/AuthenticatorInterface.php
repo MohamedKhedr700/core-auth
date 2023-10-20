@@ -15,6 +15,11 @@ interface AuthenticatorInterface
     public static function authenticatable(): string;
 
     /**
+     * Get authenticator default channel.
+     */
+    public static function defaultChannel(): ?string;
+
+    /**
      * Get authenticator channels.
      */
     public static function channels(): array;
@@ -38,4 +43,9 @@ interface AuthenticatorInterface
      * Get an authentication channel.
      */
     public static function getAuthChannel(array $channels, string $channel): ?string;
+
+    /**
+     * Get default authentication channel.
+     */
+    public static function getDefaultAuthChannel(): ?string;
 }

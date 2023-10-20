@@ -8,13 +8,41 @@ use Raid\Core\Auth\Utilities\AuthUtility;
 trait WithChannels
 {
     /**
+     * Authenticator default channel.
+     */
+    public const DEFAULT_CHANNEL = null;
+
+    /**
+     * Authenticator channels.
+     */
+    public const CHANNELS = [];
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function defaultChannel(): ?string
+    {
+        return static::DEFAULT_CHANNEL;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function channels(): array
+    {
+        return static::CHANNELS;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @throws InvalidChannelException
      */
     public static function getChannel(array $channels, ?string $channel): string
     {
-        $channelClass = $channel ? static::getAuthChannel($channels, $channel) : AuthUtility::getDefaultAuthChannel();
+        $channelClass = $channel ?
+            static::getAuthChannel($channels, $channel) :
+            static::getDefaultAuthChannel();
 
         if (! $channelClass) {
             $class = static::class;
@@ -39,5 +67,13 @@ trait WithChannels
         }
 
         return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getDefaultAuthChannel(): ?string
+    {
+        return static::defaultChannel() ?: AuthUtility::getDefaultAuthChannel();
     }
 }
