@@ -17,10 +17,6 @@ trait Authenticatable
     {
         $authenticator = static::getAuthenticator();
 
-        if (! $authenticator) {
-            throw new InvalidAuthenticatorException('No authenticator is defined for '.static::class);
-        }
-
         return $authenticator::attempt($credentials, $channel);
     }
 
@@ -33,19 +29,23 @@ trait Authenticatable
     {
         $authenticator = static::getAuthenticator();
 
-        if (! $authenticator) {
-            throw new InvalidAuthenticatorException('No authenticator is defined for '.static::class);
-        }
-
         return $authenticator::login($account, $channel);
     }
 
     /**
      * Get authenticator.
+     *
+     * @throws InvalidAuthenticatorException
      */
     public static function getAuthenticator(): ?string
     {
-        return config('authentication.authenticators.'.static::class);
+        $authenticator = config('authentication.authenticators.'.static::class);
+
+        if (! $authenticator) {
+            throw new InvalidAuthenticatorException('No authenticator is defined for '.static::class);
+        }
+
+        return $authenticator;
     }
 
     /**

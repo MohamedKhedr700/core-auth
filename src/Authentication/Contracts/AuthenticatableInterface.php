@@ -19,7 +19,7 @@ interface AuthenticatableInterface
     /**
      * Get authenticator.
      */
-    public static function getAuthenticator(): ?string;
+    public static function getAuthenticator(): string;
 
     /**
      * Get an account by key and value.
