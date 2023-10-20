@@ -45,7 +45,7 @@ abstract class AuthWorker implements AuthWorkerInterface
     /**
      * {@inheritdoc}
      */
-    public function getWorkerValue(array $credentials): string
+    public function getWorkerValue(array $credentials): ?string
     {
         return $credentials[static::worker()];
     }

@@ -24,7 +24,7 @@ interface AuthWorkerInterface
     /**
      * Get the worker credential value.
      */
-    public function getWorkerValue(array $credentials): string;
+    public function getWorkerValue(array $credentials): ?string;
 
     /**
      * Find a worker account.
