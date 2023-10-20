@@ -37,7 +37,7 @@ trait Authenticatable
      *
      * @throws InvalidAuthenticatorException
      */
-    public static function getAuthenticator(): ?string
+    public static function getAuthenticator(): string
     {
         $authenticator = config('authentication.authenticators.'.static::class);
 
