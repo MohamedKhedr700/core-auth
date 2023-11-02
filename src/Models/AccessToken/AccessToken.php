@@ -7,6 +7,11 @@ class AccessToken extends PersonalAccessToken
     /**
      * {@inheritdoc}
      */
+    protected $table = 'personal_access_tokens';
+
+    /**
+     * {@inheritdoc}
+     */
     protected $fillable = [
         'name',
         'token',
