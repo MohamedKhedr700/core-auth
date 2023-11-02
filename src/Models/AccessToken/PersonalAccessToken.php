@@ -3,10 +3,10 @@
 namespace Raid\Core\Auth\Models\AccessToken;
 
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Raid\Core\Model\Models\BaseModel;
+use Raid\Core\Model\Models\Model;
 use Raid\Core\Model\Traits\Model\Attributable;
 
-class PersonalAccessToken extends BaseModel
+class PersonalAccessToken extends Model
 {
     use Attributable;
 
