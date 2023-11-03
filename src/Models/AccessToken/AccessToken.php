@@ -2,6 +2,8 @@
 
 namespace Raid\Core\Auth\Models\AccessToken;
 
+use Raid\Core\Model\Models\Contracts\ModelInterface;
+
 class AccessToken extends PersonalAccessToken
 {
     /**
@@ -19,14 +21,9 @@ class AccessToken extends PersonalAccessToken
     ];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public static function boot(): void
+    public static function creatingObserve(ModelInterface $model): void
     {
-        parent::boot();
-
-        static::creating(function ($model) {
-            //
-        });
     }
 }
