@@ -10,7 +10,7 @@ abstract class AuthRule implements AuthRuleInterface
     /**
      * {@inheritdoc}
      */
-    public function rule(AuthChannelInterface $authManager): bool
+    public function rule(AuthChannelInterface $authChannel): bool
     {
         return true;
     }

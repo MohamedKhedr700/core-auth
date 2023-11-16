@@ -10,7 +10,7 @@ abstract class AuthStep implements AuthStepInterface
     /**
      * {@inheritdoc}
      */
-    public function step(AuthChannelInterface $authManager): void
+    public function step(AuthChannelInterface $authChannel): void
     {
     }
 }
