@@ -1547,12 +1547,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MohamedKhedr700/core-model.git",
-                "reference": "16289657aa5e2652f5a316027e9959e970469a5d"
+                "reference": "26608e808b4f0a5f6f9902b92ce1607e9b9809d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MohamedKhedr700/core-model/zipball/16289657aa5e2652f5a316027e9959e970469a5d",
-                "reference": "16289657aa5e2652f5a316027e9959e970469a5d",
+                "url": "https://api.github.com/repos/MohamedKhedr700/core-model/zipball/26608e808b4f0a5f6f9902b92ce1607e9b9809d2",
+                "reference": "26608e808b4f0a5f6f9902b92ce1607e9b9809d2",
                 "shasum": ""
             },
             "require": {
@@ -1598,7 +1598,7 @@
                 "issues": "https://github.com/MohamedKhedr700/core-model/issues",
                 "source": "https://github.com/MohamedKhedr700/core-model/tree/main"
             },
-            "time": "2023-10-19T21:07:47+00:00"
+            "time": "2023-11-16T19:57:59+00:00"
         },
         {
             "name": "symfony/console",
@@ -2859,7 +2859,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "raid/core-model": 20,
         "raid/core-enum": 20,
         "raid/core-command": 20
     },

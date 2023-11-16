@@ -78,7 +78,7 @@ abstract class Account extends Model implements AccountInterface, Authenticatabl
     /**
      * Fill account type attribute.
      */
-    public static function fillAccountType(Account $account): void
+    public static function fillAccountType(AccountInterface $account): void
     {
         $account->fillAttribute('account_type', $account->accountType());
     }

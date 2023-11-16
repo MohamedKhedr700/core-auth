@@ -12,7 +12,13 @@ class MatchingPasswordRule implements AuthRuleInterface
      */
     public function rule(AuthChannelInterface $authChannel): bool
     {
-        if ($authChannel->account()->isMatchingPassword($authChannel->credentials('password', ''))) {
+        $password = $authChannel->credentials('password');
+
+        if (! $password) {
+            return false;
+        }
+
+        if ($authChannel->account()->isMatchingPassword($password)) {
             return true;
         }
 
