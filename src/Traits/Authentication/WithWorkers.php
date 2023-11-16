@@ -90,4 +90,12 @@ trait WithWorkers
 
         return null;
     }
+
+    /**
+     * Get worker column.
+     */
+    public function getWorkerColumn(): string
+    {
+        return $this->authWorker()->queryColumn() ?: $this->authWorker()->worker();
+    }
 }
