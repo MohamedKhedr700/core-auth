@@ -14,11 +14,7 @@ class MatchingPasswordRule implements AuthRuleInterface
     {
         $password = $authChannel->credentials('password');
 
-        if (! $password) {
-            return false;
-        }
-
-        if ($authChannel->account()->isMatchingPassword($password)) {
+        if ($password && $authChannel->account()->isMatchingPassword($password)) {
             return true;
         }
 
