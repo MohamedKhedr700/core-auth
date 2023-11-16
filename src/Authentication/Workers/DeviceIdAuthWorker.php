@@ -3,6 +3,7 @@
 namespace Raid\Core\Auth\Authentication\Workers;
 
 use Raid\Core\Auth\Authentication\AuthWorker;
+use Raid\Core\Auth\Authentication\Contracts\AuthenticatableInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthWorkerInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountableInterface;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;
@@ -18,10 +19,10 @@ class DeviceIdAuthWorker extends AuthWorker implements AuthWorkerInterface
     /**
      * {@inheritdoc}
      */
-    public function find(AccountableInterface $accountable, array $credentials): ?AccountInterface
+    public function find(AuthenticatableInterface $authenticatable, array $credentials): ?AccountInterface
     {
-        $device = parent::find($accountable, $credentials);
+        $device = parent::find($authenticatable, $credentials);
 
-        return $device ? $accountable->update($device->accountId(), $credentials) : $accountable->create($credentials);
+        return $device ? $authenticatable->update($device->accountId(), $credentials) : $authenticatable->create($credentials);
     }
 }
