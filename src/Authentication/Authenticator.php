@@ -60,7 +60,7 @@ abstract class Authenticator implements AuthenticatorInterface
     {
         $authChannel = static::getChannel(static::channels(), $channel);
 
-        return $authChannel::authAccount($account);
+        return $authChannel::authAccount(static::authenticatable(), $account);
     }
 
     /**
