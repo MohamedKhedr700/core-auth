@@ -17,7 +17,7 @@ trait WithAuthIdentifier
      */
     public function getAuthIdentifier()
     {
-        // TODO: Implement getAuthIdentifier() method.
+        return $this->attribute($this->getKeyName());
     }
 
     /**
