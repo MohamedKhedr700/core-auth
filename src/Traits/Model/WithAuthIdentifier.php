@@ -9,7 +9,6 @@ trait WithAuthIdentifier
      */
     public function getAuthIdentifierName()
     {
-        // TODO: Implement getAuthIdentifierName() method.
     }
 
     /**
@@ -25,7 +24,6 @@ trait WithAuthIdentifier
      */
     public function getAuthPassword()
     {
-        // TODO: Implement getAuthPassword() method.
     }
 
     /**
@@ -33,7 +31,7 @@ trait WithAuthIdentifier
      */
     public function getRememberToken()
     {
-        // TODO: Implement getRememberToken() method.
+        return $this->attribute('remember_token');
     }
 
     /**
@@ -41,7 +39,6 @@ trait WithAuthIdentifier
      */
     public function setRememberToken($value)
     {
-        // TODO: Implement setRememberToken() method.
     }
 
     /**
@@ -49,6 +46,6 @@ trait WithAuthIdentifier
      */
     public function getRememberTokenName()
     {
-        // TODO: Implement getRememberTokenName() method.
+        return $this->attribute('remember_token_name');
     }
 }
