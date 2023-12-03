@@ -71,6 +71,8 @@ abstract class Account extends Model implements AccountInterface, Authenticatabl
      */
     public static function creatingObserve(ModelInterface $model): void
     {
+        parent::creatingObserve($model);
+
         static::fillCreatedBy($model);
         static::fillAccountType($model);
     }
