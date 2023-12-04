@@ -25,5 +25,6 @@ class AccessToken extends PersonalAccessToken
      */
     public static function creatingObserve(ModelInterface $model): void
     {
+        parent::creatingObserve($model);
     }
 }
