@@ -9,6 +9,7 @@ trait WithAuthIdentifier
      */
     public function getAuthIdentifierName()
     {
+        return $this->getKeyName();
     }
 
     /**
@@ -16,7 +17,7 @@ trait WithAuthIdentifier
      */
     public function getAuthIdentifier()
     {
-        return $this->attribute($this->getKeyName());
+        return $this->attribute($this->getAuthIdentifierName());
     }
 
     /**
@@ -24,6 +25,7 @@ trait WithAuthIdentifier
      */
     public function getAuthPassword()
     {
+        return $this->attribute('password');
     }
 
     /**

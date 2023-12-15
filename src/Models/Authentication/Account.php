@@ -52,7 +52,7 @@ abstract class Account extends Model implements AccountInterface, Authenticatabl
      * Account fillable attributes.
      */
     protected array $accountFillable = [
-        'account_type', 'first_name', 'last_name', 'email',
+        'account_type', 'name', 'first_name', 'last_name', 'email',
         'country_code', 'phone', 'full_phone', 'password',
         'devices', 'is_disabled', 'is_verified', 'is_active',
         'last_login_at', 'last_login_ip',
