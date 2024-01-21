@@ -39,7 +39,7 @@ trait Authenticatable
      */
     public static function getAuthenticator(): string
     {
-        $authenticator = config('authentication.authenticators.'.static::class);
+        $authenticator = config('authentication.authenticators.'.static::class, config('authentication.default_authenticator'));
 
         if (! $authenticator) {
             throw new InvalidAuthenticatorException('No authenticator is defined for '.static::class);

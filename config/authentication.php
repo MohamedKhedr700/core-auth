@@ -28,6 +28,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Default Authenticator
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the default authenticator that will be used.
+    |
+    */
+
+    'default_authenticator' => \Raid\Core\Auth\Authentication\DefaultAuthenticator::class,
+
+    /*
+    |--------------------------------------------------------------------------
     | Access Token Model
     |--------------------------------------------------------------------------
     |
