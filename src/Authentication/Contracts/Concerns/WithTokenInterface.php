@@ -10,4 +10,14 @@ interface WithTokenInterface
      * Create a token for account.
      */
     public function createToken(AccountInterface $account): void;
+
+    /**
+     * Get token response.
+     */
+    public function tokenResponse(): array;
+
+    /**
+     * Get user string token if presentable.
+     */
+    public function stringToken(): string;
 }
