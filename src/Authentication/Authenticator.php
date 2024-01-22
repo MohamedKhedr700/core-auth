@@ -3,7 +3,6 @@
 namespace Raid\Core\Auth\Authentication;
 
 use Raid\Core\Auth\Authentication\Contracts\AuthChannelInterface;
-use Raid\Core\Auth\Authentication\Contracts\AuthenticatableInterface;
 use Raid\Core\Auth\Authentication\Contracts\AuthenticatorInterface;
 use Raid\Core\Auth\Exceptions\Authentication\InvalidChannelException;
 use Raid\Core\Auth\Models\Authentication\Contracts\AccountInterface;

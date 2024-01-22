@@ -26,7 +26,6 @@ if (! function_exists('authenticate_account')) {
     }
 }
 
-
 if (! function_exists('auth_check')) {
     /**
      * Check if the given guard is authenticated.
