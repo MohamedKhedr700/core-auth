@@ -33,6 +33,8 @@ class AccessToken extends PersonalAccessToken
      */
     public static function currentToken(): ?PersonalAccessToken
     {
-        return static::findToken(request()->bearerToken());
+        $token = request()->bearerToken();
+
+        return $token ? static::findToken($token) : null;
     }
 }
