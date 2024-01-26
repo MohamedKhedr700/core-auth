@@ -31,7 +31,7 @@ class AccessToken extends PersonalAccessToken
     /**
      * Get request current token if presented.
      */
-    public static function currentToken(): ?PersonalAccessToken
+    public static function current(): ?static
     {
         $token = request()->bearerToken();
 

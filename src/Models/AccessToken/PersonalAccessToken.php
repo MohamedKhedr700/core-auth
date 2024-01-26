@@ -28,7 +28,7 @@ class PersonalAccessToken extends Model
     /**
      * Find the token instance matching the given token.
      */
-    public static function findToken(string $token): ?PersonalAccessToken
+    public static function findToken(string $token): ?static
     {
         if (! str_contains($token, '|')) {
             return static::where('token', hash('sha256', $token))->first();
