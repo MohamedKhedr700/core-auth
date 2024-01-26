@@ -27,4 +27,12 @@ class AccessToken extends PersonalAccessToken
     {
         parent::creatingObserve($model);
     }
+
+    /**
+     * Get request current token if presented.
+     */
+    public static function currentToken(): ?PersonalAccessToken
+    {
+        return static::findToken(request()->bearerToken());
+    }
 }

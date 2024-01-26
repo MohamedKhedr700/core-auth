@@ -26,6 +26,24 @@ class PersonalAccessToken extends Model
     ];
 
     /**
+     * Find the token instance matching the given token.
+     */
+    public static function findToken(string $token): ?PersonalAccessToken
+    {
+        if (! str_contains($token, '|')) {
+            return static::where('token', hash('sha256', $token))->first();
+        }
+
+        [$id, $token] = explode('|', $token, 2);
+
+        if (! $instance = static::find($id)) {
+            return null;
+        }
+
+        return hash_equals($instance->attribute('token'), hash('sha256', $token)) ? $instance : null;
+    }
+
+    /**
      * Get the tokenable model that the access token belongs to.
      */
     public function tokenable(): MorphTo
@@ -50,23 +68,5 @@ class PersonalAccessToken extends Model
     public function cant(string $ability): bool
     {
         return ! $this->can($ability);
-    }
-
-    /**
-     * Find the token instance matching the given token.
-     */
-    public static function findToken(string $token): ?PersonalAccessToken
-    {
-        if (! str_contains($token, '|')) {
-            return static::where('token', hash('sha256', $token))->first();
-        }
-
-        [$id, $token] = explode('|', $token, 2);
-
-        if (! $instance = static::find($id)) {
-            return null;
-        }
-
-        return hash_equals($instance->attribute('token'), hash('sha256', $token)) ? $instance : null;
     }
 }
