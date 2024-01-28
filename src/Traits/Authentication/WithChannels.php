@@ -47,7 +47,7 @@ trait WithChannels
         if (! $channelClass) {
             $class = static::class;
 
-            throw new InvalidChannelException("Authentication channel [{$channel}] is not supported by [{$class}].");
+            throw new InvalidChannelException("Authentication channel [{$channel}] is not configured for class [{$class}].");
         }
 
         return $channelClass;
